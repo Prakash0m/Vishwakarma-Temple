@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 
 let mongodInstance = null;
 let isConnected = false;
@@ -17,19 +16,20 @@ export const connectDB = async () => {
       serverSelectionTimeoutMS: 5000,
       connectTimeoutMS: 5000
     });
-    console.log(`✅ MongoDB Connected to: ${conn.connection.host}`);
+    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     isConnected = true;
     return conn;
   } catch (err) {
-    // If in production or serverless environment without local mongo, log error
-    if (process.env.NODE_ENV === 'production' && process.env.MONGODB_URI) {
-      console.error(`❌ MongoDB Connection Error in Production:`, err);
+    // If in production or with Atlas URI, log error and throw
+    if (process.env.NODE_ENV === 'production' || process.env.MONGODB_URI) {
+      console.error(`❌ MongoDB Atlas Connection Error:`, err.message);
       throw err;
     }
 
-    console.warn(`⚠️ Primary MongoDB connection failed (${err.message}). Starting embedded high-performance MongoDB instance...`);
+    console.warn(`⚠️ Primary MongoDB connection failed (${err.message}). Starting local in-memory fallback...`);
     
     try {
+      const { MongoMemoryServer } = await import('mongodb-memory-server');
       if (!mongodInstance) {
         mongodInstance = await MongoMemoryServer.create({
           instance: {
@@ -41,11 +41,11 @@ export const connectDB = async () => {
       
       const memoryUri = mongodInstance.getUri();
       const conn = await mongoose.connect(memoryUri);
-      console.log(`✅ Embedded MongoDB successfully started and connected: ${memoryUri}`);
+      console.log(`✅ Embedded MongoDB started: ${memoryUri}`);
       isConnected = true;
       return conn;
     } catch (memErr) {
-      console.error(`❌ Critical: Could not start embedded MongoDB:`, memErr);
+      console.error(`❌ Could not start in-memory MongoDB:`, memErr);
       process.exit(1);
     }
   }
