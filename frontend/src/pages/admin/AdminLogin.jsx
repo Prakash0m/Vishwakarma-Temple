@@ -12,7 +12,7 @@ const AdminLogin = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('admin@vishwakarmatemple.org');
-  const [password, setPassword] = useState('TempleAdmin@2026');
+  const [password, setPassword] = useState('TempleAdmin@2027');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -142,7 +142,7 @@ const AdminLogin = () => {
               <span>पूर्वनिर्धारित प्रमाण (Default Credentials):</span>
             </div>
             <div>इमेल: <code>admin@vishwakarmatemple.org</code></div>
-            <div>पासवर्ड: <code>TempleAdmin@2026</code></div>
+            <div>पासवर्ड: <code>TempleAdmin@2027</code></div>
           </div>
 
           <button
