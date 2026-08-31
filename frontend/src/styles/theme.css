@@ -1,0 +1,73 @@
+/* ==========================================================================
+   VISHWAKARMA TEMPLE DESIGN SYSTEM TOKENS
+   छापकी (वडा नं. ५), सप्तरी, मधेश प्रदेश, नेपाल
+   ========================================================================== */
+
+:root {
+  /* Primary - Deep Temple Red / Maroon */
+  --color-primary: #7A121D;
+  --color-primary-dark: #580B14;
+  --color-primary-light: #9B1E2D;
+  --color-primary-subtle: #FBECEE;
+
+  /* Secondary - Saffron / Orange */
+  --color-saffron: #D9531E;
+  --color-saffron-dark: #B23D10;
+  --color-saffron-light: #F27036;
+  --color-saffron-subtle: #FEF3EB;
+
+  /* Accent - Traditional Gold */
+  --color-gold: #C59B27;
+  --color-gold-dark: #9A7718;
+  --color-gold-light: #DFB847;
+  --color-gold-subtle: #FDF9EC;
+
+  /* Supporting - Natural Sacred Green (Mandatory: Seva, Success, Healthy Balance) */
+  --color-green: #2D6A4F;
+  --color-green-dark: #1B4332;
+  --color-green-light: #40916C;
+  --color-green-subtle: #E8F5EE;
+
+  /* Backgrounds - Warm Sacred Cream & Off-White */
+  --bg-cream: #FAF7F2;
+  --bg-cream-card: #FFFFFF;
+  --bg-cream-alt: #F4EFE6;
+  --bg-cream-darker: #EAE3D5;
+
+  /* Text Colors */
+  --text-dark: #1F1510;
+  --text-brown: #38281E;
+  --text-muted: #6B5B52;
+  --text-light: #FAF7F2;
+
+  /* Status Colors */
+  --color-danger: #C0392B;
+  --color-warning: #D97706;
+  --color-success: #2D6A4F;
+  --color-info: #1D4ED8;
+
+  /* Borders & Dividers */
+  --border-gold: rgba(197, 155, 39, 0.35);
+  --border-maroon: rgba(122, 18, 29, 0.2);
+  --border-subtle: rgba(107, 91, 82, 0.15);
+  --border-radius-sm: 6px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 18px;
+  --border-radius-xl: 24px;
+  --border-radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 6px rgba(43, 30, 22, 0.04);
+  --shadow-md: 0 6px 18px rgba(43, 30, 22, 0.07);
+  --shadow-lg: 0 12px 32px rgba(43, 30, 22, 0.11);
+  --shadow-gold: 0 8px 24px rgba(197, 155, 39, 0.25);
+  --shadow-diya: 0 0 25px rgba(217, 83, 30, 0.35);
+
+  /* Typography */
+  --font-heading: 'Noto Serif Devanagari', 'Noto Sans Devanagari', serif;
+  --font-body: 'Noto Sans Devanagari', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-english-heading: 'Outfit', sans-serif;
+
+  /* Transitions */
+  --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}

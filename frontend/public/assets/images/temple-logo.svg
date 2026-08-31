@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <circle cx="50" cy="50" r="48" fill="#7A121D" stroke="#D4AF37" stroke-width="3"/>
+  <circle cx="50" cy="50" r="42" stroke="#E65100" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <!-- Gold Sun Rays / Shikhara Kalash -->
+  <path d="M50 14 L55 26 L68 26 L57 34 L61 47 L50 39 L39 47 L43 34 L32 26 L45 26 Z" fill="#D4AF37"/>
+  <!-- Diya Flame -->
+  <path d="M50 28 C54 36 58 42 50 56 C42 42 46 36 50 28 Z" fill="#FFB703"/>
+  <path d="M50 38 C52 42 54 46 50 52 C46 46 48 42 50 38 Z" fill="#D9531E"/>
+  <!-- Diya Base -->
+  <path d="M30 56 Q50 72 70 56 Q50 63 30 56 Z" fill="#D4AF37"/>
+  <!-- Vishwakarma Hammer / Trishul / Sacred Geometric Compass Emblem -->
+  <circle cx="50" cy="74" r="5" fill="#D4AF37"/>
+  <path d="M48 60 L48 76 L52 76 L52 60 Z" fill="#D4AF37"/>
+  <!-- Om symbol representation / Divine Blessing Accent -->
+  <path d="M43 78 Q50 84 57 78" stroke="#D4AF37" stroke-width="2" stroke-linecap="round"/>
+</svg>
