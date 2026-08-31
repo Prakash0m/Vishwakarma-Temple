@@ -48,11 +48,23 @@ if (process.env.NODE_ENV !== 'test') {
 const uploadsPath = path.join(process.cwd(), 'uploads');
 app.use('/uploads', express.static(uploadsPath));
 
+// Root Health Check
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Vishwakarma Temple API is running',
+    temple: 'श्री विश्वकर्मा मन्दिर, छापकी (सप्तरी)',
+    version: '1.0.0',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // API Health Check
 app.get('/api/health', (req, res) => {
   res.status(200).json({
+    success: true,
     status: 'online',
-    message: 'ॐ श्री विश्वकर्मणे नमः - Vishwakarma Temple Backend is healthy',
+    message: 'Vishwakarma Temple API is running',
     timestamp: new Date().toISOString(),
     version: '1.0.0'
   });
