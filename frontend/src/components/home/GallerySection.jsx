@@ -73,11 +73,11 @@ const GallerySection = ({ gallery }) => {
           ))}
         </div>
 
-        {/* Gallery Grid Layout */}
+        {/* Gallery Grid Layout with Proportional Zoom-Out */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
-          gap: 'clamp(0.75rem, 2vw, 1.5rem)'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: 'clamp(0.85rem, 2vw, 1.5rem)'
         }}>
           {filteredGallery.length > 0 ? (
             filteredGallery.map((item) => {
@@ -88,13 +88,13 @@ const GallerySection = ({ gallery }) => {
                   key={item._id}
                   style={{
                     position: 'relative',
-                    borderRadius: '14px',
+                    borderRadius: '16px',
                     overflow: 'hidden',
                     backgroundColor: 'var(--bg-cream-alt)',
                     border: '1px solid var(--border-gold)',
                     boxShadow: 'var(--shadow-sm)',
                     cursor: 'pointer',
-                    height: 'clamp(180px, 28vw, 260px)'
+                    height: '220px'
                   }}
                   onClick={() => setLightboxImage(item)}
                 >
@@ -105,9 +105,10 @@ const GallerySection = ({ gallery }) => {
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
+                      objectPosition: 'center 25%',
                       transition: 'transform 0.4s ease'
                     }}
-                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.06)'}
+                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
                     onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                   />
 
@@ -115,7 +116,7 @@ const GallerySection = ({ gallery }) => {
                   <div style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to top, rgba(88, 11, 20, 0.92) 0%, rgba(88, 11, 20, 0.3) 55%, transparent 100%)',
+                    background: 'linear-gradient(to top, rgba(88, 11, 20, 0.92) 0%, rgba(88, 11, 20, 0.25) 50%, transparent 80%)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'flex-end',
@@ -142,7 +143,7 @@ const GallerySection = ({ gallery }) => {
                         }}>
                           {title}
                         </h4>
-                        <span style={{ fontSize: '0.7rem', opacity: 0.85, color: '#F4EFE6', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block' }}>
+                        <span style={{ fontSize: '0.72rem', opacity: 0.85, color: '#F4EFE6', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block' }}>
                           {item.categoryNepali || item.category}
                         </span>
                       </div>

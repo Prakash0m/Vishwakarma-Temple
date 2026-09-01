@@ -271,15 +271,16 @@ export const translations = {
     nav: {
       home: 'Home',
       about: 'About',
-      pooja: 'Pooja Services',
+      leadership: 'Leadership',
+      pooja: 'Pooja',
       events: 'Events',
       gallery: 'Gallery',
-      donation: 'Donations',
+      donation: 'Donation',
       transparency: 'Transparency',
       location: 'Location',
       contact: 'Contact',
       joinMeeting: 'Join Meeting',
-      donateNow: 'Donate Now',
+      donateNow: 'Donate',
       adminPortal: 'Admin Portal'
     },
 

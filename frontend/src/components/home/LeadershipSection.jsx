@@ -78,114 +78,136 @@ const LeadershipSection = () => {
         {/* 5 Candidates Cards Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
           gap: '1.25rem',
           justifyContent: 'center'
         }}>
-          {candidates.map((cand, idx) => (
-            <div
-              key={cand._id}
-              style={{
-                backgroundColor: '#FFFFFF',
-                borderRadius: '16px',
-                border: '1px solid var(--border-gold)',
-                overflow: 'hidden',
-                boxShadow: '0 4px 18px rgba(0,0,0,0.04)',
-                display: 'flex',
-                flexDirection: 'column',
-                transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-                position: 'relative'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 10px 24px rgba(122, 18, 29, 0.12)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 18px rgba(0,0,0,0.04)';
-              }}
-            >
-              {/* Order Number Badge */}
-              <div style={{
-                position: 'absolute',
-                top: '10px',
-                left: '10px',
-                zIndex: 2,
-                backgroundColor: 'rgba(122, 18, 29, 0.92)',
-                color: '#FFD166',
-                padding: '0.2rem 0.55rem',
-                borderRadius: '14px',
-                fontSize: '0.7rem',
-                fontWeight: '700',
-                backdropFilter: 'blur(4px)'
-              }}>
-                #{idx + 1}
-              </div>
+          {candidates.map((cand, idx) => {
+            const imgSrc = cand.profileImage || '/assets/images/deity-portrait.jpg';
+            const isLogo = imgSrc.includes('logo') || imgSrc.endsWith('.svg');
 
-              {/* Photo */}
-              <div style={{ width: '100%', height: '200px', backgroundColor: '#F0ECE4', position: 'relative', overflow: 'hidden' }}>
-                <img
-                  src={cand.profileImage || '/assets/images/deity-portrait.jpg'}
-                  alt={cand.fullName}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  onError={(e) => { e.target.src = '/assets/images/deity-portrait.jpg'; }}
-                />
+            return (
+              <div
+                key={cand._id}
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: '16px',
+                  border: '1px solid var(--border-gold)',
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 18px rgba(0,0,0,0.04)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+                  position: 'relative'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 10px 24px rgba(122, 18, 29, 0.12)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 18px rgba(0,0,0,0.04)';
+                }}
+              >
+                {/* Order Number Badge */}
                 <div style={{
                   position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(to top, rgba(56, 6, 13, 0.82) 0%, transparent 60%)'
-                }} />
-                <div style={{ position: 'absolute', bottom: '8px', left: '10px', right: '10px', color: '#FFF' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: '700', color: '#FFD166', textTransform: 'uppercase' }}>
-                    {cand.positionDevanagari || cand.position}
-                  </div>
-                  <div style={{ fontSize: '1.08rem', fontWeight: '700', fontFamily: 'var(--font-heading)', lineHeight: 1.2 }}>
-                    {cand.fullNameDevanagari || cand.fullName}
-                  </div>
-                </div>
-              </div>
-
-              {/* Bio & Details */}
-              <div style={{ padding: '1rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                <p style={{
-                  fontSize: '0.82rem',
-                  color: '#555',
-                  lineHeight: 1.5,
-                  margin: '0 0 0.85rem 0'
+                  top: '10px',
+                  left: '10px',
+                  zIndex: 2,
+                  backgroundColor: 'rgba(122, 18, 29, 0.92)',
+                  color: '#FFD166',
+                  padding: '0.2rem 0.55rem',
+                  borderRadius: '14px',
+                  fontSize: '0.7rem',
+                  fontWeight: '700',
+                  backdropFilter: 'blur(4px)'
                 }}>
-                  {cand.bio || 'छापकी टोलको विकास, धार्मिक अनुष्ठान तथा सामाजिक सद्भावमा निरन्तर क्रियाशील।'}
-                </p>
+                  #{idx + 1}
+                </div>
 
+                {/* Photo / Emblem Frame (Optimized Zoom-Out) */}
                 <div style={{
-                  borderTop: '1px solid #F0ECE4',
-                  paddingTop: '0.65rem',
+                  width: '100%',
+                  height: '210px',
+                  backgroundColor: isLogo ? '#38060D' : '#FAF7F2',
+                  position: 'relative',
+                  overflow: 'hidden',
                   display: 'flex',
-                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  fontSize: '0.78rem',
-                  color: '#777'
+                  justifyContent: 'center'
                 }}>
-                  <div>घर नं. <strong>{cand.houseNumber || '१०१'}</strong></div>
-                  {cand.phone && (
-                    <a
-                      href={`tel:${cand.phone}`}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.25rem',
-                        color: 'var(--color-primary)',
-                        fontWeight: '600',
-                        textDecoration: 'none'
-                      }}
-                    >
-                      <Phone size={12} />
-                      <span>{cand.phone}</span>
-                    </a>
-                  )}
+                  <img
+                    src={imgSrc}
+                    alt={cand.fullName}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: isLogo ? 'contain' : 'cover',
+                      objectPosition: isLogo ? 'center' : 'center 22%',
+                      padding: isLogo ? '22px' : '0',
+                      transition: 'transform 0.3s ease'
+                    }}
+                    onError={(e) => { e.target.src = '/assets/images/deity-portrait.jpg'; }}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to top, rgba(56, 6, 13, 0.88) 0%, rgba(56, 6, 13, 0.2) 40%, transparent 70%)',
+                    pointerEvents: 'none'
+                  }} />
+                  <div style={{ position: 'absolute', bottom: '8px', left: '10px', right: '10px', color: '#FFF' }}>
+                    <div style={{ fontSize: '0.74rem', fontWeight: '700', color: '#FFD166', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
+                      {cand.positionDevanagari || cand.position}
+                    </div>
+                    <div style={{ fontSize: '1.05rem', fontWeight: '700', fontFamily: 'var(--font-heading)', lineHeight: 1.2 }}>
+                      {cand.fullNameDevanagari || cand.fullName}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bio & Details */}
+                <div style={{ padding: '1rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <p style={{
+                    fontSize: '0.82rem',
+                    color: '#555',
+                    lineHeight: 1.5,
+                    margin: '0 0 0.85rem 0'
+                  }}>
+                    {cand.bio || 'छापकी टोलको विकास, धार्मिक अनुष्ठान तथा सामाजिक सद्भावमा निरन्तर क्रियाशील।'}
+                  </p>
+
+                  <div style={{
+                    borderTop: '1px solid #F0ECE4',
+                    paddingTop: '0.65rem',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    fontSize: '0.78rem',
+                    color: '#777'
+                  }}>
+                    <div>घर नं. <strong>{cand.houseNumber || '१०१'}</strong></div>
+                    {cand.phone && (
+                      <a
+                        href={`tel:${cand.phone}`}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                          color: 'var(--color-primary)',
+                          fontWeight: '600',
+                          textDecoration: 'none'
+                        }}
+                      >
+                        <Phone size={12} />
+                        <span>{cand.phone}</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

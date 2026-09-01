@@ -15,26 +15,27 @@ const AboutSection = ({ settings }) => {
 
   const aboutImage = settings?.aboutImage || '/assets/images/temple-structure.jpg';
 
+  // Clear un-truncated stat labels and numbers
   const stats = [
     {
       icon: <Sparkles size={20} color="#C59B27" />,
-      number: settings?.establishedYear || '२०५५',
-      label: t('about.statsEstablished')
+      number: language === 'ne' ? '२०५५ (१९९८)' : '1998 AD (2055)',
+      label: language === 'ne' ? 'स्थापना वर्ष' : 'Established Year'
     },
     {
       icon: <Users size={20} color="#D9531E" />,
-      number: settings?.devoteesCount || '१०,०००+',
-      label: t('about.statsDevotees')
+      number: language === 'ne' ? '१०,०००+' : '10,000+',
+      label: language === 'ne' ? 'वार्षिक भक्तजन' : 'Annual Devotees'
     },
     {
       icon: <CalendarCheck size={20} color="#7A121D" />,
-      number: settings?.annualEventsCount || '२४+',
-      label: t('about.statsEvents')
+      number: language === 'ne' ? '२४+' : '24+',
+      label: language === 'ne' ? 'वार्षिक उत्सव' : 'Annual Events'
     },
     {
       icon: <ShieldCheck size={20} color="#2D6A4F" />,
-      number: settings?.communityProjectsCount || '१००% पारदर्शी',
-      label: t('about.statsTransparency')
+      number: language === 'ne' ? '१००% पारदर्शी' : '100% Transparent',
+      label: language === 'ne' ? 'समुदाय सेवा' : 'Community Seva'
     }
   ];
 
@@ -47,7 +48,7 @@ const AboutSection = ({ settings }) => {
           gap: 'clamp(2rem, 4vw, 3.5rem)',
           alignItems: 'center'
         }}>
-          {/* Left Side: Real Temple Photograph with Elevation Frame */}
+          {/* Left Side: Real Temple Photograph with Perfect Zoom-out & Elevation Frame */}
           <div>
             <div style={{
               position: 'relative',
@@ -56,18 +57,27 @@ const AboutSection = ({ settings }) => {
               background: 'linear-gradient(135deg, #C59B27 0%, rgba(122, 18, 29, 0.2) 100%)',
               boxShadow: '0 14px 36px rgba(43, 30, 22, 0.12)'
             }}>
-              <img
-                src={aboutImage}
-                alt="Vishwakarma Temple Structure - Chhapki, Saptari, Nepal"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  maxHeight: '420px',
-                  objectFit: 'cover',
-                  borderRadius: '16px',
-                  display: 'block'
-                }}
-              />
+              <div style={{
+                borderRadius: '16px',
+                overflow: 'hidden',
+                backgroundColor: '#FAF7F2',
+                aspectRatio: '16 / 11',
+                width: '100%',
+                position: 'relative'
+              }}>
+                <img
+                  src={aboutImage}
+                  alt="Vishwakarma Temple Structure - Chhapki, Saptari, Nepal"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center 40%',
+                    display: 'block',
+                    transition: 'transform 0.4s ease'
+                  }}
+                />
+              </div>
 
               {/* Floating Real Temple Badge */}
               <div style={{
@@ -90,9 +100,9 @@ const AboutSection = ({ settings }) => {
               {/* Bottom Caption Pill */}
               <div style={{
                 position: 'absolute',
-                bottom: '12px',
-                left: '12px',
-                right: '12px',
+                bottom: '14px',
+                left: '14px',
+                right: '14px',
                 backgroundColor: 'rgba(250, 247, 242, 0.95)',
                 backdropFilter: 'blur(6px)',
                 WebkitBackdropFilter: 'blur(6px)',
@@ -158,11 +168,11 @@ const AboutSection = ({ settings }) => {
               </p>
             </div>
 
-            {/* Statistics Counters */}
+            {/* Statistics Counters with Clean Un-Truncated Layout */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
-              gap: '0.75rem'
+              gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+              gap: '0.85rem'
             }}>
               {stats.map((st, index) => (
                 <div
@@ -170,45 +180,42 @@ const AboutSection = ({ settings }) => {
                   style={{
                     backgroundColor: 'var(--bg-cream-alt)',
                     borderRadius: 'var(--border-radius-md)',
-                    padding: '0.75rem 0.85rem',
+                    padding: '0.85rem 0.95rem',
                     border: '1px solid var(--border-gold)',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.65rem'
+                    gap: '0.75rem',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
                   }}
                 >
                   <div style={{
                     backgroundColor: '#FFFFFF',
-                    padding: '6px',
-                    borderRadius: '8px',
+                    padding: '7px',
+                    borderRadius: '10px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: '0 2px 6px rgba(0,0,0,0.04)',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
                     flexShrink: 0
                   }}>
                     {st.icon}
                   </div>
-                  <div style={{ minWidth: 0 }}>
+                  <div style={{ minWidth: 0, flex: 1 }}>
                     <div style={{
                       fontFamily: 'var(--font-heading)',
-                      fontSize: '1.05rem',
+                      fontSize: '1rem',
                       fontWeight: '800',
                       color: 'var(--color-primary-dark)',
-                      lineHeight: 1.1,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap'
+                      lineHeight: 1.15,
+                      marginBottom: '2px'
                     }}>
                       {st.number}
                     </div>
                     <div style={{
-                      fontSize: '0.72rem',
+                      fontSize: '0.74rem',
                       color: 'var(--text-muted)',
                       fontWeight: '600',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap'
+                      lineHeight: 1.2
                     }}>
                       {st.label}
                     </div>

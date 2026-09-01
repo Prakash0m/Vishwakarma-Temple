@@ -175,7 +175,7 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
             </div>
           </div>
 
-          {/* Right Hero: Real Vishwakarma Bhagwan Deity Presentation */}
+          {/* Right Hero: Real Vishwakarma Bhagwan Deity Presentation with Balanced Zoom Out */}
           <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <div className="deity-halo-container" style={{ width: '100%', maxWidth: '440px' }}>
               {/* Outer Traditional Golden Border Frame */}
@@ -190,19 +190,23 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
                 <div style={{
                   backgroundColor: '#FAF7F2',
                   borderRadius: '18px',
-                  padding: '5px',
+                  padding: '4px',
                   position: 'relative',
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  aspectRatio: '4 / 4.8',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}>
-                  {/* Real Deity Image */}
+                  {/* Real Deity Image (Well proportioned and centered) */}
                   <img
                     src={heroImage}
                     alt="Lord Vishwakarma Bhagwan Idol - Chhapki, Saptari, Nepal"
                     style={{
                       width: '100%',
-                      height: 'auto',
-                      maxHeight: '460px',
+                      height: '100%',
                       objectFit: 'cover',
+                      objectPosition: 'center 22%',
                       borderRadius: '14px',
                       display: 'block',
                       transition: 'transform 0.4s ease'
