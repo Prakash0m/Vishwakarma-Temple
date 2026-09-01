@@ -17,22 +17,22 @@ const AboutSection = ({ settings }) => {
 
   const stats = [
     {
-      icon: <Sparkles size={22} color="#C59B27" />,
+      icon: <Sparkles size={20} color="#C59B27" />,
       number: settings?.establishedYear || '२०५५',
       label: t('about.statsEstablished')
     },
     {
-      icon: <Users size={22} color="#D9531E" />,
+      icon: <Users size={20} color="#D9531E" />,
       number: settings?.devoteesCount || '१०,०००+',
       label: t('about.statsDevotees')
     },
     {
-      icon: <CalendarCheck size={22} color="#7A121D" />,
+      icon: <CalendarCheck size={20} color="#7A121D" />,
       number: settings?.annualEventsCount || '२४+',
       label: t('about.statsEvents')
     },
     {
-      icon: <ShieldCheck size={22} color="#2D6A4F" />,
+      icon: <ShieldCheck size={20} color="#2D6A4F" />,
       number: settings?.communityProjectsCount || '१००% पारदर्शी',
       label: t('about.statsTransparency')
     }
@@ -43,16 +43,16 @@ const AboutSection = ({ settings }) => {
       <div className="container">
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '3.5rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: 'clamp(2rem, 4vw, 3.5rem)',
           alignItems: 'center'
         }}>
           {/* Left Side: Real Temple Photograph with Elevation Frame */}
           <div>
             <div style={{
               position: 'relative',
-              borderRadius: '24px',
-              padding: '8px',
+              borderRadius: '20px',
+              padding: '6px',
               background: 'linear-gradient(135deg, #C59B27 0%, rgba(122, 18, 29, 0.2) 100%)',
               boxShadow: '0 14px 36px rgba(43, 30, 22, 0.12)'
             }}>
@@ -62,9 +62,9 @@ const AboutSection = ({ settings }) => {
                 style={{
                   width: '100%',
                   height: 'auto',
-                  maxHeight: '440px',
+                  maxHeight: '420px',
                   objectFit: 'cover',
-                  borderRadius: '18px',
+                  borderRadius: '16px',
                   display: 'block'
                 }}
               />
@@ -72,14 +72,14 @@ const AboutSection = ({ settings }) => {
               {/* Floating Real Temple Badge */}
               <div style={{
                 position: 'absolute',
-                top: '-14px',
-                left: '24px',
+                top: '-12px',
+                left: '16px',
                 backgroundColor: 'var(--color-primary)',
                 color: '#FFFFFF',
-                padding: '6px 16px',
+                padding: '4px 12px',
                 borderRadius: 'var(--border-radius-full)',
                 fontFamily: 'var(--font-heading)',
-                fontSize: '0.85rem',
+                fontSize: '0.8rem',
                 fontWeight: '700',
                 boxShadow: '0 4px 12px rgba(122, 18, 29, 0.3)',
                 border: '1px solid var(--color-gold)'
@@ -90,22 +90,24 @@ const AboutSection = ({ settings }) => {
               {/* Bottom Caption Pill */}
               <div style={{
                 position: 'absolute',
-                bottom: '18px',
-                left: '18px',
-                right: '18px',
+                bottom: '12px',
+                left: '12px',
+                right: '12px',
                 backgroundColor: 'rgba(250, 247, 242, 0.95)',
                 backdropFilter: 'blur(6px)',
-                padding: '10px 14px',
-                borderRadius: '12px',
+                WebkitBackdropFilter: 'blur(6px)',
+                padding: '8px 12px',
+                borderRadius: '10px',
                 border: '1px solid var(--border-gold)',
-                fontSize: '0.82rem',
+                fontSize: '0.78rem',
                 color: 'var(--text-brown)',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                gap: '4px'
               }}>
-                <span>📍 छापकी (सप्तरी), नेपाल • शिखर शैली</span>
-                <span style={{ color: '#2D6A4F', fontWeight: 'bold' }}>✓ प्रमाणित तीर्थ</span>
+                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>📍 छापकी (सप्तरी) • शिखर शैली</span>
+                <span style={{ color: '#2D6A4F', fontWeight: 'bold', flexShrink: 0 }}>✓ प्रमाणित तीर्थ</span>
               </div>
             </div>
           </div>
@@ -117,15 +119,15 @@ const AboutSection = ({ settings }) => {
               <span>{t('about.eyebrow')}</span>
             </div>
 
-            <h2 className="section-title" style={{ textAlign: 'left', marginBottom: '1.25rem' }}>
+            <h2 className="section-title" style={{ textAlign: 'left', marginBottom: '1rem' }}>
               {aboutTitle}
             </h2>
 
             <p style={{
-              fontSize: '1.05rem',
+              fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
               lineHeight: 1.8,
               color: 'var(--text-brown)',
-              marginBottom: '1.5rem'
+              marginBottom: '1.25rem'
             }}>
               {aboutDesc}
             </p>
@@ -133,17 +135,17 @@ const AboutSection = ({ settings }) => {
             <div style={{
               backgroundColor: '#FFFFFF',
               borderLeft: '4px solid var(--color-gold)',
-              padding: '1.15rem 1.4rem',
+              padding: '1rem 1.25rem',
               borderRadius: '0 12px 12px 0',
-              marginBottom: '2rem',
+              marginBottom: '1.75rem',
               boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
             }}>
               <div style={{
                 fontFamily: 'var(--font-heading)',
                 fontWeight: '700',
-                fontSize: '0.98rem',
+                fontSize: '0.95rem',
                 color: 'var(--color-primary)',
-                marginBottom: '0.35rem',
+                marginBottom: '0.3rem',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.5rem'
@@ -151,7 +153,7 @@ const AboutSection = ({ settings }) => {
                 <HeartHandshake size={18} color="#D9531E" />
                 <span>{t('about.missionTitle')}</span>
               </div>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+              <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6, margin: 0 }}>
                 {t('about.missionDesc')}
               </p>
             </div>
@@ -159,8 +161,8 @@ const AboutSection = ({ settings }) => {
             {/* Statistics Counters */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: '1rem'
+              gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
+              gap: '0.75rem'
             }}>
               {stats.map((st, index) => (
                 <div
@@ -168,38 +170,45 @@ const AboutSection = ({ settings }) => {
                   style={{
                     backgroundColor: 'var(--bg-cream-alt)',
                     borderRadius: 'var(--border-radius-md)',
-                    padding: '0.9rem 1.1rem',
+                    padding: '0.75rem 0.85rem',
                     border: '1px solid var(--border-gold)',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.75rem'
+                    gap: '0.65rem'
                   }}
                 >
                   <div style={{
                     backgroundColor: '#FFFFFF',
-                    padding: '8px',
-                    borderRadius: '10px',
+                    padding: '6px',
+                    borderRadius: '8px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: '0 2px 6px rgba(0,0,0,0.04)'
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.04)',
+                    flexShrink: 0
                   }}>
                     {st.icon}
                   </div>
-                  <div>
+                  <div style={{ minWidth: 0 }}>
                     <div style={{
                       fontFamily: 'var(--font-heading)',
-                      fontSize: '1.2rem',
+                      fontSize: '1.05rem',
                       fontWeight: '800',
                       color: 'var(--color-primary-dark)',
-                      lineHeight: 1.1
+                      lineHeight: 1.1,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
                     }}>
                       {st.number}
                     </div>
                     <div style={{
-                      fontSize: '0.78rem',
+                      fontSize: '0.72rem',
                       color: 'var(--text-muted)',
-                      fontWeight: '600'
+                      fontWeight: '600',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
                     }}>
                       {st.label}
                     </div>

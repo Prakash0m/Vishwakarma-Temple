@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { Clock, Tag, Sparkles, Send } from 'lucide-react';
+import { Clock, Sparkles, Send } from 'lucide-react';
 
 const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
   const { language, t, getLocalized } = useLanguage();
@@ -24,8 +24,8 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
         {/* Pooja Cards Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '2rem'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1.5rem'
         }}>
           {poojas && poojas.length > 0 ? (
             poojas.map((item) => {
@@ -46,7 +46,7 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                   }}
                 >
                   {/* Card Image Banner */}
-                  <div style={{ position: 'relative', height: '210px', overflow: 'hidden' }}>
+                  <div style={{ position: 'relative', height: '190px', overflow: 'hidden' }}>
                     <img
                       src={image}
                       alt={title}
@@ -63,14 +63,14 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                     {/* Price Tag Badge */}
                     <div style={{
                       position: 'absolute',
-                      top: '14px',
-                      right: '14px',
+                      top: '12px',
+                      right: '12px',
                       backgroundColor: 'var(--color-primary)',
                       color: '#FFFFFF',
-                      padding: '5px 12px',
+                      padding: '4px 10px',
                       borderRadius: 'var(--border-radius-full)',
                       fontFamily: 'var(--font-heading)',
-                      fontSize: '0.95rem',
+                      fontSize: '0.88rem',
                       fontWeight: '700',
                       boxShadow: '0 4px 10px rgba(0,0,0,0.25)',
                       border: '1px solid var(--color-gold)',
@@ -85,13 +85,13 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                     {item.featured && (
                       <div style={{
                         position: 'absolute',
-                        top: '14px',
-                        left: '14px',
+                        top: '12px',
+                        left: '12px',
                         backgroundColor: '#FFB703',
                         color: '#1F1510',
                         padding: '4px 10px',
                         borderRadius: 'var(--border-radius-full)',
-                        fontSize: '0.75rem',
+                        fontSize: '0.72rem',
                         fontWeight: '700',
                         display: 'flex',
                         alignItems: 'center',
@@ -104,34 +104,34 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                   </div>
 
                   {/* Card Content Body */}
-                  <div style={{ padding: '1.4rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                  <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.5rem',
-                      fontSize: '0.82rem',
+                      gap: '0.4rem',
+                      fontSize: '0.8rem',
                       color: 'var(--color-saffron)',
                       fontWeight: '600',
-                      marginBottom: '0.5rem'
+                      marginBottom: '0.4rem'
                     }}>
-                      <Clock size={14} />
+                      <Clock size={13} />
                       <span>{t('pooja.durationLabel')} {duration}</span>
                     </div>
 
                     <h3 style={{
-                      fontSize: '1.25rem',
+                      fontSize: '1.18rem',
                       color: 'var(--color-primary-dark)',
-                      marginBottom: '0.75rem',
-                      lineHeight: 1.3
+                      marginBottom: '0.5rem',
+                      lineHeight: 1.25
                     }}>
                       {title}
                     </h3>
 
                     <p style={{
-                      fontSize: '0.92rem',
+                      fontSize: '0.88rem',
                       color: 'var(--text-muted)',
-                      lineHeight: 1.6,
-                      marginBottom: '1.5rem',
+                      lineHeight: 1.55,
+                      marginBottom: '1.25rem',
                       flex: 1
                     }}>
                       {description}
@@ -146,7 +146,8 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                         backgroundColor: '#FFFFFF',
                         borderColor: 'var(--color-primary)',
                         gap: '0.5rem',
-                        fontWeight: '600'
+                        fontWeight: '600',
+                        minHeight: '44px'
                       }}
                     >
                       <Send size={15} />

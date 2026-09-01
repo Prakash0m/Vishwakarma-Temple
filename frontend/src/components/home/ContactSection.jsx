@@ -73,63 +73,66 @@ const ContactSection = ({ settings }) => {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '2.5rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1.75rem',
           alignItems: 'start'
         }}>
           {/* Left: Contact Info Cards */}
           <div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <div className="temple-card" style={{ padding: '1.25rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div className="temple-card" style={{ padding: '1rem', display: 'flex', gap: '0.85rem', alignItems: 'center' }}>
                 <div style={{
                   backgroundColor: 'var(--color-primary-subtle)',
-                  padding: '12px',
-                  borderRadius: '12px'
+                  padding: '10px',
+                  borderRadius: '10px',
+                  flexShrink: 0
                 }}>
-                  <Phone size={22} color="#7A121D" />
+                  <Phone size={20} color="#7A121D" />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>सम्पर्क टेलिफोन</div>
-                  <strong style={{ fontSize: '1rem', color: 'var(--color-primary-dark)' }}>{phone}</strong>
-                  <div style={{ fontSize: '0.82rem', color: 'var(--text-brown)' }}>{secondaryPhone}</div>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>सम्पर्क टेलिफोन</div>
+                  <a href={`tel:${phone}`} style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--color-primary-dark)', display: 'block' }}>{phone}</a>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-brown)' }}>{secondaryPhone}</div>
                 </div>
               </div>
 
-              <div className="temple-card" style={{ padding: '1.25rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+              <div className="temple-card" style={{ padding: '1rem', display: 'flex', gap: '0.85rem', alignItems: 'center' }}>
                 <div style={{
                   backgroundColor: 'var(--color-saffron-subtle)',
-                  padding: '12px',
-                  borderRadius: '12px'
+                  padding: '10px',
+                  borderRadius: '10px',
+                  flexShrink: 0
                 }}>
-                  <Mail size={22} color="#D9531E" />
+                  <Mail size={20} color="#D9531E" />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>इमेल ठेगाना</div>
-                  <strong style={{ fontSize: '0.98rem', color: 'var(--color-primary-dark)' }}>{email}</strong>
-                  <div style={{ fontSize: '0.82rem', color: 'var(--text-brown)' }}>२४ घण्टा भित्र जवाफ</div>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>इमेल ठेगाना</div>
+                  <a href={`mailto:${email}`} style={{ fontSize: '0.92rem', fontWeight: '700', color: 'var(--color-primary-dark)', display: 'block', wordBreak: 'break-all' }}>{email}</a>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-brown)' }}>२४ घण्टा भित्र जवाफ</div>
                 </div>
               </div>
 
-              <div className="temple-card" style={{ padding: '1.25rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+              <div className="temple-card" style={{ padding: '1rem', display: 'flex', gap: '0.85rem', alignItems: 'center' }}>
                 <div style={{
                   backgroundColor: 'var(--color-green-subtle)',
-                  padding: '12px',
-                  borderRadius: '12px'
+                  padding: '10px',
+                  borderRadius: '10px',
+                  flexShrink: 0
                 }}>
-                  <MapPin size={22} color="#2D6A4F" />
+                  <MapPin size={20} color="#2D6A4F" />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>मन्दिर अवस्थिति</div>
-                  <strong style={{ fontSize: '0.98rem', color: 'var(--color-primary-dark)' }}>{address}</strong>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>मन्दिर अवस्थिति</div>
+                  <strong style={{ fontSize: '0.9rem', color: 'var(--color-primary-dark)', display: 'block' }}>{address}</strong>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Right: Contact Form */}
-          <div className="temple-card" style={{ padding: '2rem' }}>
+          <div className="temple-card" style={{ padding: 'clamp(1.25rem, 3vw, 2rem)' }}>
             <form onSubmit={handleSubmit}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.85rem' }}>
                 <div className="form-group">
                   <label className="form-label">{t('locationContact.fullName')} *</label>
                   <input
@@ -185,7 +188,7 @@ const ContactSection = ({ settings }) => {
               <button
                 type="submit"
                 className="btn btn-primary"
-                style={{ width: '100%', gap: '0.5rem' }}
+                style={{ width: '100%', gap: '0.5rem', minHeight: '46px' }}
                 disabled={loading}
               >
                 <Send size={16} />

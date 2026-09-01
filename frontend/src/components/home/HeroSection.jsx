@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { Heart, Sparkles, Video, ArrowDown, ChevronRight } from 'lucide-react';
+import { Heart, Sparkles, Video, ChevronRight } from 'lucide-react';
 
 const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
   const { language, t } = useLanguage();
@@ -24,27 +24,22 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const scrollToServices = () => {
-    const el = document.getElementById('pooja');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <section id="hero" style={{
       position: 'relative',
-      paddingTop: '3.5rem',
-      paddingBottom: '4.5rem',
+      paddingTop: 'clamp(2rem, 5vw, 3.5rem)',
+      paddingBottom: 'clamp(2.5rem, 6vw, 4.5rem)',
       background: 'linear-gradient(180deg, #FAF7F2 0%, #F5EFE6 100%)',
       borderBottom: '1px solid var(--border-gold)',
       overflow: 'hidden'
     }}>
-      {/* Subtle Background Mandala / Glow Texture */}
+      {/* Subtle Background Glow */}
       <div style={{
         position: 'absolute',
         top: '-10%',
         right: '-5%',
-        width: '550px',
-        height: '550px',
+        width: 'clamp(300px, 40vw, 550px)',
+        height: 'clamp(300px, 40vw, 550px)',
         borderRadius: '50%',
         background: 'radial-gradient(circle, rgba(217, 83, 30, 0.08) 0%, rgba(197, 155, 39, 0.05) 45%, transparent 70%)',
         pointerEvents: 'none',
@@ -54,9 +49,9 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           alignItems: 'center',
-          gap: '3rem'
+          gap: 'clamp(1.75rem, 4vw, 3rem)'
         }}>
           {/* Left Hero Content */}
           <div>
@@ -64,21 +59,21 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
             <div style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.6rem',
+              gap: '0.5rem',
               backgroundColor: '#FDF3E7',
               border: '1px solid rgba(217, 83, 30, 0.3)',
               borderRadius: 'var(--border-radius-full)',
-              padding: '0.4rem 1.1rem',
-              marginBottom: '1.25rem',
+              padding: '0.35rem 0.95rem',
+              marginBottom: '1rem',
               boxShadow: '0 2px 8px rgba(217, 83, 30, 0.08)'
             }}>
-              <span className="diya-flame" style={{ fontSize: '1.1rem' }}>🪔</span>
+              <span className="diya-flame" style={{ fontSize: '1rem' }}>🪔</span>
               <span style={{
                 fontFamily: 'var(--font-heading)',
-                fontSize: '0.92rem',
+                fontSize: 'clamp(0.8rem, 2vw, 0.92rem)',
                 fontWeight: '700',
                 color: 'var(--color-saffron-dark)',
-                letterSpacing: '0.5px'
+                letterSpacing: '0.4px'
               }}>
                 {heroEyebrow}
               </span>
@@ -86,11 +81,11 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
 
             {/* Main Heading */}
             <h1 style={{
-              fontSize: 'clamp(2rem, 4vw, 3.2rem)',
+              fontSize: 'clamp(1.75rem, 4.5vw, 3.2rem)',
               fontFamily: 'var(--font-heading)',
               color: 'var(--color-primary)',
               lineHeight: 1.2,
-              marginBottom: '1.25rem',
+              marginBottom: '1rem',
               fontWeight: '800'
             }}>
               {heroTitle}
@@ -98,20 +93,25 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
 
             {/* Subtitle Description */}
             <p style={{
-              fontSize: '1.1rem',
+              fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
               lineHeight: 1.7,
               color: 'var(--text-brown)',
-              marginBottom: '2rem',
+              marginBottom: '1.75rem',
               maxWidth: '560px'
             }}>
               {heroSubtitle}
             </p>
 
             {/* Action Buttons */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
+            <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '0.75rem',
+              alignItems: 'center'
+            }}>
               <button
                 onClick={scrollToAbout}
-                className="btn btn-lg btn-primary"
+                className="btn btn-lg btn-primary btn-mobile-full"
                 style={{
                   boxShadow: '0 6px 18px rgba(122, 18, 29, 0.3)'
                 }}
@@ -122,7 +122,7 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
 
               <button
                 onClick={onOpenDonationModal}
-                className="btn btn-lg btn-green"
+                className="btn btn-lg btn-green btn-mobile-full"
                 style={{
                   boxShadow: '0 6px 18px rgba(45, 106, 79, 0.3)'
                 }}
@@ -136,7 +136,7 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
                   href={meetingData.virtualMeeting.meetingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-lg btn-outline-gold"
+                  className="btn btn-lg btn-outline-gold btn-mobile-full"
                   style={{
                     backgroundColor: '#FFFFFF',
                     color: '#9A7718'
@@ -151,12 +151,13 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
             {/* Quick Micro Trust Indicators */}
             <div style={{
               display: 'flex',
+              flexWrap: 'wrap',
               alignItems: 'center',
-              gap: '1.5rem',
-              marginTop: '2.5rem',
-              paddingTop: '1.5rem',
+              gap: 'clamp(0.75rem, 2vw, 1.5rem)',
+              marginTop: '1.75rem',
+              paddingTop: '1.25rem',
               borderTop: '1px solid var(--border-subtle)',
-              fontSize: '0.88rem',
+              fontSize: 'clamp(0.8rem, 2vw, 0.88rem)',
               color: 'var(--text-muted)'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
@@ -175,21 +176,21 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
           </div>
 
           {/* Right Hero: Real Vishwakarma Bhagwan Deity Presentation */}
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <div className="deity-halo-container" style={{ width: '100%', maxWidth: '440px' }}>
               {/* Outer Traditional Golden Border Frame */}
               <div style={{
                 position: 'relative',
                 zIndex: 1,
-                padding: '10px',
-                borderRadius: '28px',
+                padding: '8px',
+                borderRadius: '24px',
                 background: 'linear-gradient(135deg, #DFB847 0%, #C59B27 40%, #7A121D 100%)',
                 boxShadow: '0 16px 40px rgba(43, 30, 22, 0.18)'
               }}>
                 <div style={{
                   backgroundColor: '#FAF7F2',
-                  borderRadius: '22px',
-                  padding: '6px',
+                  borderRadius: '18px',
+                  padding: '5px',
                   position: 'relative',
                   overflow: 'hidden'
                 }}>
@@ -200,42 +201,42 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
                     style={{
                       width: '100%',
                       height: 'auto',
-                      maxHeight: '480px',
+                      maxHeight: '460px',
                       objectFit: 'cover',
-                      borderRadius: '18px',
+                      borderRadius: '14px',
                       display: 'block',
                       transition: 'transform 0.4s ease'
                     }}
-                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
-                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                   />
 
                   {/* Respectful Deity Caption Ribbon */}
                   <div style={{
                     position: 'absolute',
-                    bottom: '14px',
-                    left: '14px',
-                    right: '14px',
-                    backgroundColor: 'rgba(88, 11, 20, 0.92)',
+                    bottom: '10px',
+                    left: '10px',
+                    right: '10px',
+                    backgroundColor: 'rgba(88, 11, 20, 0.94)',
                     backdropFilter: 'blur(6px)',
+                    WebkitBackdropFilter: 'blur(6px)',
                     color: '#F4EFE6',
-                    padding: '8px 14px',
-                    borderRadius: '12px',
+                    padding: '8px 12px',
+                    borderRadius: '10px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
+                    gap: '6px',
                     border: '1px solid rgba(197, 155, 39, 0.4)',
                     boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
                   }}>
-                    <div>
-                      <div style={{ fontFamily: 'var(--font-heading)', fontSize: '0.92rem', fontWeight: '700', color: '#FFD166' }}>
+                    <div style={{ minWidth: 0, overflow: 'hidden' }}>
+                      <div style={{ fontFamily: 'var(--font-heading)', fontSize: '0.88rem', fontWeight: '700', color: '#FFD166', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                         श्री विश्वकर्मा भगवान
                       </div>
-                      <div style={{ fontSize: '0.75rem', opacity: 0.9 }}>
+                      <div style={{ fontSize: '0.72rem', opacity: 0.9, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                         गर्भगृह दिव्य विग्रह दर्शन • छापकी, सप्तरी
                       </div>
                     </div>
-                    <span className="diya-flame" style={{ fontSize: '1.2rem' }}>🪔</span>
+                    <span className="diya-flame" style={{ fontSize: '1.1rem', flexShrink: 0 }}>🪔</span>
                   </div>
                 </div>
               </div>

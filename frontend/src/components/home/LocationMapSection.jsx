@@ -43,13 +43,11 @@ const LocationMapSection = ({ settings }) => {
           </div>
         </div>
 
-        {/* View Mode Switcher Pill Tabs */}
-        <div style={{
-          display: 'flex',
+        {/* View Mode Switcher Pill Tabs with App-like Chip Scroll */}
+        <div className="chip-scroll-container" style={{
           justifyContent: 'center',
-          gap: '0.75rem',
-          marginBottom: '1.75rem',
-          flexWrap: 'wrap'
+          marginBottom: '1.5rem',
+          padding: '4px 2px 10px 2px'
         }}>
           <button
             type="button"
@@ -57,21 +55,24 @@ const LocationMapSection = ({ settings }) => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.5rem',
-              padding: '8px 20px',
+              gap: '0.45rem',
+              padding: '6px 16px',
+              minHeight: '38px',
               borderRadius: '30px',
               border: viewMode === 'streetview' ? '2px solid var(--color-gold)' : '1px solid var(--border-subtle)',
               backgroundColor: viewMode === 'streetview' ? 'var(--color-primary)' : '#FFFFFF',
               color: viewMode === 'streetview' ? '#FFFFFF' : 'var(--text-brown)',
               fontWeight: '700',
-              fontSize: '0.9rem',
+              fontSize: '0.84rem',
               cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
               boxShadow: viewMode === 'streetview' ? '0 6px 16px rgba(122, 18, 29, 0.25)' : 'none',
               transition: 'all 0.25s ease'
             }}
           >
-            <Eye size={16} color={viewMode === 'streetview' ? '#FFD166' : 'var(--color-saffron)'} />
-            <span>{language === 'ne' ? 'स्ट्रीट भ्यू ३६०° (Street View)' : 'Street View Visual 360°'}</span>
+            <Eye size={15} color={viewMode === 'streetview' ? '#FFD166' : 'var(--color-saffron)'} />
+            <span>{language === 'ne' ? 'स्ट्रीट भ्यू ३६०°' : 'Street View 360°'}</span>
           </button>
 
           <button
@@ -80,21 +81,24 @@ const LocationMapSection = ({ settings }) => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.5rem',
-              padding: '8px 20px',
+              gap: '0.45rem',
+              padding: '6px 16px',
+              minHeight: '38px',
               borderRadius: '30px',
               border: viewMode === 'satellite' ? '2px solid var(--color-gold)' : '1px solid var(--border-subtle)',
               backgroundColor: viewMode === 'satellite' ? 'var(--color-primary)' : '#FFFFFF',
               color: viewMode === 'satellite' ? '#FFFFFF' : 'var(--text-brown)',
               fontWeight: '700',
-              fontSize: '0.9rem',
+              fontSize: '0.84rem',
               cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
               boxShadow: viewMode === 'satellite' ? '0 6px 16px rgba(122, 18, 29, 0.25)' : 'none',
               transition: 'all 0.25s ease'
             }}
           >
-            <Globe size={16} color={viewMode === 'satellite' ? '#FFD166' : '#2D6A4F'} />
-            <span>{language === 'ne' ? 'स्याटेलाइट दृश्य (Satellite 3D)' : 'Satellite 3D Visual'}</span>
+            <Globe size={15} color={viewMode === 'satellite' ? '#FFD166' : '#2D6A4F'} />
+            <span>{language === 'ne' ? 'स्याटेलाइट ३D' : 'Satellite 3D'}</span>
           </button>
 
           <button
@@ -103,34 +107,37 @@ const LocationMapSection = ({ settings }) => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.5rem',
-              padding: '8px 20px',
+              gap: '0.45rem',
+              padding: '6px 16px',
+              minHeight: '38px',
               borderRadius: '30px',
               border: viewMode === 'map' ? '2px solid var(--color-gold)' : '1px solid var(--border-subtle)',
               backgroundColor: viewMode === 'map' ? 'var(--color-primary)' : '#FFFFFF',
               color: viewMode === 'map' ? '#FFFFFF' : 'var(--text-brown)',
               fontWeight: '700',
-              fontSize: '0.9rem',
+              fontSize: '0.84rem',
               cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
               boxShadow: viewMode === 'map' ? '0 6px 16px rgba(122, 18, 29, 0.25)' : 'none',
               transition: 'all 0.25s ease'
             }}
           >
-            <Layers size={16} color={viewMode === 'map' ? '#FFD166' : 'var(--color-primary)'} />
-            <span>{language === 'ne' ? 'मानचित्र (Roadmap)' : 'Standard Roadmap'}</span>
+            <Layers size={15} color={viewMode === 'map' ? '#FFD166' : 'var(--color-primary)'} />
+            <span>{language === 'ne' ? 'मानचित्र (Map)' : 'Roadmap'}</span>
           </button>
         </div>
 
         {/* Map & Direction Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '2rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1.75rem',
           alignItems: 'stretch'
         }}>
           {/* Left: Map Frame with Street View Visual Header */}
           <div style={{
-            borderRadius: '20px',
+            borderRadius: '16px',
             overflow: 'hidden',
             border: '2px solid var(--border-gold)',
             boxShadow: '0 12px 32px rgba(43, 30, 22, 0.15)',
@@ -138,47 +145,49 @@ const LocationMapSection = ({ settings }) => {
             display: 'flex',
             flexDirection: 'column',
             position: 'relative',
-            minHeight: '440px'
+            minHeight: 'clamp(320px, 45vh, 420px)'
           }}>
             {/* Top Interactive Banner */}
             <div style={{
               backgroundColor: 'rgba(26, 26, 26, 0.95)',
               color: '#F4EFE6',
-              padding: '10px 16px',
+              padding: '8px 12px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
               borderBottom: '1px solid rgba(197, 155, 39, 0.3)',
-              fontSize: '0.85rem',
-              zIndex: 2
+              fontSize: '0.8rem',
+              zIndex: 2,
+              gap: '6px'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, overflow: 'hidden' }}>
                 <span style={{
                   display: 'inline-block',
-                  width: '10px',
-                  height: '10px',
+                  width: '8px',
+                  height: '8px',
                   borderRadius: '50%',
                   backgroundColor: '#22C55E',
-                  boxShadow: '0 0 8px #22C55E'
+                  boxShadow: '0 0 8px #22C55E',
+                  flexShrink: 0
                 }} />
-                <strong>
+                <strong style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {viewMode === 'streetview' 
-                    ? (language === 'ne' ? 'इन्टर्याक्टिभ स्ट्रीट भ्यू • छापकी, सप्तरी' : 'Interactive Street View • Chhapki, Saptari')
+                    ? (language === 'ne' ? 'स्ट्रीट भ्यू • छापकी, सप्तरी' : 'Street View • Chhapki, Saptari')
                     : viewMode === 'satellite'
-                      ? (language === 'ne' ? 'स्याटेलाइट त्रि-आयामिक दृश्य • छापकी' : 'Satellite 3D Surface • Chhapki')
-                      : (language === 'ne' ? 'गुगल नेभिगेसन मानचित्र' : 'Google Navigation Map')}
+                      ? (language === 'ne' ? 'स्याटेलाइट • छापकी' : 'Satellite 3D • Chhapki')
+                      : (language === 'ne' ? 'गुगल म्याप' : 'Google Map')}
                 </strong>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ fontSize: '0.78rem', color: '#FFD166', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <Compass size={14} /> 26.6052° N, 86.8144° E
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+                <span style={{ fontSize: '0.72rem', color: '#FFD166', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                  <Compass size={12} /> 26.6052°N
                 </span>
               </div>
             </div>
 
             {/* Embed Frame */}
-            <div style={{ flex: 1, position: 'relative', minHeight: '380px' }}>
+            <div style={{ flex: 1, position: 'relative', minHeight: '260px' }}>
               <iframe
                 title="Vishwakarma Temple Chhapki Saptari Street View Map"
                 src={currentEmbedUrl}
@@ -201,15 +210,18 @@ const LocationMapSection = ({ settings }) => {
             {/* Quick Action Bar on Bottom */}
             <div style={{
               backgroundColor: 'rgba(26, 26, 26, 0.95)',
-              padding: '10px 16px',
+              padding: '8px 12px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
               borderTop: '1px solid rgba(197, 155, 39, 0.3)',
-              fontSize: '0.82rem',
-              color: '#F4EFE6'
+              fontSize: '0.78rem',
+              color: '#F4EFE6',
+              gap: '6px'
             }}>
-              <span>{language === 'ne' ? 'छापकी (वडा नं. ५), सप्तरी' : 'Chhapki (Ward-5), Saptari, Nepal'}</span>
+              <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {language === 'ne' ? 'छापकी-५, सप्तरी' : 'Chhapki-5, Saptari'}
+              </span>
               <a
                 href={streetViewDirectUrl}
                 target="_blank"
@@ -219,24 +231,25 @@ const LocationMapSection = ({ settings }) => {
                   textDecoration: 'none',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '4px',
-                  fontWeight: '600'
+                  gap: '3px',
+                  fontWeight: '600',
+                  flexShrink: 0
                 }}
               >
-                <span>{language === 'ne' ? 'पूर्ण ३६०° दृश्य खोल्नुहोस्' : 'Open Full 360° View'}</span>
-                <ExternalLink size={13} />
+                <span>{language === 'ne' ? 'पूर्ण ३६०°' : 'Full 360°'}</span>
+                <ExternalLink size={12} />
               </a>
             </div>
           </div>
 
           {/* Right: Visitor Directions, Settlement Highlight & Timings Card */}
-          <div className="temple-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div className="temple-card" style={{ padding: 'clamp(1.25rem, 3vw, 1.75rem)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1.25rem' }}>
-                <Navigation size={24} color="#7A121D" />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1rem' }}>
+                <Navigation size={22} color="#7A121D" />
                 <h3 style={{
                   fontFamily: 'var(--font-heading)',
-                  fontSize: '1.3rem',
+                  fontSize: '1.25rem',
                   color: 'var(--color-primary-dark)'
                 }}>
                   {language === 'ne' ? 'मन्दिर दर्शन तथा दिशानिर्देश' : 'Temple Darshan & Directions'}
@@ -246,53 +259,53 @@ const LocationMapSection = ({ settings }) => {
               {/* Settlement Highlight Box */}
               <div style={{
                 backgroundColor: 'rgba(217, 83, 30, 0.08)',
-                border: '2px solid var(--color-gold)',
+                border: '1.5px solid var(--color-gold)',
                 borderRadius: '12px',
-                padding: '1rem',
-                marginBottom: '1.25rem'
+                padding: '0.85rem',
+                marginBottom: '1rem'
               }}>
                 <div style={{
                   display: 'inline-block',
                   backgroundColor: 'var(--color-primary)',
                   color: '#FFFFFF',
-                  padding: '3px 10px',
-                  borderRadius: '12px',
-                  fontSize: '0.75rem',
+                  padding: '2px 8px',
+                  borderRadius: '10px',
+                  fontSize: '0.72rem',
                   fontWeight: '700',
-                  marginBottom: '6px'
+                  marginBottom: '4px'
                 }}>
                   ✨ {language === 'ne' ? 'विशेष अवस्थिति' : 'Key Settlement'}
                 </div>
                 <h4 style={{
                   fontFamily: 'var(--font-heading)',
-                  fontSize: '1.05rem',
+                  fontSize: '0.98rem',
                   color: 'var(--color-primary)',
-                  marginBottom: '4px'
+                  marginBottom: '2px'
                 }}>
                   {language === 'ne' ? 'छापकी (Chhapki) - वडा नं. ५' : 'Chhapki Settlement - Ward No. 5'}
                 </h4>
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-brown)', lineHeight: 1.5, margin: 0 }}>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-brown)', lineHeight: 1.45, margin: 0 }}>
                   {language === 'ne'
                     ? 'अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला (मधेश प्रदेश, नेपाल)।'
                     : 'Agnisair Krishnasavaran Rural Municipality, Saptari District (Madhesh Province, Nepal).'}
                 </p>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.25rem' }}>
                 <div style={{
                   display: 'flex',
-                  gap: '0.75rem',
+                  gap: '0.65rem',
                   backgroundColor: 'var(--bg-cream)',
-                  padding: '0.9rem',
+                  padding: '0.75rem',
                   borderRadius: '10px',
                   border: '1px solid var(--border-subtle)'
                 }}>
-                  <MapPin size={20} color="#D9531E" style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <MapPin size={18} color="#D9531E" style={{ flexShrink: 0, marginTop: '2px' }} />
                   <div>
-                    <strong style={{ fontSize: '0.9rem', color: 'var(--color-primary-dark)' }}>
+                    <strong style={{ fontSize: '0.85rem', color: 'var(--color-primary-dark)' }}>
                       {language === 'ne' ? 'पूरा ठेगाना:' : 'Full Address:'}
                     </strong>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '2px 0 0 0' }}>
+                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '2px 0 0 0' }}>
                       {templeAddress}
                     </p>
                   </div>
@@ -300,19 +313,19 @@ const LocationMapSection = ({ settings }) => {
 
                 <div style={{
                   display: 'flex',
-                  gap: '0.75rem',
+                  gap: '0.65rem',
                   backgroundColor: 'var(--bg-cream)',
-                  padding: '0.9rem',
+                  padding: '0.75rem',
                   borderRadius: '10px',
                   border: '1px solid var(--border-subtle)'
                 }}>
-                  <Clock size={20} color="#2D6A4F" style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <Clock size={18} color="#2D6A4F" style={{ flexShrink: 0, marginTop: '2px' }} />
                   <div>
-                    <strong style={{ fontSize: '0.9rem', color: 'var(--color-primary-dark)' }}>
+                    <strong style={{ fontSize: '0.85rem', color: 'var(--color-primary-dark)' }}>
                       {language === 'ne' ? 'दैनिक दर्शन समय:' : 'Darshan Hours:'}
                     </strong>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '2px 0 0 0' }}>
-                      {language === 'ne' ? 'दैनिक बिहान ६:०० देखि साँझ ७:०० सम्म खुला रहनेछ।' : 'Open daily from 6:00 AM to 7:00 PM.'}
+                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '2px 0 0 0' }}>
+                      {language === 'ne' ? 'दैनिक बिहान ६:०० देखि साँझ ७:०० सम्म खुला।' : 'Open daily from 6:00 AM to 7:00 PM.'}
                     </p>
                   </div>
                 </div>
@@ -320,13 +333,13 @@ const LocationMapSection = ({ settings }) => {
             </div>
 
             {/* Action Buttons */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
               <a
                 href={mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary"
-                style={{ width: '100%', gap: '0.5rem', justifyContent: 'center' }}
+                style={{ width: '100%', gap: '0.4rem', justifyContent: 'center' }}
               >
                 <Navigation size={16} />
                 <span>{t('locationContact.viewGoogleMaps')}</span>
@@ -337,11 +350,11 @@ const LocationMapSection = ({ settings }) => {
                 href={streetViewDirectUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-secondary"
-                style={{ width: '100%', gap: '0.5rem', justifyContent: 'center' }}
+                className="btn btn-outline"
+                style={{ width: '100%', gap: '0.4rem', justifyContent: 'center', backgroundColor: '#FFFFFF' }}
               >
                 <Eye size={16} />
-                <span>{language === 'ne' ? 'गुगल स्ट्रीट भ्यू ३६०° खोल्नुहोस्' : 'Open in Google Street View'}</span>
+                <span>{language === 'ne' ? 'गुगल ३६०° खोल्नुहोस्' : 'Open 360° Street View'}</span>
                 <ExternalLink size={14} />
               </a>
             </div>

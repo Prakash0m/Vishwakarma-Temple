@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { Video, Radio, Calendar, Clock, ExternalLink, Sparkles, Users } from 'lucide-react';
+import { Video, Radio, Calendar, Clock, ExternalLink, Users } from 'lucide-react';
 
 const LiveDarshanMeetingSection = ({ meetingData }) => {
   const { language, t, getLocalized } = useLanguage();
@@ -44,26 +44,26 @@ const LiveDarshanMeetingSection = ({ meetingData }) => {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '2.5rem'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1.75rem'
         }}>
           {/* Card 1: Live Darshan */}
           {liveDarshan?.isActive && (
-            <div className="temple-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div className="temple-card" style={{ padding: 'clamp(1.25rem, 3vw, 1.75rem)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.5rem',
+                    gap: '0.4rem',
                     backgroundColor: 'var(--color-primary-subtle)',
                     color: 'var(--color-primary-dark)',
-                    padding: '0.35rem 0.9rem',
+                    padding: '0.3rem 0.8rem',
                     borderRadius: 'var(--border-radius-full)',
-                    fontSize: '0.82rem',
+                    fontSize: '0.78rem',
                     fontWeight: '700'
                   }}>
-                    <Radio size={15} color="#7A121D" />
+                    <Radio size={14} color="#7A121D" />
                     <span>{liveDarshan.platform || 'YouTube Live'}</span>
                   </div>
 
@@ -79,30 +79,30 @@ const LiveDarshanMeetingSection = ({ meetingData }) => {
                 </div>
 
                 <h3 style={{
-                  fontSize: '1.4rem',
+                  fontSize: '1.25rem',
                   color: 'var(--color-primary)',
-                  marginBottom: '0.75rem',
-                  lineHeight: 1.3
+                  marginBottom: '0.5rem',
+                  lineHeight: 1.25
                 }}>
                   {liveTitle}
                 </h3>
 
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.55, marginBottom: '1.25rem' }}>
                   {liveDesc}
                 </p>
 
                 {/* Sanctum Preview Thumbnail */}
                 <div style={{
                   position: 'relative',
-                  borderRadius: '14px',
+                  borderRadius: '12px',
                   overflow: 'hidden',
-                  marginBottom: '1.5rem',
+                  marginBottom: '1.25rem',
                   border: '1px solid var(--border-gold)'
                 }}>
                   <img
                     src="/assets/images/deity-sanctum.jpg"
                     alt="Live Darshan Stream Preview"
-                    style={{ width: '100%', height: '180px', objectFit: 'cover' }}
+                    style={{ width: '100%', height: '160px', objectFit: 'cover' }}
                   />
                   <div style={{
                     position: 'absolute',
@@ -113,18 +113,18 @@ const LiveDarshanMeetingSection = ({ meetingData }) => {
                     justifyContent: 'center'
                   }}>
                     <div style={{
-                      backgroundColor: 'rgba(122, 18, 29, 0.9)',
+                      backgroundColor: 'rgba(122, 18, 29, 0.92)',
                       color: '#FFFFFF',
-                      padding: '8px 16px',
+                      padding: '6px 14px',
                       borderRadius: 'var(--border-radius-full)',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '8px',
-                      fontSize: '0.88rem',
+                      gap: '6px',
+                      fontSize: '0.82rem',
                       fontWeight: '600',
                       border: '1px solid var(--color-gold)'
                     }}>
-                      <Radio size={16} />
+                      <Radio size={14} />
                       <span>गर्भगृह प्रत्यक्ष आरती दर्शन</span>
                     </div>
                   </div>
@@ -133,12 +133,12 @@ const LiveDarshanMeetingSection = ({ meetingData }) => {
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.5rem',
-                  fontSize: '0.88rem',
+                  gap: '0.4rem',
+                  fontSize: '0.84rem',
                   color: 'var(--text-brown)',
-                  marginBottom: '1.5rem'
+                  marginBottom: '1.25rem'
                 }}>
-                  <Clock size={16} color="#D9531E" />
+                  <Clock size={15} color="#D9531E" />
                   <strong>आरती समय:</strong> <span>{liveTime}</span>
                 </div>
               </div>
@@ -159,21 +159,21 @@ const LiveDarshanMeetingSection = ({ meetingData }) => {
 
           {/* Card 2: Virtual Meeting */}
           {virtualMeeting?.isActive && (
-            <div className="temple-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div className="temple-card" style={{ padding: 'clamp(1.25rem, 3vw, 1.75rem)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.5rem',
+                    gap: '0.4rem',
                     backgroundColor: 'var(--color-gold-subtle)',
                     color: 'var(--color-gold-dark)',
-                    padding: '0.35rem 0.9rem',
+                    padding: '0.3rem 0.8rem',
                     borderRadius: 'var(--border-radius-full)',
-                    fontSize: '0.82rem',
+                    fontSize: '0.78rem',
                     fontWeight: '700'
                   }}>
-                    <Video size={15} />
+                    <Video size={14} />
                     <span>{virtualMeeting.platform || 'Google Meet'}</span>
                   </div>
 
@@ -183,45 +183,45 @@ const LiveDarshanMeetingSection = ({ meetingData }) => {
                 </div>
 
                 <h3 style={{
-                  fontSize: '1.4rem',
+                  fontSize: '1.25rem',
                   color: 'var(--color-primary-dark)',
-                  marginBottom: '0.75rem',
-                  lineHeight: 1.3
+                  marginBottom: '0.5rem',
+                  lineHeight: 1.25
                 }}>
                   {meetingTitle}
                 </h3>
 
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.55, marginBottom: '1.25rem' }}>
                   {meetingDesc}
                 </p>
 
                 {/* Meeting Timing Strip */}
                 <div style={{
                   backgroundColor: 'var(--bg-cream-alt)',
-                  borderRadius: '12px',
-                  padding: '1.15rem',
+                  borderRadius: '10px',
+                  padding: '0.9rem',
                   border: '1px solid var(--border-gold)',
-                  marginBottom: '1.5rem'
+                  marginBottom: '1.25rem'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.5rem', fontSize: '0.9rem' }}>
-                    <Calendar size={16} color="#7A121D" />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem', fontSize: '0.85rem' }}>
+                    <Calendar size={15} color="#7A121D" />
                     <strong>{virtualMeeting.date || 'प्रत्येक शनिबार'}</strong>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem' }}>
-                    <Clock size={16} color="#D9531E" />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' }}>
+                    <Clock size={15} color="#D9531E" />
                     <span>{meetingTime || 'साँझ ६:०० देखि ७:०० सम्म'}</span>
                   </div>
                 </div>
 
                 <div style={{
-                  fontSize: '0.85rem',
+                  fontSize: '0.82rem',
                   color: 'var(--text-muted)',
-                  marginBottom: '1.5rem',
+                  marginBottom: '1.25rem',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.5rem'
+                  gap: '0.4rem'
                 }}>
-                  <Users size={16} color="#2D6A4F" />
+                  <Users size={15} color="#2D6A4F" />
                   <span>देश-विदेशका सम्पूर्ण भक्तजनहरू निःशुल्क सहभागी हुन सक्नुहुन्छ।</span>
                 </div>
               </div>

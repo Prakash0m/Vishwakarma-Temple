@@ -3,7 +3,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useToast } from '../../context/ToastContext';
 import api from '../../services/api';
 import confetti from 'canvas-confetti';
-import { X, Heart, CheckCircle2, ShieldCheck, QrCode } from 'lucide-react';
+import { X, Heart, CheckCircle2 } from 'lucide-react';
 
 const DonationModal = ({ isOpen, onClose, onDonationSuccess }) => {
   const { language, t } = useLanguage();
@@ -83,7 +83,8 @@ const DonationModal = ({ isOpen, onClose, onDonationSuccess }) => {
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              color: 'var(--text-muted)'
+              color: 'var(--text-muted)',
+              padding: '6px'
             }}
           >
             <X size={20} />
@@ -93,31 +94,31 @@ const DonationModal = ({ isOpen, onClose, onDonationSuccess }) => {
         {/* Modal Body */}
         <div className="modal-body">
           {submitted ? (
-            <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
+            <div style={{ textAlign: 'center', padding: '1rem 0' }}>
               <div style={{
-                width: '64px',
-                height: '64px',
+                width: '56px',
+                height: '56px',
                 borderRadius: '50%',
                 backgroundColor: 'var(--color-green-subtle)',
                 color: 'var(--color-green)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                margin: '0 auto 1.25rem auto'
+                margin: '0 auto 1rem auto'
               }}>
-                <CheckCircle2 size={36} />
+                <CheckCircle2 size={32} />
               </div>
 
               <h4 style={{
                 fontFamily: 'var(--font-heading)',
-                fontSize: '1.35rem',
+                fontSize: '1.25rem',
                 color: 'var(--color-primary-dark)',
-                marginBottom: '0.5rem'
+                marginBottom: '0.4rem'
               }}>
                 चन्दा सहयोग सफलतापूर्वक दर्ता भयो 🙏
               </h4>
 
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginBottom: '1.5rem' }}>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '1.25rem' }}>
                 {t('donation.successDonation')}
               </p>
 
@@ -125,25 +126,25 @@ const DonationModal = ({ isOpen, onClose, onDonationSuccess }) => {
                 <div style={{
                   backgroundColor: 'var(--bg-cream-alt)',
                   borderRadius: '12px',
-                  padding: '1.15rem',
+                  padding: '1rem',
                   border: '1px solid var(--border-gold)',
                   textAlign: 'left',
-                  fontSize: '0.9rem',
-                  marginBottom: '1.5rem'
+                  fontSize: '0.85rem',
+                  marginBottom: '1.25rem'
                 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                     <span style={{ color: 'var(--text-muted)' }}>रसिद नम्बर:</span>
                     <strong style={{ color: 'var(--color-primary)' }}>{receiptData.receiptNumber}</strong>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                     <span style={{ color: 'var(--text-muted)' }}>दाता:</span>
                     <strong>{receiptData.donorName}</strong>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                     <span style={{ color: 'var(--text-muted)' }}>सहयोग रकम:</span>
                     <strong style={{ color: 'var(--color-green)' }}>रु. {receiptData.amount?.toLocaleString('ne-NP')}</strong>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                     <span style={{ color: 'var(--text-muted)' }}>माध्यम:</span>
                     <span>{receiptData.paymentMethod}</span>
                   </div>
@@ -160,14 +161,14 @@ const DonationModal = ({ isOpen, onClose, onDonationSuccess }) => {
                   onClose();
                 }}
                 className="btn btn-primary"
-                style={{ width: '100%' }}
+                style={{ width: '100%', minHeight: '44px' }}
               >
                 सम्पन्न (Done)
               </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.85rem' }}>
                 <div className="form-group">
                   <label className="form-label">{t('donation.donorName')} *</label>
                   <input
@@ -196,7 +197,7 @@ const DonationModal = ({ isOpen, onClose, onDonationSuccess }) => {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.85rem' }}>
                 <div className="form-group">
                   <label className="form-label">{t('donation.donorPhone')}</label>
                   <input
@@ -222,7 +223,7 @@ const DonationModal = ({ isOpen, onClose, onDonationSuccess }) => {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.85rem' }}>
                 <div className="form-group">
                   <label className="form-label">{t('donation.paymentMethod')}</label>
                   <select

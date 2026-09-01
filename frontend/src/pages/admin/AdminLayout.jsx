@@ -10,7 +10,6 @@ import {
   AlertTriangle,
   Heart,
   Award,
-  DollarSign,
   FileCheck,
   FileText,
   Droplets,
@@ -28,13 +27,12 @@ import {
   Globe,
   Menu,
   X,
-  ExternalLink,
-  ChevronRight
+  ExternalLink
 } from 'lucide-react';
 
 const AdminLayout = () => {
   const { user, logout } = useAuth();
-  const { language, toggleLanguage, t } = useLanguage();
+  const { language, toggleLanguage } = useLanguage();
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -181,9 +179,10 @@ const AdminLayout = () => {
           style={{
             position: 'fixed',
             inset: 0,
-            backgroundColor: 'rgba(0,0,0,0.5)',
+            backgroundColor: 'rgba(0,0,0,0.6)',
             zIndex: 940,
-            display: 'none'
+            backdropFilter: 'blur(3px)',
+            WebkitBackdropFilter: 'blur(3px)'
           }}
           className="admin-backdrop"
         />
@@ -211,30 +210,33 @@ const AdminLayout = () => {
       >
         {/* Brand Header */}
         <div style={{
-          padding: '1.25rem',
+          padding: '1.15rem 1.25rem',
           borderBottom: '1px solid rgba(197, 155, 39, 0.25)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           backgroundColor: '#2E050A'
         }}>
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none' }}>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none', minWidth: 0 }}>
             <img
               src="/assets/images/temple-logo.svg"
               alt="Logo"
-              style={{ width: '38px', height: '38px', borderRadius: '50%', border: '1px solid var(--color-gold)' }}
+              style={{ width: '36px', height: '36px', borderRadius: '50%', border: '1px solid var(--color-gold)', flexShrink: 0 }}
             />
-            <div>
+            <div style={{ minWidth: 0 }}>
               <div style={{
                 fontFamily: 'var(--font-heading)',
-                fontSize: '1.05rem',
+                fontSize: '1rem',
                 fontWeight: '700',
                 color: '#FFD166',
-                lineHeight: 1.15
+                lineHeight: 1.15,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
               }}>
                 विश्वकर्मा मन्दिर
               </div>
-              <div style={{ fontSize: '0.72rem', color: 'rgba(255, 255, 255, 0.7)' }}>
+              <div style={{ fontSize: '0.72rem', color: 'rgba(255, 255, 255, 0.7)', whiteSpace: 'nowrap' }}>
                 छापकी टोल व्यवस्थापन
               </div>
             </div>
@@ -248,16 +250,19 @@ const AdminLayout = () => {
               color: '#FFFFFF',
               cursor: 'pointer',
               display: 'none',
-              padding: '4px'
+              padding: '6px',
+              minHeight: '36px',
+              minWidth: '36px'
             }}
             className="sidebar-close-btn"
+            aria-label="Close Sidebar"
           >
             <X size={20} />
           </button>
         </div>
 
         {/* Navigation Items (Grouped Categories) */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '0.85rem 0.65rem' }}>
+        <div style={{ flex: 1, overflowY: 'auto', padding: '0.85rem 0.65rem', WebkitOverflowScrolling: 'touch' }}>
           {navSections.map((section, sIdx) => (
             <div key={sIdx} style={{ marginBottom: '1.15rem' }}>
               {section.title && (
@@ -284,7 +289,8 @@ const AdminLayout = () => {
                           display: 'flex',
                           alignItems: 'center',
                           gap: '0.7rem',
-                          padding: '0.55rem 0.75rem',
+                          padding: '0.6rem 0.75rem',
+                          minHeight: '40px',
                           borderRadius: '8px',
                           color: isActive ? '#FFFFFF' : 'rgba(250, 247, 242, 0.85)',
                           backgroundColor: isActive ? 'var(--color-primary)' : 'transparent',
@@ -316,12 +322,12 @@ const AdminLayout = () => {
 
         {/* Footer User Profile & Action */}
         <div style={{
-          padding: '0.9rem 1rem',
+          padding: '0.85rem 1rem',
           borderTop: '1px solid rgba(197, 155, 39, 0.25)',
           backgroundColor: '#2E050A'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', minWidth: 0 }}>
               <div style={{
                 width: '34px',
                 height: '34px',
@@ -333,15 +339,16 @@ const AdminLayout = () => {
                 justifyContent: 'center',
                 color: '#FFD166',
                 fontWeight: '700',
-                fontSize: '0.85rem'
+                fontSize: '0.85rem',
+                flexShrink: 0
               }}>
                 {user?.fullName?.charAt(0) || 'A'}
               </div>
-              <div style={{ overflow: 'hidden' }}>
-                <div style={{ fontSize: '0.85rem', fontWeight: '600', color: '#FFF', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              <div style={{ overflow: 'hidden', minWidth: 0 }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: '600', color: '#FFF', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {user?.fullName || 'Temple Admin'}
                 </div>
-                <div style={{ fontSize: '0.7rem', color: '#FFD166' }}>
+                <div style={{ fontSize: '0.68rem', color: '#FFD166', whiteSpace: 'nowrap' }}>
                   छापकी टोल प्रशासन
                 </div>
               </div>
@@ -380,60 +387,67 @@ const AdminLayout = () => {
       }} className="admin-main-container">
         {/* Top Navbar */}
         <header style={{
-          height: '62px',
+          height: '58px',
           backgroundColor: '#FFFFFF',
           borderBottom: '1px solid #E8E2D9',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '0 1.5rem',
+          padding: '0 clamp(0.75rem, 2vw, 1.5rem)',
           position: 'sticky',
           top: 0,
           zIndex: 900,
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.03)'
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.03)',
+          gap: '0.5rem'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', minWidth: 0 }}>
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
               style={{
                 background: 'none',
                 border: '1px solid #D0C9BE',
-                borderRadius: '6px',
-                padding: '5px',
+                borderRadius: '8px',
+                padding: '6px',
+                minHeight: '38px',
+                minWidth: '38px',
                 color: '#333',
                 cursor: 'pointer',
                 display: 'none',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                flexShrink: 0
               }}
               className="sidebar-toggle-btn"
+              aria-label="Toggle Admin Menu"
             >
               <Menu size={20} />
             </button>
-            <div style={{ fontSize: '0.9rem', color: '#555', fontWeight: '600' }}>
-              श्री विश्वकर्मा मन्दिर तथा छापकी टोल विकास समिति
+            <div style={{ fontSize: '0.88rem', color: '#444', fontWeight: '700', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              <span className="desktop-admin-title">श्री विश्वकर्मा मन्दिर तथा छापकी टोल विकास समिति</span>
+              <span className="mobile-admin-title" style={{ display: 'none' }}>छापकी टोल प्रशासन</span>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
             <button
               onClick={toggleLanguage}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.4rem',
-                padding: '0.35rem 0.75rem',
-                borderRadius: '8px',
+                gap: '0.35rem',
+                padding: '0.3rem 0.65rem',
+                minHeight: '34px',
+                borderRadius: '6px',
                 border: '1px solid #D0C9BE',
                 backgroundColor: '#FAF7F2',
                 color: 'var(--color-primary-dark)',
-                fontSize: '0.85rem',
+                fontSize: '0.8rem',
                 fontWeight: '600',
                 cursor: 'pointer'
               }}
             >
-              <Globe size={14} />
-              <span>{language === 'ne' ? 'English' : 'नेपाली'}</span>
+              <Globe size={13} />
+              <span>{language === 'ne' ? 'EN' : 'नेपाली'}</span>
             </button>
 
             <Link
@@ -442,25 +456,27 @@ const AdminLayout = () => {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.4rem',
-                padding: '0.35rem 0.85rem',
-                borderRadius: '8px',
+                gap: '0.35rem',
+                padding: '0.3rem 0.75rem',
+                minHeight: '34px',
+                borderRadius: '6px',
                 backgroundColor: 'var(--color-primary-subtle)',
                 color: 'var(--color-primary)',
-                fontSize: '0.85rem',
+                fontSize: '0.8rem',
                 fontWeight: '600',
                 textDecoration: 'none',
-                border: '1px solid rgba(122, 18, 29, 0.15)'
+                border: '1px solid rgba(122, 18, 29, 0.15)',
+                whiteSpace: 'nowrap'
               }}
             >
-              <span>वेबसाइट हेर्नुहोस्</span>
-              <ExternalLink size={14} />
+              <span>वेबसाइट</span>
+              <ExternalLink size={13} />
             </Link>
           </div>
         </header>
 
         {/* Page Content Outlet */}
-        <main style={{ flex: 1 }}>
+        <main style={{ flex: 1, padding: 'clamp(0.85rem, 2vw, 1.5rem)', maxWidth: '100%', overflowX: 'hidden' }}>
           <Outlet />
         </main>
       </div>
@@ -485,6 +501,14 @@ const AdminLayout = () => {
           }
           .admin-backdrop {
             display: block !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .desktop-admin-title {
+            display: none !important;
+          }
+          .mobile-admin-title {
+            display: inline !important;
           }
         }
       `}</style>

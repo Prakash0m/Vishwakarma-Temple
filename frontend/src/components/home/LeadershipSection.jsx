@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import { useLanguage } from '../../context/LanguageContext';
-import { Award, Users, Phone, ShieldCheck, CheckCircle } from 'lucide-react';
+import { Phone, ShieldCheck } from 'lucide-react';
 
 const LeadershipSection = () => {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
   const [candidates, setCandidates] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -31,10 +31,10 @@ const LeadershipSection = () => {
   }
 
   return (
-    <section id="leadership" style={{ padding: '5rem 1.5rem', backgroundColor: '#FAF7F2', position: 'relative' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+    <section id="leadership" style={{ padding: 'clamp(2.5rem, 5vw, 4.5rem) 0', backgroundColor: '#FAF7F2', position: 'relative' }}>
+      <div className="container">
         {/* Section Header */}
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -43,26 +43,27 @@ const LeadershipSection = () => {
             backgroundColor: 'var(--color-primary-subtle)',
             borderRadius: '20px',
             color: 'var(--color-primary)',
-            fontSize: '0.85rem',
+            fontSize: '0.82rem',
             fontWeight: '700',
-            marginBottom: '0.75rem',
+            marginBottom: '0.65rem',
             border: '1px solid rgba(122, 18, 29, 0.2)'
           }}>
-            <ShieldCheck size={16} />
+            <ShieldCheck size={15} />
             <span>टोल नेतृत्व तथा कार्यसमिति</span>
           </div>
 
           <h2 style={{
             fontFamily: 'var(--font-heading)',
-            fontSize: '2.25rem',
+            fontSize: 'clamp(1.65rem, 4vw, 2.25rem)',
             color: 'var(--color-primary-dark)',
-            margin: '0 0 0.75rem 0'
+            margin: '0 0 0.5rem 0',
+            lineHeight: 1.2
           }}>
             {language === 'ne' ? 'छापकी टोल विकास समिति नेतृत्व' : 'Chhapki Tole Leadership Committee'}
           </h2>
 
           <p style={{
-            fontSize: '1.05rem',
+            fontSize: 'clamp(0.9rem, 2vw, 1.05rem)',
             color: '#666',
             maxWidth: '700px',
             margin: '0 auto',
@@ -78,7 +79,7 @@ const LeadershipSection = () => {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '1.5rem',
+          gap: '1.25rem',
           justifyContent: 'center'
         }}>
           {candidates.map((cand, idx) => (
@@ -89,32 +90,32 @@ const LeadershipSection = () => {
                 borderRadius: '16px',
                 border: '1px solid var(--border-gold)',
                 overflow: 'hidden',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
+                boxShadow: '0 4px 18px rgba(0,0,0,0.04)',
                 display: 'flex',
                 flexDirection: 'column',
                 transition: 'transform 0.25s ease, box-shadow 0.25s ease',
                 position: 'relative'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-6px)';
-                e.currentTarget.style.boxShadow = '0 12px 28px rgba(122, 18, 29, 0.12)';
+                e.currentTarget.style.transform = 'translateY(-4px)';
+                e.currentTarget.style.boxShadow = '0 10px 24px rgba(122, 18, 29, 0.12)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.04)';
+                e.currentTarget.style.boxShadow = '0 4px 18px rgba(0,0,0,0.04)';
               }}
             >
               {/* Order Number Badge */}
               <div style={{
                 position: 'absolute',
-                top: '12px',
-                left: '12px',
+                top: '10px',
+                left: '10px',
                 zIndex: 2,
-                backgroundColor: 'rgba(122, 18, 29, 0.9)',
+                backgroundColor: 'rgba(122, 18, 29, 0.92)',
                 color: '#FFD166',
-                padding: '0.2rem 0.6rem',
-                borderRadius: '20px',
-                fontSize: '0.72rem',
+                padding: '0.2rem 0.55rem',
+                borderRadius: '14px',
+                fontSize: '0.7rem',
                 fontWeight: '700',
                 backdropFilter: 'blur(4px)'
               }}>
@@ -122,7 +123,7 @@ const LeadershipSection = () => {
               </div>
 
               {/* Photo */}
-              <div style={{ width: '100%', height: '220px', backgroundColor: '#F0ECE4', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ width: '100%', height: '200px', backgroundColor: '#F0ECE4', position: 'relative', overflow: 'hidden' }}>
                 <img
                   src={cand.profileImage || '/assets/images/deity-portrait.jpg'}
                   alt={cand.fullName}
@@ -132,43 +133,55 @@ const LeadershipSection = () => {
                 <div style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'linear-gradient(to top, rgba(56, 6, 13, 0.8) 0%, transparent 60%)'
+                  background: 'linear-gradient(to top, rgba(56, 6, 13, 0.82) 0%, transparent 60%)'
                 }} />
-                <div style={{ position: 'absolute', bottom: '10px', left: '12px', right: '12px', color: '#FFF' }}>
-                  <div style={{ fontSize: '0.8rem', fontWeight: '700', color: '#FFD166', textTransform: 'uppercase' }}>
+                <div style={{ position: 'absolute', bottom: '8px', left: '10px', right: '10px', color: '#FFF' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: '700', color: '#FFD166', textTransform: 'uppercase' }}>
                     {cand.positionDevanagari || cand.position}
                   </div>
-                  <div style={{ fontSize: '1.15rem', fontWeight: '700', fontFamily: 'var(--font-heading)', lineHeight: 1.2 }}>
+                  <div style={{ fontSize: '1.08rem', fontWeight: '700', fontFamily: 'var(--font-heading)', lineHeight: 1.2 }}>
                     {cand.fullNameDevanagari || cand.fullName}
                   </div>
                 </div>
               </div>
 
               {/* Bio & Details */}
-              <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div style={{ padding: '1rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <p style={{
-                  fontSize: '0.85rem',
+                  fontSize: '0.82rem',
                   color: '#555',
                   lineHeight: 1.5,
-                  margin: '0 0 1rem 0'
+                  margin: '0 0 0.85rem 0'
                 }}>
                   {cand.bio || 'छापकी टोलको विकास, धार्मिक अनुष्ठान तथा सामाजिक सद्भावमा निरन्तर क्रियाशील।'}
                 </p>
 
                 <div style={{
                   borderTop: '1px solid #F0ECE4',
-                  paddingTop: '0.75rem',
+                  paddingTop: '0.65rem',
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  fontSize: '0.8rem',
+                  fontSize: '0.78rem',
                   color: '#777'
                 }}>
                   <div>घर नं. <strong>{cand.houseNumber || '१०१'}</strong></div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', color: 'var(--color-primary)', fontWeight: '600' }}>
-                    <Phone size={13} />
-                    <span>{cand.phone}</span>
-                  </div>
+                  {cand.phone && (
+                    <a
+                      href={`tel:${cand.phone}`}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.25rem',
+                        color: 'var(--color-primary)',
+                        fontWeight: '600',
+                        textDecoration: 'none'
+                      }}
+                    >
+                      <Phone size={12} />
+                      <span>{cand.phone}</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

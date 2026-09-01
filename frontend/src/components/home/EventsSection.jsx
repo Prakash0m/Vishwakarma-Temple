@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { Calendar, Clock, MapPin, Video, Sparkles } from 'lucide-react';
+import { Clock, MapPin, Video, Sparkles } from 'lucide-react';
 
 const EventsSection = ({ events }) => {
   const { language, t, getLocalized } = useLanguage();
@@ -24,8 +24,8 @@ const EventsSection = ({ events }) => {
         {/* Events Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '2rem'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1.5rem'
         }}>
           {events && events.length > 0 ? (
             events.map((event) => {
@@ -46,7 +46,7 @@ const EventsSection = ({ events }) => {
                   }}
                 >
                   {/* Event Banner */}
-                  <div style={{ position: 'relative', height: '190px', overflow: 'hidden' }}>
+                  <div style={{ position: 'relative', height: '180px', overflow: 'hidden' }}>
                     <img
                       src={event.bannerImage || '/assets/images/temple-structure.jpg'}
                       alt={title}
@@ -60,20 +60,20 @@ const EventsSection = ({ events }) => {
                     {/* Date Badge */}
                     <div style={{
                       position: 'absolute',
-                      top: '14px',
-                      left: '14px',
+                      top: '12px',
+                      left: '12px',
                       backgroundColor: 'var(--color-primary)',
                       color: '#FFFFFF',
-                      padding: '6px 12px',
+                      padding: '4px 10px',
                       borderRadius: '10px',
                       textAlign: 'center',
                       boxShadow: '0 4px 10px rgba(0,0,0,0.25)',
                       border: '1px solid var(--color-gold)'
                     }}>
-                      <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.9 }}>
+                      <div style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.5px', opacity: 0.9 }}>
                         {eventDate.toLocaleString('default', { month: 'short' })}
                       </div>
-                      <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: '800', lineHeight: 1 }}>
+                      <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.15rem', fontWeight: '800', lineHeight: 1 }}>
                         {eventDate.getDate()}
                       </div>
                     </div>
@@ -81,13 +81,13 @@ const EventsSection = ({ events }) => {
                     {/* Category Pill */}
                     <div style={{
                       position: 'absolute',
-                      top: '14px',
-                      right: '14px',
+                      top: '12px',
+                      right: '12px',
                       backgroundColor: 'rgba(250, 247, 242, 0.95)',
                       color: 'var(--color-primary-dark)',
-                      padding: '4px 10px',
+                      padding: '3px 9px',
                       borderRadius: 'var(--border-radius-full)',
-                      fontSize: '0.75rem',
+                      fontSize: '0.72rem',
                       fontWeight: '700',
                       border: '1px solid var(--border-gold)'
                     }}>
@@ -96,21 +96,21 @@ const EventsSection = ({ events }) => {
                   </div>
 
                   {/* Event Details */}
-                  <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                  <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
                     <h3 style={{
-                      fontSize: '1.25rem',
+                      fontSize: '1.18rem',
                       color: 'var(--color-primary-dark)',
-                      marginBottom: '0.75rem',
-                      lineHeight: 1.3
+                      marginBottom: '0.5rem',
+                      lineHeight: 1.25
                     }}>
                       {title}
                     </h3>
 
                     <p style={{
-                      fontSize: '0.92rem',
+                      fontSize: '0.88rem',
                       color: 'var(--text-muted)',
-                      lineHeight: 1.6,
-                      marginBottom: '1.25rem',
+                      lineHeight: 1.55,
+                      marginBottom: '1rem',
                       flex: 1
                     }}>
                       {description}
@@ -119,21 +119,21 @@ const EventsSection = ({ events }) => {
                     <div style={{
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '0.4rem',
-                      fontSize: '0.85rem',
+                      gap: '0.35rem',
+                      fontSize: '0.82rem',
                       color: 'var(--text-brown)',
                       backgroundColor: 'var(--bg-cream-alt)',
-                      padding: '0.75rem 1rem',
+                      padding: '0.65rem 0.85rem',
                       borderRadius: '10px',
                       border: '1px solid var(--border-subtle)',
-                      marginBottom: '1.25rem'
+                      marginBottom: '1rem'
                     }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <Clock size={15} color="#D9531E" />
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <Clock size={14} color="#D9531E" />
                         <span>{time}</span>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <MapPin size={15} color="#2D6A4F" />
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <MapPin size={14} color="#2D6A4F" />
                         <span>{location}</span>
                       </div>
                     </div>
@@ -144,7 +144,7 @@ const EventsSection = ({ events }) => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-outline"
-                        style={{ width: '100%', gap: '0.5rem' }}
+                        style={{ width: '100%', gap: '0.5rem', minHeight: '44px' }}
                       >
                         <Video size={16} />
                         <span>{t('events.joinVirtualBtn')}</span>
@@ -154,15 +154,15 @@ const EventsSection = ({ events }) => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: '0.5rem',
-                        fontSize: '0.88rem',
+                        gap: '0.4rem',
+                        fontSize: '0.82rem',
                         color: 'var(--color-primary)',
                         fontWeight: '600',
                         padding: '0.5rem',
                         border: '1px dashed var(--border-maroon)',
                         borderRadius: '8px'
                       }}>
-                        <Sparkles size={14} color="#D4AF37" />
+                        <Sparkles size={13} color="#D4AF37" />
                         <span>सबै भक्तजनहरू सादर आमन्त्रित हुनुहुन्छ</span>
                       </div>
                     )}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
-import { Menu, X, Video, Heart, Globe, Shield, Phone, Clock, MapPin, DollarSign, Award } from 'lucide-react';
+import { Menu, X, Heart, Globe, Shield, Phone, Clock, MapPin, DollarSign, Home, Sparkles } from 'lucide-react';
 
 const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModal }) => {
   const { language, toggleLanguage, t } = useLanguage();
@@ -88,32 +88,35 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
           alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'nowrap',
-          gap: '1rem'
+          gap: '0.75rem',
+          overflow: 'hidden'
         }}>
-          {/* Left: Mantra & Timings */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', whiteSpace: 'nowrap' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: '600' }}>
-              <span className="diya-flame" style={{ color: '#FFB703', fontSize: '0.9rem' }}>🪔</span>
-              <span style={{ color: '#FDFBF7', letterSpacing: '0.3px' }}>{t('mantra')}</span>
+          {/* Left: Mantra */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', whiteSpace: 'nowrap', minWidth: 0, overflow: 'hidden' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: '600', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+              <span className="diya-flame" style={{ color: '#FFB703', fontSize: '0.9rem', flexShrink: 0 }}>🪔</span>
+              <span style={{ color: '#FDFBF7', letterSpacing: '0.3px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {t('mantra')}
+              </span>
             </div>
-            <div className="top-timings-badge" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: '#E8D5B5', fontSize: '0.76rem' }}>
+            <div className="top-timings-badge desktop-only-strip" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: '#E8D5B5', fontSize: '0.76rem' }}>
               <Clock size={12} color="#DFB847" />
               <span>बिहान ६:०० – साँझ ७:००</span>
             </div>
           </div>
 
           {/* Right: Phone, Location & Admin */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', whiteSpace: 'nowrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', whiteSpace: 'nowrap', flexShrink: 0 }}>
             <a
               href="tel:+97721523456"
-              className="top-phone-link"
+              className="top-phone-link desktop-only-strip"
               style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: '#F4EFE6', textDecoration: 'none', fontSize: '0.78rem' }}
             >
               <Phone size={12} color="#DFB847" />
               <span>+९७७-२१-५२३४५६</span>
             </a>
 
-            <div className="top-location-badge" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: '#DFB847', fontSize: '0.78rem' }}>
+            <div className="top-location-badge desktop-only-strip" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: '#DFB847', fontSize: '0.78rem' }}>
               <MapPin size={12} />
               <span>{templeCity}</span>
             </div>
@@ -165,11 +168,11 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
         <div style={{
           maxWidth: '1360px',
           margin: '0 auto',
-          padding: isScrolled ? '0.55rem 1.25rem' : '0.75rem 1.25rem',
+          padding: isScrolled ? '0.45rem 1.25rem' : '0.65rem 1.25rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '1rem',
+          gap: '0.75rem',
           transition: 'all 0.25s ease'
         }}>
           {/* Logo & Brand Name */}
@@ -178,14 +181,15 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.65rem',
+              gap: '0.6rem',
               textDecoration: 'none',
-              flexShrink: 0
+              minWidth: 0,
+              flexShrink: 1
             }}
           >
             <div style={{
-              width: isScrolled ? '40px' : '46px',
-              height: isScrolled ? '40px' : '46px',
+              width: isScrolled ? '38px' : '44px',
+              height: isScrolled ? '38px' : '44px',
               borderRadius: '50%',
               backgroundColor: '#FFFFFF',
               border: '2px solid var(--color-gold)',
@@ -204,23 +208,27 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
               />
             </div>
 
-            <div>
+            <div style={{ minWidth: 0, overflow: 'hidden' }}>
               <div style={{
                 fontFamily: 'var(--font-heading)',
-                fontSize: isScrolled ? '1.15rem' : '1.25rem',
+                fontSize: isScrolled ? '1.08rem' : '1.18rem',
                 fontWeight: '700',
                 color: 'var(--color-primary-dark)',
                 lineHeight: 1.15,
-                whiteSpace: 'nowrap'
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
               }}>
                 {templeTitle}
               </div>
               <div style={{
-                fontSize: '0.74rem',
+                fontSize: '0.72rem',
                 color: 'var(--text-muted)',
                 fontWeight: '500',
-                letterSpacing: '0.3px',
-                whiteSpace: 'nowrap'
+                letterSpacing: '0.2px',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
               }}>
                 {templeCity}
               </div>
@@ -232,7 +240,7 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
             <ul style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.25rem',
+              gap: '0.2rem',
               listStyle: 'none',
               margin: 0,
               padding: 0
@@ -246,11 +254,11 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
                       onClick={(e) => handleNavClick(e, item.href)}
                       style={{
                         fontFamily: 'var(--font-body)',
-                        fontSize: '0.85rem',
+                        fontSize: '0.84rem',
                         fontWeight: isActive ? '700' : '600',
                         color: isActive ? 'var(--color-primary)' : 'var(--text-brown)',
                         backgroundColor: isActive ? 'var(--color-primary-subtle)' : 'transparent',
-                        padding: '0.35rem 0.55rem',
+                        padding: '0.35rem 0.5rem',
                         borderRadius: '6px',
                         textDecoration: 'none',
                         whiteSpace: 'nowrap',
@@ -286,18 +294,18 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.35rem',
-                fontSize: '0.8rem',
+                gap: '0.3rem',
+                fontSize: '0.78rem',
                 fontWeight: '700',
                 padding: '0.35rem 0.65rem',
+                minHeight: '36px',
                 borderRadius: 'var(--border-radius-full)',
                 backgroundColor: 'var(--bg-cream-alt)',
                 border: '1.5px solid var(--border-gold)',
                 color: 'var(--color-primary-dark)',
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
-                transition: 'all 0.2s ease',
-                boxShadow: 'var(--shadow-xs)'
+                transition: 'all 0.2s ease'
               }}
               title="Switch Language / भाषा परिवर्तन"
             >
@@ -305,15 +313,16 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
               <span>{language === 'ne' ? 'English' : 'नेपाली'}</span>
             </button>
 
-            {/* Pay Monthly Tole Fund Button */}
+            {/* Desktop Only: Pay Monthly Tole Fund Button */}
             <button
               onClick={onOpenToleFundModal}
+              className="desktop-only-btn"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.35rem',
                 padding: '0.45rem 0.85rem',
-                fontSize: '0.85rem',
+                fontSize: '0.84rem',
                 fontWeight: '700',
                 borderRadius: 'var(--border-radius-full)',
                 backgroundColor: '#FAF7F2',
@@ -336,14 +345,14 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
               <span>{language === 'ne' ? 'मासिक टोल कोष' : 'Tole Fund'}</span>
             </button>
 
-            {/* Donate CTA Button (Green) */}
+            {/* Desktop Only: Donate CTA Button */}
             <button
               onClick={onOpenDonationModal}
-              className="btn btn-sm btn-green"
+              className="btn btn-sm btn-green desktop-only-btn"
               style={{
                 boxShadow: '0 3px 12px rgba(45, 106, 79, 0.25)',
                 padding: '0.45rem 0.95rem',
-                fontSize: '0.85rem',
+                fontSize: '0.84rem',
                 fontWeight: '700',
                 borderRadius: 'var(--border-radius-full)',
                 whiteSpace: 'nowrap'
@@ -364,6 +373,8 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
                 border: '1.5px solid var(--border-gold)',
                 borderRadius: '8px',
                 padding: '6px',
+                minHeight: '40px',
+                minWidth: '40px',
                 color: 'var(--color-primary)',
                 cursor: 'pointer'
               }}
@@ -380,22 +391,35 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
       {mobileMenuOpen && (
         <div style={{
           position: 'fixed',
-          top: isScrolled ? '60px' : '68px',
+          top: isScrolled ? '56px' : '64px',
           left: 0,
           right: 0,
           bottom: 0,
           backgroundColor: 'rgba(250, 247, 242, 0.98)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-          zIndex: 890,
-          padding: '1.25rem 1.5rem',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          zIndex: 915,
+          padding: '1.25rem 1.25rem calc(70px + env(safe-area-inset-bottom, 0px)) 1.25rem',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          overflowY: 'auto'
+          overflowY: 'auto',
+          animation: 'fadeIn 0.2s ease-out'
         }}>
           <div>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.4rem', margin: 0, padding: 0 }}>
+            <div style={{
+              fontSize: '0.75rem',
+              fontWeight: '700',
+              textTransform: 'uppercase',
+              color: 'var(--color-saffron-dark)',
+              letterSpacing: '0.8px',
+              marginBottom: '0.75rem',
+              paddingLeft: '0.5rem'
+            }}>
+              {language === 'ne' ? 'नेभिगेसन मेनु' : 'Navigation Menu'}
+            </div>
+
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.3rem', margin: 0, padding: 0 }}>
               {navLinks.map((item) => {
                 const isActive = activeSection === item.id;
                 return (
@@ -404,17 +428,21 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
                       href={item.href}
                       onClick={(e) => handleNavClick(e, item.href)}
                       style={{
-                        display: 'block',
-                        fontSize: '1.1rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        fontSize: '1rem',
                         fontWeight: '600',
-                        color: isActive ? 'var(--color-primary)' : 'var(--color-primary-dark)',
-                        padding: '0.65rem 0.75rem',
-                        borderRadius: '8px',
-                        backgroundColor: isActive ? 'var(--color-primary-subtle)' : 'transparent',
-                        borderBottom: '1px solid var(--border-subtle)'
+                        color: isActive ? 'var(--color-primary)' : 'var(--text-brown)',
+                        padding: '0.75rem 0.85rem',
+                        borderRadius: '10px',
+                        backgroundColor: isActive ? 'var(--color-primary-subtle)' : '#FFFFFF',
+                        border: isActive ? '1px solid rgba(122, 18, 29, 0.2)' : '1px solid var(--border-subtle)',
+                        boxShadow: '0 1px 4px rgba(0,0,0,0.02)'
                       }}
                     >
-                      {item.label}
+                      <span>{item.label}</span>
+                      {isActive && <span style={{ color: 'var(--color-primary)', fontWeight: 'bold' }}>●</span>}
                     </a>
                   </li>
                 );
@@ -430,17 +458,20 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
               }}
               style={{
                 width: '100%',
-                padding: '0.75rem',
-                borderRadius: '8px',
+                padding: '0.85rem',
+                minHeight: '46px',
+                borderRadius: '10px',
                 backgroundColor: 'var(--color-primary)',
                 color: '#FFF',
                 fontWeight: '700',
+                fontSize: '0.95rem',
                 border: 'none',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '0.4rem'
+                gap: '0.4rem',
+                boxShadow: '0 4px 12px rgba(122, 18, 29, 0.25)'
               }}
             >
               <DollarSign size={18} />
@@ -453,7 +484,7 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
                 onOpenDonationModal();
               }}
               className="btn btn-green"
-              style={{ width: '100%', justifyContent: 'center', padding: '0.75rem' }}
+              style={{ width: '100%', justifyContent: 'center', padding: '0.85rem', minHeight: '46px', fontSize: '0.95rem' }}
             >
               <Heart size={18} />
               <span>{t('nav.donateNow')}</span>
@@ -463,7 +494,7 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
               to="/admin"
               onClick={() => setMobileMenuOpen(false)}
               className="btn btn-outline-gold"
-              style={{ width: '100%', justifyContent: 'center', backgroundColor: '#FFFFFF' }}
+              style={{ width: '100%', justifyContent: 'center', backgroundColor: '#FFFFFF', minHeight: '44px', fontSize: '0.9rem' }}
             >
               <Shield size={16} />
               <span>{t('nav.adminPortal')}</span>
@@ -472,6 +503,52 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
         </div>
       )}
 
+      {/* 4. Native-Feel Mobile App Bottom Bar (Fixed at bottom on phones) */}
+      <div className="mobile-app-bottom-bar">
+        <button
+          className={`mobile-bottom-item ${activeSection === 'hero' ? 'active' : ''}`}
+          onClick={(e) => handleNavClick(e, '#hero')}
+        >
+          <Home size={20} />
+          <span>{language === 'ne' ? 'गृह' : 'Home'}</span>
+        </button>
+
+        <button
+          className={`mobile-bottom-item ${activeSection === 'pooja' ? 'active' : ''}`}
+          onClick={(e) => handleNavClick(e, '#pooja')}
+        >
+          <Sparkles size={20} />
+          <span>{language === 'ne' ? 'पूजा' : 'Pooja'}</span>
+        </button>
+
+        <button
+          className="mobile-bottom-item"
+          onClick={() => {
+            if (onOpenToleFundModal) onOpenToleFundModal();
+          }}
+          style={{ color: '#FFD166' }}
+        >
+          <DollarSign size={21} />
+          <span>{language === 'ne' ? 'टोल कोष' : 'Tole Fund'}</span>
+        </button>
+
+        <button
+          className="mobile-bottom-item donate-item"
+          onClick={onOpenDonationModal}
+        >
+          <Heart size={20} />
+          <span>{language === 'ne' ? 'दान' : 'Donate'}</span>
+        </button>
+
+        <button
+          className={`mobile-bottom-item ${mobileMenuOpen ? 'active' : ''}`}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          <span>{language === 'ne' ? 'मेनु' : 'Menu'}</span>
+        </button>
+      </div>
+
       {/* Responsive Media Queries */}
       <style>{`
         @media (min-width: 1080px) {
@@ -479,6 +556,14 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
             display: block !important;
           }
           .mobile-hamburger-btn {
+            display: none !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .desktop-only-btn {
+            display: none !important;
+          }
+          .desktop-only-strip {
             display: none !important;
           }
         }

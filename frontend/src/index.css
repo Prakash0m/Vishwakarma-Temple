@@ -12,6 +12,8 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -20,6 +22,16 @@ body {
   color: var(--text-brown);
   line-height: 1.65;
   overflow-x: hidden;
+  position: relative;
+  width: 100%;
+  min-width: 320px;
+}
+
+/* Mobile Safe Bottom Padding for Native-like Bottom Navigation */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 /* Typography Helpers */
@@ -27,7 +39,9 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   color: var(--color-primary-dark);
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .heading-devanagari {
@@ -41,6 +55,7 @@ h1, h2, h3, h4, h5, h6 {
 a {
   color: inherit;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 img {
@@ -49,7 +64,7 @@ img {
   display: block;
 }
 
-/* Container */
+/* Fluid Container */
 .container {
   width: 100%;
   max-width: 1240px;
@@ -57,6 +72,13 @@ img {
   margin-right: auto;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 @media (min-width: 1440px) {
@@ -91,35 +113,42 @@ img {
   font-weight: 700;
   color: var(--color-saffron);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   margin-bottom: 0.5rem;
   background: var(--color-saffron-subtle);
-  padding: 0.3rem 0.9rem;
+  padding: 0.35rem 0.95rem;
   border-radius: var(--border-radius-full);
   border: 1px solid rgba(217, 83, 30, 0.25);
+  box-shadow: 0 2px 6px rgba(217, 83, 30, 0.06);
 }
 
 .section-title {
-  font-size: 2.25rem;
+  font-size: clamp(1.65rem, 4vw, 2.35rem);
   color: var(--color-primary-dark);
   margin-bottom: 0.75rem;
+  line-height: 1.2;
 }
 
 @media (max-width: 768px) {
-  .section-title {
-    font-size: 1.75rem;
-  }
   .section {
-    padding: 3rem 0;
+    padding: 2.75rem 0;
+  }
+  .section-header {
+    margin-bottom: 2rem;
+  }
+  .section-eyebrow {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
   }
 }
 
 .section-subtitle {
-  font-size: 1.05rem;
+  font-size: clamp(0.92rem, 2vw, 1.05rem);
   color: var(--text-muted);
   max-width: 680px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.6;
 }
 
 /* Decorative Gold Divider */
@@ -145,7 +174,7 @@ img {
   font-size: 1.1rem;
 }
 
-/* Buttons */
+/* Buttons & Touch Targets */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -155,16 +184,18 @@ img {
   font-weight: 600;
   font-size: 0.95rem;
   padding: 0.65rem 1.4rem;
+  min-height: 44px;
   border-radius: var(--border-radius-md);
   border: 1.5px solid transparent;
   cursor: pointer;
   transition: var(--transition-smooth);
   text-align: center;
   white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 
 .btn-primary {
@@ -245,13 +276,21 @@ img {
 .btn-sm {
   padding: 0.4rem 0.9rem;
   font-size: 0.85rem;
+  min-height: 38px;
   border-radius: var(--border-radius-sm);
 }
 
 .btn-lg {
   padding: 0.85rem 1.8rem;
   font-size: 1.05rem;
+  min-height: 48px;
   border-radius: var(--border-radius-lg);
+}
+
+@media (max-width: 640px) {
+  .btn-mobile-full {
+    width: 100% !important;
+  }
 }
 
 /* Cards */
@@ -268,6 +307,12 @@ img {
   box-shadow: var(--shadow-md);
   border-color: var(--color-gold);
   transform: translateY(-3px);
+}
+
+@media (max-width: 640px) {
+  .temple-card {
+    border-radius: var(--border-radius-md);
+  }
 }
 
 /* Badges */
@@ -305,7 +350,7 @@ img {
   border: 1px solid rgba(197, 155, 39, 0.4);
 }
 
-/* Forms */
+/* Form Controls with 44px min height for Mobile */
 .form-group {
   margin-bottom: 1.25rem;
 }
@@ -320,6 +365,7 @@ img {
 
 .form-control {
   width: 100%;
+  min-height: 44px;
   padding: 0.65rem 0.95rem;
   font-family: var(--font-body);
   font-size: 0.95rem;
@@ -341,12 +387,13 @@ textarea.form-control {
   resize: vertical;
 }
 
-/* Modals */
+/* Modals & Responsive Bottom Sheet */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(26, 17, 12, 0.65);
-  backdrop-filter: blur(4px);
+  background-color: rgba(26, 17, 12, 0.72);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -366,6 +413,7 @@ textarea.form-control {
   overflow-y: auto;
   position: relative;
   animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-header {
@@ -375,6 +423,9 @@ textarea.form-control {
   align-items: center;
   justify-content: space-between;
   background-color: var(--bg-cream-alt);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .modal-body {
@@ -389,6 +440,53 @@ textarea.form-control {
   justify-content: flex-end;
   gap: 0.75rem;
   background-color: var(--bg-cream-alt);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+/* Mobile Bottom Sheet Adaptation */
+@media (max-width: 640px) {
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal-content {
+    border-radius: 24px 24px 0 0;
+    max-height: 88vh;
+    max-width: 100%;
+    animation: slideUpBottom 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    border-bottom: none;
+  }
+
+  .modal-header {
+    padding: 1rem 1.25rem;
+  }
+
+  .modal-body {
+    padding: 1.25rem 1rem;
+  }
+
+  .modal-footer {
+    padding: 0.85rem 1rem;
+    flex-direction: column-reverse;
+    gap: 0.6rem;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+  }
+
+  .responsive-form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+}
+
+@keyframes slideUpBottom {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
 }
 
 @keyframes fadeIn {
@@ -433,12 +531,29 @@ textarea.form-control {
   animation: diyaFlicker 2s infinite ease-in-out;
 }
 
-/* Table styling for Admin & Transparency */
+/* App-like Horizontal Filter Chip Scroll Bar */
+.chip-scroll-container {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.chip-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Table styling with touch momentum scrolling */
 .temple-table-wrapper {
+  width: 100%;
   overflow-x: auto;
   border-radius: var(--border-radius-md);
   border: 1px solid var(--border-subtle);
   background: #FFFFFF;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
 }
 
 .temple-table {
@@ -446,6 +561,7 @@ textarea.form-control {
   border-collapse: collapse;
   text-align: left;
   font-size: 0.9rem;
+  min-width: 600px;
 }
 
 .temple-table th {
@@ -494,10 +610,69 @@ textarea.form-control {
   background-color: var(--color-danger);
 }
 
+/* Modern App-like Bottom Navigation Bar for Mobile */
+.mobile-app-bottom-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-app-bottom-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(60px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background-color: rgba(56, 6, 13, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1.5px solid rgba(197, 155, 39, 0.4);
+    z-index: 920;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .mobile-bottom-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: rgba(250, 247, 242, 0.8);
+    font-size: 0.72rem;
+    font-weight: 600;
+    flex: 1;
+    height: 100%;
+    text-align: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-bottom-item.active,
+  .mobile-bottom-item:active {
+    color: #FFD166;
+    transform: scale(1.04);
+  }
+
+  .mobile-bottom-item.donate-item {
+    color: #40916C;
+  }
+  
+  .mobile-bottom-item.donate-item.active,
+  .mobile-bottom-item.donate-item:active {
+    color: #52B788;
+  }
+}
+
 /* Scrollbar Customization */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {

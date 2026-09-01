@@ -3,7 +3,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useToast } from '../../context/ToastContext';
 import api from '../../services/api';
 import confetti from 'canvas-confetti';
-import { X, Calendar, Clock, User, Phone, Mail, CheckCircle2, Sparkles } from 'lucide-react';
+import { X, CheckCircle2 } from 'lucide-react';
 
 const PoojaBookingModal = ({ isOpen, onClose, selectedPooja, poojas }) => {
   const { language, t, getLocalized } = useLanguage();
@@ -64,9 +64,6 @@ const PoojaBookingModal = ({ isOpen, onClose, selectedPooja, poojas }) => {
     }
   };
 
-  const currentPooja = poojas?.find(p => p._id === formData.poojaId) || selectedPooja;
-  const poojaTitle = currentPooja ? getLocalized(currentPooja, 'title', 'titleEnglish') : '';
-
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -88,7 +85,8 @@ const PoojaBookingModal = ({ isOpen, onClose, selectedPooja, poojas }) => {
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              color: 'var(--text-muted)'
+              color: 'var(--text-muted)',
+              padding: '6px'
             }}
           >
             <X size={20} />
@@ -98,29 +96,29 @@ const PoojaBookingModal = ({ isOpen, onClose, selectedPooja, poojas }) => {
         {/* Body */}
         <div className="modal-body">
           {submitted ? (
-            <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
+            <div style={{ textAlign: 'center', padding: '1rem 0' }}>
               <div style={{
-                width: '64px',
-                height: '64px',
+                width: '56px',
+                height: '56px',
                 borderRadius: '50%',
                 backgroundColor: 'var(--color-green-subtle)',
                 color: 'var(--color-green)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                margin: '0 auto 1.25rem auto'
+                margin: '0 auto 1rem auto'
               }}>
-                <CheckCircle2 size={36} />
+                <CheckCircle2 size={32} />
               </div>
               <h4 style={{
                 fontFamily: 'var(--font-heading)',
-                fontSize: '1.35rem',
+                fontSize: '1.25rem',
                 color: 'var(--color-primary-dark)',
-                marginBottom: '0.5rem'
+                marginBottom: '0.4rem'
               }}>
                 पूजा अनुरोध स्वीकृत भयो 🙏
               </h4>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '1.25rem' }}>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '1.25rem' }}>
                 {t('pooja.successMessage')}
               </p>
 
@@ -131,18 +129,18 @@ const PoojaBookingModal = ({ isOpen, onClose, selectedPooja, poojas }) => {
                   padding: '1rem',
                   border: '1px solid var(--border-gold)',
                   textAlign: 'left',
-                  fontSize: '0.88rem',
-                  marginBottom: '1.5rem'
+                  fontSize: '0.85rem',
+                  marginBottom: '1.25rem'
                 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                     <span style={{ color: 'var(--text-muted)' }}>अनुरोध नम्बर:</span>
                     <strong style={{ color: 'var(--color-primary)' }}>{bookingResult.bookingNumber}</strong>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                     <span style={{ color: 'var(--text-muted)' }}>पूजा:</span>
                     <strong>{bookingResult.poojaName}</strong>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                     <span style={{ color: 'var(--text-muted)' }}>श्रद्धालु:</span>
                     <strong>{bookingResult.devoteeName}</strong>
                   </div>
@@ -159,7 +157,7 @@ const PoojaBookingModal = ({ isOpen, onClose, selectedPooja, poojas }) => {
                   onClose();
                 }}
                 className="btn btn-primary"
-                style={{ width: '100%' }}
+                style={{ width: '100%', minHeight: '44px' }}
               >
                 बन्द गर्नुहोस् (Close)
               </button>
@@ -185,7 +183,7 @@ const PoojaBookingModal = ({ isOpen, onClose, selectedPooja, poojas }) => {
               </div>
 
               {/* Devotee Name & Phone */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.85rem' }}>
                 <div className="form-group">
                   <label className="form-label">{t('pooja.nameLabel')} *</label>
                   <input
@@ -214,7 +212,7 @@ const PoojaBookingModal = ({ isOpen, onClose, selectedPooja, poojas }) => {
               </div>
 
               {/* Email & Desired Date */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.85rem' }}>
                 <div className="form-group">
                   <label className="form-label">{t('pooja.emailLabel')}</label>
                   <input
@@ -241,7 +239,7 @@ const PoojaBookingModal = ({ isOpen, onClose, selectedPooja, poojas }) => {
               </div>
 
               {/* Gotra & Time */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.85rem' }}>
                 <div className="form-group">
                   <label className="form-label">{t('pooja.gotraLabel')}</label>
                   <input

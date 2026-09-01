@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
-import { Phone, Mail, MapPin, Heart, Shield, Sparkles } from 'lucide-react';
+import { Phone, Mail, MapPin, Heart, Shield } from 'lucide-react';
 
 const Footer = ({ settings, onOpenDonationModal }) => {
   const { language, t } = useLanguage();
@@ -33,51 +33,52 @@ const Footer = ({ settings, onOpenDonationModal }) => {
       backgroundColor: '#38060D',
       color: '#F4EFE6',
       borderTop: '3px solid var(--color-gold)',
-      paddingTop: '4rem',
-      paddingBottom: '2rem',
+      paddingTop: 'clamp(2.5rem, 5vw, 4rem)',
+      paddingBottom: 'clamp(1.5rem, 3vw, 2.5rem)',
       position: 'relative'
     }}>
       <div className="container">
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-          gap: '2.5rem',
-          marginBottom: '3rem'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '2rem',
+          marginBottom: '2.5rem'
         }}>
           {/* Column 1: Temple Branding */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1rem' }}>
               <img
                 src="/assets/images/temple-logo.svg"
                 alt="Temple Logo"
-                style={{ width: '48px', height: '48px', borderRadius: '50%' }}
+                style={{ width: '42px', height: '42px', borderRadius: '50%', flexShrink: 0 }}
               />
-              <div>
+              <div style={{ minWidth: 0 }}>
                 <h3 style={{
                   fontFamily: 'var(--font-heading)',
-                  fontSize: '1.35rem',
+                  fontSize: '1.2rem',
                   color: '#FFD166',
-                  lineHeight: 1.15
+                  lineHeight: 1.15,
+                  margin: 0
                 }}>
                   {templeTitle}
                 </h3>
-                <span style={{ fontSize: '0.82rem', color: '#DFB847' }}>{templeCity}</span>
+                <span style={{ fontSize: '0.78rem', color: '#DFB847' }}>{templeCity}</span>
               </div>
             </div>
 
-            <p style={{ fontSize: '0.9rem', lineHeight: 1.7, color: 'rgba(244, 239, 230, 0.8)', marginBottom: '1.5rem' }}>
+            <p style={{ fontSize: '0.85rem', lineHeight: 1.6, color: 'rgba(244, 239, 230, 0.8)', marginBottom: '1.25rem' }}>
               सृष्टिकर्ता तथा शिल्पकलाका अधिष्ठाता भगवान विश्वकर्माको पवित्र मन्दिर। सनातन धर्म, वैदिक पूजा र जनसेवामा समर्पित।
             </p>
 
             <div style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.5rem',
+              gap: '0.4rem',
               backgroundColor: 'rgba(255, 209, 102, 0.1)',
               border: '1px solid rgba(255, 209, 102, 0.3)',
-              padding: '0.4rem 0.9rem',
+              padding: '0.3rem 0.8rem',
               borderRadius: 'var(--border-radius-full)',
-              fontSize: '0.85rem',
+              fontSize: '0.8rem',
               color: '#FFD166'
             }}>
               <span>🪔</span>
@@ -89,49 +90,49 @@ const Footer = ({ settings, onOpenDonationModal }) => {
           <div>
             <h4 style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: '1.15rem',
+              fontSize: '1.1rem',
               color: '#FFD166',
-              marginBottom: '1.25rem',
+              marginBottom: '1rem',
               borderBottom: '1px solid rgba(197, 155, 39, 0.3)',
-              paddingBottom: '0.5rem'
+              paddingBottom: '0.4rem'
             }}>
               {t('footer.quickLinks')}
             </h4>
 
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.92rem' }}>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.88rem' }}>
               <li>
-                <a href="#about" style={{ color: 'rgba(244, 239, 230, 0.85)', transition: 'color 0.2s' }}>
+                <a href="#about" style={{ color: 'rgba(244, 239, 230, 0.85)', display: 'block', padding: '2px 0' }}>
                   • {t('nav.about')}
                 </a>
               </li>
               <li>
-                <a href="#pooja" style={{ color: 'rgba(244, 239, 230, 0.85)', transition: 'color 0.2s' }}>
+                <a href="#pooja" style={{ color: 'rgba(244, 239, 230, 0.85)', display: 'block', padding: '2px 0' }}>
                   • {t('nav.pooja')}
                 </a>
               </li>
               <li>
-                <a href="#events" style={{ color: 'rgba(244, 239, 230, 0.85)', transition: 'color 0.2s' }}>
+                <a href="#events" style={{ color: 'rgba(244, 239, 230, 0.85)', display: 'block', padding: '2px 0' }}>
                   • {t('nav.events')}
                 </a>
               </li>
               <li>
-                <a href="#gallery" style={{ color: 'rgba(244, 239, 230, 0.85)', transition: 'color 0.2s' }}>
+                <a href="#gallery" style={{ color: 'rgba(244, 239, 230, 0.85)', display: 'block', padding: '2px 0' }}>
                   • {t('nav.gallery')}
                 </a>
               </li>
               <li>
-                <a href="#donation" style={{ color: 'rgba(244, 239, 230, 0.85)', transition: 'color 0.2s' }}>
+                <a href="#donation" style={{ color: 'rgba(244, 239, 230, 0.85)', display: 'block', padding: '2px 0' }}>
                   • {t('nav.donation')}
                 </a>
               </li>
               <li>
-                <a href="#transparency" style={{ color: 'rgba(244, 239, 230, 0.85)', transition: 'color 0.2s' }}>
+                <a href="#transparency" style={{ color: 'rgba(244, 239, 230, 0.85)', display: 'block', padding: '2px 0' }}>
                   • {t('nav.transparency')}
                 </a>
               </li>
               <li>
-                <Link to="/admin" style={{ color: '#DFB847', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <Shield size={14} />
+                <Link to="/admin" style={{ color: '#DFB847', display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '2px 0' }}>
+                  <Shield size={13} />
                   <span>प्रशासक पोर्टल (Admin)</span>
                 </Link>
               </li>
@@ -142,38 +143,38 @@ const Footer = ({ settings, onOpenDonationModal }) => {
           <div>
             <h4 style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: '1.15rem',
+              fontSize: '1.1rem',
               color: '#FFD166',
-              marginBottom: '1.25rem',
+              marginBottom: '1rem',
               borderBottom: '1px solid rgba(197, 155, 39, 0.3)',
-              paddingBottom: '0.5rem'
+              paddingBottom: '0.4rem'
             }}>
               {t('footer.timings')} & {t('nav.contact')}
             </h4>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem', color: 'rgba(244, 239, 230, 0.85)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.85rem', color: 'rgba(244, 239, 230, 0.85)' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
-                <MapPin size={16} color="#DFB847" style={{ flexShrink: 0, marginTop: '3px' }} />
+                <MapPin size={15} color="#DFB847" style={{ flexShrink: 0, marginTop: '3px' }} />
                 <span>{address}</span>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Phone size={16} color="#DFB847" />
-                <span>{phone}</span>
+                <Phone size={15} color="#DFB847" style={{ flexShrink: 0 }} />
+                <a href={`tel:${phone}`} style={{ color: 'inherit' }}>{phone}</a>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Mail size={16} color="#DFB847" />
-                <span>{email}</span>
+                <Mail size={15} color="#DFB847" style={{ flexShrink: 0 }} />
+                <a href={`mailto:${email}`} style={{ color: 'inherit', wordBreak: 'break-all' }}>{email}</a>
               </div>
 
               <div style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.06)',
-                padding: '0.65rem 0.9rem',
+                padding: '0.55rem 0.8rem',
                 borderRadius: '8px',
-                marginTop: '0.5rem',
+                marginTop: '0.35rem',
                 borderLeft: '3px solid #DFB847',
-                fontSize: '0.85rem'
+                fontSize: '0.8rem'
               }}>
                 <strong>दर्शन समय:</strong> {t('footer.dailyTime')}
               </div>
@@ -184,20 +185,20 @@ const Footer = ({ settings, onOpenDonationModal }) => {
           <div>
             <h4 style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: '1.15rem',
+              fontSize: '1.1rem',
               color: '#FFD166',
-              marginBottom: '1.25rem',
+              marginBottom: '1rem',
               borderBottom: '1px solid rgba(197, 155, 39, 0.3)',
-              paddingBottom: '0.5rem'
+              paddingBottom: '0.4rem'
             }}>
-              सामाजिक सञ्जाल (Social Media)
+              सामाजिक सञ्जाल (Social)
             </h4>
 
-            <p style={{ fontSize: '0.88rem', color: 'rgba(244, 239, 230, 0.8)', marginBottom: '1rem' }}>
+            <p style={{ fontSize: '0.84rem', color: 'rgba(244, 239, 230, 0.8)', marginBottom: '0.85rem' }}>
               मन्दिरका दैनिक आरती, प्रत्यक्ष दर्शन तथा आगामी कार्यक्रमहरूको जानकारी पाउन हामीसँग जोडिनुहोस्।
             </p>
 
-            <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.5rem' }}>
+            <div style={{ display: 'flex', gap: '0.65rem', marginBottom: '1.25rem' }}>
               {socialLinks.facebook && (
                 <a
                   href={socialLinks.facebook}
@@ -205,14 +206,15 @@ const Footer = ({ settings, onOpenDonationModal }) => {
                   rel="noopener noreferrer"
                   style={{
                     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    width: '38px',
-                    height: '38px',
+                    width: '36px',
+                    height: '36px',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: '#FFFFFF',
-                    transition: 'background 0.2s'
+                    transition: 'background 0.2s',
+                    fontWeight: '700'
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--color-primary-light)'}
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
@@ -227,8 +229,8 @@ const Footer = ({ settings, onOpenDonationModal }) => {
                   rel="noopener noreferrer"
                   style={{
                     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    width: '38px',
-                    height: '38px',
+                    width: '36px',
+                    height: '36px',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
@@ -249,8 +251,8 @@ const Footer = ({ settings, onOpenDonationModal }) => {
                   rel="noopener noreferrer"
                   style={{
                     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    width: '38px',
-                    height: '38px',
+                    width: '36px',
+                    height: '36px',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
@@ -269,7 +271,7 @@ const Footer = ({ settings, onOpenDonationModal }) => {
             <button
               onClick={onOpenDonationModal}
               className="btn btn-green btn-sm"
-              style={{ width: '100%', gap: '0.4rem' }}
+              style={{ width: '100%', gap: '0.4rem', minHeight: '42px', fontWeight: '700' }}
             >
               <Heart size={15} />
               <span>{t('nav.donateNow')}</span>
@@ -280,13 +282,13 @@ const Footer = ({ settings, onOpenDonationModal }) => {
         {/* Bottom Copyright Bar */}
         <div style={{
           borderTop: '1px solid rgba(197, 155, 39, 0.25)',
-          paddingTop: '1.5rem',
+          paddingTop: '1.25rem',
           display: 'flex',
           flexWrap: 'wrap',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '1rem',
-          fontSize: '0.85rem',
+          gap: '0.75rem',
+          fontSize: '0.8rem',
           color: 'rgba(244, 239, 230, 0.7)'
         }}>
           <div>{t('footer.copyright')}</div>

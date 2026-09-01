@@ -14,32 +14,32 @@ const QuickInfoStrip = ({ settings }) => {
     : (settings?.specialPoojaTimeEnglish || 'Every Saturday & Sankranti');
 
   const locationText = language === 'ne'
-    ? (settings?.addressNepali || 'छापकी (वडा नं. ५), अग्निसाइर कृष्णासवरण, सप्तरी')
-    : (settings?.addressEnglish || 'Chhapki (Ward No. 5), Agnisair Krishnasavaran, Saptari');
+    ? (settings?.addressNepali || 'छापकी (वडा नं. ५), सप्तरी')
+    : (settings?.addressEnglish || 'Chhapki (Ward No. 5), Saptari');
 
   const phoneText = settings?.phone || '+९७७-३१-५२०१२३ / ९८५२८९९९९९';
 
   const items = [
     {
-      icon: <Clock size={24} color="#D9531E" />,
+      icon: <Clock size={22} color="#D9531E" />,
       title: t('quickInfo.dailyPoojaTitle'),
       desc: dailyTime,
       badge: 'नित्य सेवा'
     },
     {
-      icon: <Calendar size={24} color="#C59B27" />,
+      icon: <Calendar size={22} color="#C59B27" />,
       title: t('quickInfo.specialPoojaTitle'),
       desc: specialTime,
       badge: 'महाआरती'
     },
     {
-      icon: <MapPin size={24} color="#2D6A4F" />,
+      icon: <MapPin size={22} color="#2D6A4F" />,
       title: t('quickInfo.locationTitle'),
       desc: locationText,
       badge: 'छापकी (Chhapki)'
     },
     {
-      icon: <Phone size={24} color="#7A121D" />,
+      icon: <Phone size={22} color="#7A121D" />,
       title: t('quickInfo.contactTitle'),
       desc: phoneText,
       badge: '२४/७ सेवा'
@@ -50,15 +50,15 @@ const QuickInfoStrip = ({ settings }) => {
     <div style={{
       backgroundColor: '#FAF7F2',
       borderBottom: '1px solid var(--border-gold)',
-      padding: '1.25rem 0',
+      padding: '1rem 0',
       position: 'relative',
       zIndex: 10
     }}>
       <div className="container">
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-          gap: '1.25rem'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '0.85rem'
         }}>
           {items.map((item, idx) => (
             <div
@@ -66,11 +66,11 @@ const QuickInfoStrip = ({ settings }) => {
               style={{
                 backgroundColor: '#FFFFFF',
                 borderRadius: 'var(--border-radius-md)',
-                padding: '1rem 1.15rem',
+                padding: '0.85rem 1rem',
                 border: '1px solid var(--border-gold)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '1rem',
+                gap: '0.85rem',
                 boxShadow: '0 2px 8px rgba(43, 30, 22, 0.04)',
                 transition: 'var(--transition-smooth)'
               }}
@@ -85,8 +85,8 @@ const QuickInfoStrip = ({ settings }) => {
             >
               <div style={{
                 backgroundColor: 'var(--bg-cream)',
-                padding: '10px',
-                borderRadius: '12px',
+                padding: '8px',
+                borderRadius: '10px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -97,7 +97,7 @@ const QuickInfoStrip = ({ settings }) => {
               <div style={{ minWidth: 0, flex: 1 }}>
                 <div style={{
                   fontFamily: 'var(--font-heading)',
-                  fontSize: '0.95rem',
+                  fontSize: '0.92rem',
                   fontWeight: '700',
                   color: 'var(--color-primary-dark)',
                   lineHeight: 1.2
@@ -105,9 +105,9 @@ const QuickInfoStrip = ({ settings }) => {
                   {item.title}
                 </div>
                 <div style={{
-                  fontSize: '0.82rem',
+                  fontSize: '0.8rem',
                   color: 'var(--text-muted)',
-                  marginTop: '3px',
+                  marginTop: '2px',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis'
