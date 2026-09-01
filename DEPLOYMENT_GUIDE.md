@@ -75,7 +75,7 @@ Once Vercel finishes the build (typically ~1 minute):
 - **Admin Portal**: `https://your-project-name.vercel.app/admin`
 - **Default Admin Credentials**:
   - **Email**: `admin@vishwakarmatemple.org`
-  - **Password**: `TempleAdmin@2026`
+  - **Password**: `TempleAdmin@2030`
 
 ---
 

@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
       const cleanEmail = email.trim().toLowerCase();
       if (
         cleanEmail === 'admin@vishwakarmatemple.org' &&
-        (password === 'TempleAdmin@2027' || password === 'TempleAdmin@2026')
+        (password === 'TempleAdmin@2030' || password === 'TempleAdmin@2027' || password === 'TempleAdmin@2026')
       ) {
         const demoUser = {
           name: 'पण्डित रमेश आचार्य (Head Priest & Admin)',

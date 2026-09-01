@@ -142,7 +142,7 @@ const AdminLogin = () => {
               <span>पूर्वनिर्धारित प्रमाण (Default Credentials):</span>
             </div>
             <div>इमेल: <code>admin@vishwakarmatemple.org</code></div>
-            <div>पासवर्ड: <code>TempleAdmin@2027</code></div>
+            <div>पासवर्ड: <code>TempleAdmin@2030</code></div>
           </div>
 
           <button

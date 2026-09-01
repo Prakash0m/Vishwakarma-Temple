@@ -14,20 +14,20 @@ const resetPassword = async () => {
       admin = new User({
         name: 'पण्डित रमेश आचार्य (Head Priest & Admin)',
         email: 'admin@vishwakarmatemple.org',
-        password: 'TempleAdmin@2027',
+        password: 'TempleAdmin@2030',
         role: 'superadmin',
         phone: '+977 9852012345'
       });
       await admin.save();
-      console.log('Created admin with new password TempleAdmin@2027');
+      console.log('Created admin with new password TempleAdmin@2030');
     } else {
-      admin.password = 'TempleAdmin@2027';
+      admin.password = 'TempleAdmin@2030';
       await admin.save();
-      console.log('Updated existing admin password to TempleAdmin@2027');
+      console.log('Updated existing admin password to TempleAdmin@2030');
     }
 
     const testUser = await User.findOne({ email: 'admin@vishwakarmatemple.org' }).select('+password');
-    const isMatch = await testUser.matchPassword('TempleAdmin@2027');
+    const isMatch = await testUser.matchPassword('TempleAdmin@2030');
     console.log('Verification check: Password match is:', isMatch);
 
     process.exit(0);

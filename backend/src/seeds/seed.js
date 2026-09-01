@@ -37,11 +37,11 @@ export const seedDatabase = async () => {
       adminUser = await User.create({
         name: 'पण्डित रमेश आचार्य (Head Priest & Admin)',
         email: 'admin@vishwakarmatemple.org',
-        password: 'TempleAdmin@2027',
+        password: 'TempleAdmin@2030',
         role: 'superadmin',
         phone: '+977 9852012345'
       });
-      console.log('✅ Admin User Created: admin@vishwakarmatemple.org / TempleAdmin@2027');
+      console.log('✅ Admin User Created: admin@vishwakarmatemple.org / TempleAdmin@2030');
     } else {
       adminUser = existingAdmin;
     }
