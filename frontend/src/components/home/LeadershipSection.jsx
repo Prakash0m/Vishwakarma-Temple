@@ -35,7 +35,7 @@ const LeadershipSection = () => {
       <div className="container">
         {/* Section Header */}
         <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-          <div style={{
+          <div className="animate-float" style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.4rem',
@@ -46,7 +46,8 @@ const LeadershipSection = () => {
             fontSize: '0.82rem',
             fontWeight: '700',
             marginBottom: '0.65rem',
-            border: '1px solid rgba(122, 18, 29, 0.2)'
+            border: '1px solid rgba(122, 18, 29, 0.2)',
+            boxShadow: '0 4px 12px rgba(122, 18, 29, 0.08)'
           }}>
             <ShieldCheck size={15} />
             <span>टोल नेतृत्व तथा कार्यसमिति</span>
@@ -75,7 +76,7 @@ const LeadershipSection = () => {
           </p>
         </div>
 
-        {/* 5 Candidates Cards Grid */}
+        {/* 5 Candidates Cards Grid with Interactive Hover */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
@@ -89,6 +90,7 @@ const LeadershipSection = () => {
             return (
               <div
                 key={cand._id}
+                className="card-interactive"
                 style={{
                   backgroundColor: '#FFFFFF',
                   borderRadius: '16px',
@@ -97,16 +99,7 @@ const LeadershipSection = () => {
                   boxShadow: '0 4px 18px rgba(0,0,0,0.04)',
                   display: 'flex',
                   flexDirection: 'column',
-                  transition: 'transform 0.25s ease, box-shadow 0.25s ease',
                   position: 'relative'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 10px 24px rgba(122, 18, 29, 0.12)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 18px rgba(0,0,0,0.04)';
                 }}
               >
                 {/* Order Number Badge */}
@@ -121,12 +114,13 @@ const LeadershipSection = () => {
                   borderRadius: '14px',
                   fontSize: '0.7rem',
                   fontWeight: '700',
-                  backdropFilter: 'blur(4px)'
+                  backdropFilter: 'blur(4px)',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
                 }}>
                   #{idx + 1}
                 </div>
 
-                {/* Photo / Emblem Frame (Optimized Zoom-Out) */}
+                {/* Photo / Emblem Frame */}
                 <div style={{
                   width: '100%',
                   height: '210px',
@@ -146,7 +140,13 @@ const LeadershipSection = () => {
                       objectFit: isLogo ? 'contain' : 'cover',
                       objectPosition: isLogo ? 'center' : 'center 22%',
                       padding: isLogo ? '22px' : '0',
-                      transition: 'transform 0.3s ease'
+                      transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isLogo) e.target.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isLogo) e.target.style.transform = 'scale(1)';
                     }}
                     onError={(e) => { e.target.src = '/assets/images/deity-portrait.jpg'; }}
                   />
@@ -196,8 +196,11 @@ const LeadershipSection = () => {
                           gap: '0.25rem',
                           color: 'var(--color-primary)',
                           fontWeight: '600',
-                          textDecoration: 'none'
+                          textDecoration: 'none',
+                          transition: 'color 0.2s ease'
                         }}
+                        onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-saffron)'}
+                        onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-primary)'}
                       >
                         <Phone size={12} />
                         <span>{cand.phone}</span>

@@ -15,7 +15,7 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
 
   const heroSubtitle = language === 'ne'
     ? (settings?.heroSubtitleNepali || 'सृष्टि, वास्तुकला, विज्ञान र शिल्पकलाका अधिष्ठाता भगवान विश्वकर्माको पवित्र प्राङ्गणमा हार्दिक नमन गर्दछौं।')
-    : (settings?.heroSubtitleEnglish || 'Devoted to the divine supreme architect, engineer, and creator of the universe. Experience peace, prayers, and community harmony.');
+    : (settings?.heroSubtitleEnglish || 'Devoted to the divine supreme architect, engineer, and cosmic creator. Experience peace, prayers, and community harmony.');
 
   const heroImage = settings?.heroImage || '/assets/images/deity-portrait.jpg';
 
@@ -33,15 +33,28 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
       borderBottom: '1px solid var(--border-gold)',
       overflow: 'hidden'
     }}>
-      {/* Subtle Background Glow */}
+      {/* 1. Subtle Animated Sacred Background Radial Light */}
       <div style={{
         position: 'absolute',
         top: '-10%',
         right: '-5%',
-        width: 'clamp(300px, 40vw, 550px)',
-        height: 'clamp(300px, 40vw, 550px)',
+        width: 'clamp(320px, 45vw, 600px)',
+        height: 'clamp(320px, 45vw, 600px)',
         borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(217, 83, 30, 0.08) 0%, rgba(197, 155, 39, 0.05) 45%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(255, 183, 3, 0.12) 0%, rgba(217, 83, 30, 0.07) 40%, transparent 70%)',
+        pointerEvents: 'none',
+        zIndex: 0
+      }} />
+
+      {/* 2. Rotating Subtle Sacred Chakra Outline */}
+      <div className="animate-spin-slow" style={{
+        position: 'absolute',
+        top: '5%',
+        right: '4%',
+        width: '420px',
+        height: '420px',
+        borderRadius: '50%',
+        border: '1px dashed rgba(197, 155, 39, 0.18)',
         pointerEvents: 'none',
         zIndex: 0
       }} />
@@ -55,19 +68,19 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
         }}>
           {/* Left Hero Content */}
           <div>
-            {/* Spiritual Eyebrow */}
-            <div style={{
+            {/* Spiritual Eyebrow with Gentle Floating Levitation */}
+            <div className="animate-float" style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.5rem',
               backgroundColor: '#FDF3E7',
-              border: '1px solid rgba(217, 83, 30, 0.3)',
+              border: '1px solid rgba(217, 83, 30, 0.35)',
               borderRadius: 'var(--border-radius-full)',
               padding: '0.35rem 0.95rem',
               marginBottom: '1rem',
-              boxShadow: '0 2px 8px rgba(217, 83, 30, 0.08)'
+              boxShadow: '0 4px 14px rgba(217, 83, 30, 0.12)'
             }}>
-              <span className="diya-flame" style={{ fontSize: '1rem' }}>🪔</span>
+              <span className="diya-flame" style={{ fontSize: '1.05rem' }}>🪔</span>
               <span style={{
                 fontFamily: 'var(--font-heading)',
                 fontSize: 'clamp(0.8rem, 2vw, 0.92rem)',
@@ -102,7 +115,7 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
               {heroSubtitle}
             </p>
 
-            {/* Action Buttons */}
+            {/* Action Buttons with Shimmer Waves */}
             <div style={{
               display: 'flex',
               flexWrap: 'wrap',
@@ -111,7 +124,7 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
             }}>
               <button
                 onClick={scrollToAbout}
-                className="btn btn-lg btn-primary btn-mobile-full"
+                className="btn btn-lg btn-primary btn-mobile-full btn-shimmer"
                 style={{
                   boxShadow: '0 6px 18px rgba(122, 18, 29, 0.3)'
                 }}
@@ -122,7 +135,7 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
 
               <button
                 onClick={onOpenDonationModal}
-                className="btn btn-lg btn-green btn-mobile-full"
+                className="btn btn-lg btn-green btn-mobile-full btn-shimmer"
                 style={{
                   boxShadow: '0 6px 18px rgba(45, 106, 79, 0.3)'
                 }}
@@ -161,7 +174,7 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
               color: 'var(--text-muted)'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <span style={{ color: '#2D6A4F', fontWeight: 'bold' }}>✓</span>
+                <span className="live-pulse-dot" />
                 <span>दैनिक नित्य पूजा</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
@@ -175,16 +188,23 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
             </div>
           </div>
 
-          {/* Right Hero: Real Vishwakarma Bhagwan Deity Presentation with Balanced Zoom Out */}
-          <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          {/* Right Hero: Real Vishwakarma Bhagwan Deity Presentation with Golden Shimmer & Floating Aura */}
+          <div style={{ display: 'flex', justifyContent: 'center', width: '100%', position: 'relative' }}>
+            {/* Floating Spiritual Golden Sparks */}
+            <div className="floating-sparkle-1" style={{ top: '10%', right: '15%' }}>
+              <span style={{ fontSize: '1.2rem', color: '#FFD166', filter: 'drop-shadow(0 0 8px #FFAA00)' }}>✨</span>
+            </div>
+            <div className="floating-sparkle-2" style={{ bottom: '25%', left: '8%' }}>
+              <span style={{ fontSize: '1.1rem', color: '#FFB703', filter: 'drop-shadow(0 0 6px #D9531E)' }}>🌸</span>
+            </div>
+
             <div className="deity-halo-container" style={{ width: '100%', maxWidth: '440px' }}>
-              {/* Outer Traditional Golden Border Frame */}
-              <div style={{
+              {/* Animated Golden Shimmer Border Frame */}
+              <div className="gold-shimmer-border" style={{
                 position: 'relative',
                 zIndex: 1,
                 padding: '8px',
                 borderRadius: '24px',
-                background: 'linear-gradient(135deg, #DFB847 0%, #C59B27 40%, #7A121D 100%)',
                 boxShadow: '0 16px 40px rgba(43, 30, 22, 0.18)'
               }}>
                 <div style={{
@@ -198,7 +218,7 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
                   alignItems: 'center',
                   justifyContent: 'center'
                 }}>
-                  {/* Real Deity Image (Well proportioned and centered) */}
+                  {/* Real Deity Image */}
                   <img
                     src={heroImage}
                     alt="Lord Vishwakarma Bhagwan Idol - Chhapki, Saptari, Nepal"
@@ -211,6 +231,8 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
                       display: 'block',
                       transition: 'transform 0.4s ease'
                     }}
+                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.03)'}
+                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                   />
 
                   {/* Respectful Deity Caption Ribbon */}

@@ -11,7 +11,7 @@ const EventsSection = ({ events }) => {
         {/* Section Header */}
         <div className="section-header">
           <div className="section-eyebrow">
-            <span>🚩</span>
+            <span className="diya-flame">🚩</span>
             <span>{t('events.eyebrow')}</span>
           </div>
           <h2 className="section-title">{t('events.title')}</h2>
@@ -21,7 +21,7 @@ const EventsSection = ({ events }) => {
           </div>
         </div>
 
-        {/* Events Grid */}
+        {/* Events Grid with Interactive Cards */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -38,7 +38,7 @@ const EventsSection = ({ events }) => {
               return (
                 <div
                   key={event._id}
-                  className="temple-card"
+                  className="temple-card card-interactive"
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -53,8 +53,11 @@ const EventsSection = ({ events }) => {
                       style={{
                         width: '100%',
                         height: '100%',
-                        objectFit: 'cover'
+                        objectFit: 'cover',
+                        transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
                       }}
+                      onMouseEnter={(e) => e.target.style.transform = 'scale(1.06)'}
+                      onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                     />
                     
                     {/* Date Badge */}
@@ -67,7 +70,7 @@ const EventsSection = ({ events }) => {
                       padding: '4px 10px',
                       borderRadius: '10px',
                       textAlign: 'center',
-                      boxShadow: '0 4px 10px rgba(0,0,0,0.25)',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
                       border: '1px solid var(--color-gold)'
                     }}>
                       <div style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.5px', opacity: 0.9 }}>
@@ -78,8 +81,8 @@ const EventsSection = ({ events }) => {
                       </div>
                     </div>
 
-                    {/* Category Pill */}
-                    <div style={{
+                    {/* Category Pill with Soft Animation */}
+                    <div className="animate-float" style={{
                       position: 'absolute',
                       top: '12px',
                       right: '12px',
@@ -89,7 +92,8 @@ const EventsSection = ({ events }) => {
                       borderRadius: 'var(--border-radius-full)',
                       fontSize: '0.72rem',
                       fontWeight: '700',
-                      border: '1px solid var(--border-gold)'
+                      border: '1px solid var(--border-gold)',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
                     }}>
                       {event.category || 'उत्सव'}
                     </div>
@@ -143,7 +147,7 @@ const EventsSection = ({ events }) => {
                         href={event.meetingUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn btn-outline"
+                        className="btn btn-outline btn-shimmer"
                         style={{ width: '100%', gap: '0.5rem', minHeight: '44px' }}
                       >
                         <Video size={16} />
@@ -160,7 +164,8 @@ const EventsSection = ({ events }) => {
                         fontWeight: '600',
                         padding: '0.5rem',
                         border: '1px dashed var(--border-maroon)',
-                        borderRadius: '8px'
+                        borderRadius: '8px',
+                        backgroundColor: 'rgba(122, 18, 29, 0.02)'
                       }}>
                         <Sparkles size={13} color="#D4AF37" />
                         <span>सबै भक्तजनहरू सादर आमन्त्रित हुनुहुन्छ</span>

@@ -11,7 +11,7 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
         {/* Section Header */}
         <div className="section-header">
           <div className="section-eyebrow">
-            <span>🪔</span>
+            <span className="diya-flame">🪔</span>
             <span>{t('pooja.eyebrow')}</span>
           </div>
           <h2 className="section-title">{t('pooja.title')}</h2>
@@ -37,7 +37,7 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
               return (
                 <div
                   key={item._id}
-                  className="temple-card"
+                  className="temple-card card-interactive"
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -54,9 +54,9 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
-                        transition: 'transform 0.5s ease'
+                        transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
                       }}
-                      onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                      onMouseEnter={(e) => e.target.style.transform = 'scale(1.06)'}
                       onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                     />
                     
@@ -83,7 +83,7 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                     </div>
 
                     {item.featured && (
-                      <div style={{
+                      <div className="animate-float" style={{
                         position: 'absolute',
                         top: '12px',
                         left: '12px',
@@ -95,7 +95,8 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                         fontWeight: '700',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '4px'
+                        gap: '4px',
+                        boxShadow: '0 2px 8px rgba(255, 183, 3, 0.4)'
                       }}>
                         <Sparkles size={12} />
                         <span>विशेष सेवा</span>
@@ -137,10 +138,10 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                       {description}
                     </p>
 
-                    {/* Booking Action Button */}
+                    {/* Booking Action Button with Hover Shimmer */}
                     <button
                       onClick={() => onSelectPooja(item)}
-                      className="btn btn-outline"
+                      className="btn btn-outline btn-shimmer"
                       style={{
                         width: '100%',
                         backgroundColor: '#FFFFFF',

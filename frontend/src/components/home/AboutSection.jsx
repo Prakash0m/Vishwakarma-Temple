@@ -40,7 +40,7 @@ const AboutSection = ({ settings }) => {
   ];
 
   return (
-    <section id="about" className="section">
+    <section id="about" className="section" style={{ position: 'relative', overflow: 'hidden' }}>
       <div className="container">
         <div style={{
           display: 'grid',
@@ -48,14 +48,14 @@ const AboutSection = ({ settings }) => {
           gap: 'clamp(2rem, 4vw, 3.5rem)',
           alignItems: 'center'
         }}>
-          {/* Left Side: Real Temple Photograph with Perfect Zoom-out & Elevation Frame */}
+          {/* Left Side: Real Temple Photograph with Animated Golden Shimmer Frame */}
           <div>
-            <div style={{
+            <div className="gold-shimmer-border" style={{
               position: 'relative',
               borderRadius: '20px',
               padding: '6px',
-              background: 'linear-gradient(135deg, #C59B27 0%, rgba(122, 18, 29, 0.2) 100%)',
-              boxShadow: '0 14px 36px rgba(43, 30, 22, 0.12)'
+              boxShadow: '0 14px 36px rgba(43, 30, 22, 0.12)',
+              transition: 'transform 0.3s ease'
             }}>
               <div style={{
                 borderRadius: '16px',
@@ -74,25 +74,27 @@ const AboutSection = ({ settings }) => {
                     objectFit: 'cover',
                     objectPosition: 'center 40%',
                     display: 'block',
-                    transition: 'transform 0.4s ease'
+                    transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
                   }}
+                  onMouseEnter={(e) => e.target.style.transform = 'scale(1.04)'}
+                  onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                 />
               </div>
 
-              {/* Floating Real Temple Badge */}
-              <div style={{
+              {/* Floating Real Temple Badge with Smooth Float Animation */}
+              <div className="animate-float" style={{
                 position: 'absolute',
                 top: '-12px',
                 left: '16px',
                 backgroundColor: 'var(--color-primary)',
                 color: '#FFFFFF',
-                padding: '4px 12px',
+                padding: '5px 14px',
                 borderRadius: 'var(--border-radius-full)',
                 fontFamily: 'var(--font-heading)',
-                fontSize: '0.8rem',
+                fontSize: '0.82rem',
                 fontWeight: '700',
-                boxShadow: '0 4px 12px rgba(122, 18, 29, 0.3)',
-                border: '1px solid var(--color-gold)'
+                boxShadow: '0 6px 16px rgba(122, 18, 29, 0.35)',
+                border: '1.5px solid var(--color-gold)'
               }}>
                 🏛️ श्री विश्वकर्मा मन्दिर परिसर
               </div>
@@ -114,18 +116,22 @@ const AboutSection = ({ settings }) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                gap: '4px'
+                gap: '4px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.06)'
               }}>
                 <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>📍 छापकी (सप्तरी) • शिखर शैली</span>
-                <span style={{ color: '#2D6A4F', fontWeight: 'bold', flexShrink: 0 }}>✓ प्रमाणित तीर्थ</span>
+                <span style={{ color: '#2D6A4F', fontWeight: 'bold', flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <span className="live-pulse-dot" style={{ width: '6px', height: '6px' }} />
+                  प्रमाणित तीर्थ
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Right Side: Narrative & Mission */}
+          {/* Right Side: Narrative, Mission & Animated Stat Counters */}
           <div>
             <div className="section-eyebrow">
-              <span>🪷</span>
+              <span className="diya-flame">🪷</span>
               <span>{t('about.eyebrow')}</span>
             </div>
 
@@ -148,7 +154,8 @@ const AboutSection = ({ settings }) => {
               padding: '1rem 1.25rem',
               borderRadius: '0 12px 12px 0',
               marginBottom: '1.75rem',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
+              boxShadow: '0 4px 14px rgba(0,0,0,0.03)',
+              transition: 'transform 0.25s ease'
             }}>
               <div style={{
                 fontFamily: 'var(--font-heading)',
@@ -168,15 +175,16 @@ const AboutSection = ({ settings }) => {
               </p>
             </div>
 
-            {/* Statistics Counters with Clean Un-Truncated Layout */}
+            {/* Statistics Counters with Spring-like Micro-Bounce on Hover */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
               gap: '0.85rem'
             }}>
               {stats.map((st, index) => (
                 <div
                   key={index}
+                  className="stat-card-animated"
                   style={{
                     backgroundColor: 'var(--bg-cream-alt)',
                     borderRadius: 'var(--border-radius-md)',
@@ -188,16 +196,19 @@ const AboutSection = ({ settings }) => {
                     boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
                   }}
                 >
-                  <div style={{
-                    backgroundColor: '#FFFFFF',
-                    padding: '7px',
-                    borderRadius: '10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
-                    flexShrink: 0
-                  }}>
+                  <div
+                    className="stat-icon-wrapper"
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      padding: '8px',
+                      borderRadius: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+                      flexShrink: 0
+                    }}
+                  >
                     {st.icon}
                   </div>
                   <div style={{ minWidth: 0, flex: 1 }}>

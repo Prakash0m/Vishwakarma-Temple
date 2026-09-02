@@ -499,7 +499,86 @@ textarea.form-control {
   to { transform: scale(1); opacity: 1; }
 }
 
-/* Subtle Deity Halo Glow Effect */
+/* ==========================================================================
+   ENHANCED SPIRITUAL & MODERN ANIMATION SUITE
+   ========================================================================== */
+
+/* 1. Shimmering Golden Gradient Borders */
+@keyframes goldGlowAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gold-shimmer-border {
+  background: linear-gradient(135deg, #DFB847, #C59B27, #D9531E, #FFD166, #C59B27, #DFB847) !important;
+  background-size: 300% 300% !important;
+  animation: goldGlowAnimation 6s ease infinite !important;
+}
+
+/* 2. Shimmer / Shine Light Sweep on CTA Buttons */
+.btn-shimmer {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -70%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  animation: buttonShimmerSweep 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes buttonShimmerSweep {
+  0%, 65% { left: -70%; }
+  100% { left: 150%; }
+}
+
+/* 3. Diya Flicker with Dynamic Golden Drop Shadow */
+@keyframes diyaFlicker {
+  0% { transform: scale(1) rotate(0deg); opacity: 0.92; filter: drop-shadow(0 0 4px rgba(255, 183, 3, 0.6)); }
+  25% { transform: scale(1.08) rotate(-1.5deg); opacity: 1; filter: drop-shadow(0 0 10px rgba(255, 183, 3, 0.9)); }
+  50% { transform: scale(1.03) rotate(1deg); opacity: 0.95; filter: drop-shadow(0 0 6px rgba(217, 83, 30, 0.7)); }
+  75% { transform: scale(1.12) rotate(-0.5deg); opacity: 1; filter: drop-shadow(0 0 12px rgba(255, 209, 102, 1)); }
+  100% { transform: scale(1) rotate(0deg); opacity: 0.92; filter: drop-shadow(0 0 4px rgba(255, 183, 3, 0.6)); }
+}
+
+.diya-flame {
+  display: inline-block;
+  animation: diyaFlicker 2.2s infinite ease-in-out;
+  transform-origin: bottom center;
+}
+
+/* 4. Divine Deity Halo Radiance Breathing */
+@keyframes haloRadiance {
+  0% {
+    transform: translate(-50%, -50%) scale(0.92);
+    opacity: 0.5;
+    filter: blur(22px);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.12);
+    opacity: 0.85;
+    filter: blur(34px);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.92);
+    opacity: 0.5;
+    filter: blur(22px);
+  }
+}
+
 .deity-halo-container {
   position: relative;
   display: inline-block;
@@ -511,24 +590,120 @@ textarea.form-control {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 85%;
-  height: 85%;
+  width: 90%;
+  height: 90%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 183, 3, 0.35) 0%, rgba(217, 83, 30, 0.15) 50%, transparent 70%);
-  filter: blur(20px);
+  background: radial-gradient(circle, rgba(255, 183, 3, 0.45) 0%, rgba(217, 83, 30, 0.22) 50%, transparent 75%);
+  filter: blur(24px);
   z-index: 0;
   pointer-events: none;
+  animation: haloRadiance 5s ease-in-out infinite;
 }
 
-/* Diya Flicker Animation */
-@keyframes diyaFlicker {
-  0% { transform: scale(1); opacity: 0.9; }
-  50% { transform: scale(1.08) rotate(1deg); opacity: 1; filter: drop-shadow(0 0 8px rgba(255, 183, 3, 0.8)); }
-  100% { transform: scale(1); opacity: 0.9; }
+/* 5. Smooth Floating Micro-Motion */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-7px); }
 }
 
-.diya-flame {
-  animation: diyaFlicker 2s infinite ease-in-out;
+@keyframes floatSlowReverse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(6px) rotate(2deg); }
+}
+
+.animate-float {
+  animation: floatSlow 4s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: floatSlowReverse 5s ease-in-out infinite;
+}
+
+/* 6. Rotating Sacred Chakra Background Element */
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 32s linear infinite;
+}
+
+/* 7. Floating Petals & Golden Sparks in Hero */
+@keyframes petalDrift1 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  15% { opacity: 0.75; }
+  85% { opacity: 0.75; }
+  100% { transform: translate(45px, -90px) rotate(120deg); opacity: 0; }
+}
+
+@keyframes petalDrift2 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  20% { opacity: 0.85; }
+  80% { opacity: 0.85; }
+  100% { transform: translate(-40px, -110px) rotate(-140deg); opacity: 0; }
+}
+
+.floating-sparkle-1 {
+  position: absolute;
+  animation: petalDrift1 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.floating-sparkle-2 {
+  position: absolute;
+  animation: petalDrift2 7.5s cubic-bezier(0.4, 0, 0.2, 1) infinite 1.5s;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 8. Interactive Card 3D Hover Lift & Glow */
+.card-interactive {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease !important;
+}
+
+.card-interactive:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 14px 30px rgba(122, 18, 29, 0.12), 0 0 0 1px rgba(197, 155, 39, 0.35) !important;
+}
+
+/* 9. Interactive Stat Card Micro Bounce */
+.stat-card-animated {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, background-color 0.25s ease !important;
+  cursor: default;
+}
+
+.stat-card-animated:hover {
+  transform: translateY(-4px) scale(1.02) !important;
+  box-shadow: 0 8px 20px rgba(197, 155, 39, 0.18) !important;
+  background-color: #FFFFFF !important;
+  border-color: var(--color-gold) !important;
+}
+
+.stat-card-animated:hover .stat-icon-wrapper {
+  transform: scale(1.12) rotate(4deg);
+  background-color: var(--color-gold-subtle) !important;
+}
+
+.stat-icon-wrapper {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease;
+}
+
+/* 10. Live Indicator Pulse */
+@keyframes livePulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(45, 106, 79, 0.7); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(45, 106, 79, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(45, 106, 79, 0); }
+}
+
+.live-pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #2D6A4F;
+  border-radius: 50%;
+  display: inline-block;
+  animation: livePulse 1.8s infinite;
 }
 
 /* App-like Horizontal Filter Chip Scroll Bar */

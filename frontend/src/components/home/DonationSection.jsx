@@ -28,7 +28,7 @@ const DonationSection = ({ summary, settings, supporters, onOpenDonationModal })
         {/* Section Header */}
         <div className="section-header">
           <div className="section-eyebrow">
-            <span>🙏</span>
+            <span className="diya-flame">🙏</span>
             <span>{t('donation.eyebrow')}</span>
           </div>
           <h2 className="section-title">{t('donation.title')}</h2>
@@ -38,7 +38,7 @@ const DonationSection = ({ summary, settings, supporters, onOpenDonationModal })
           </div>
         </div>
 
-        {/* Top 4 Financial Counter KPI Cards */}
+        {/* Top 4 Financial Counter KPI Cards with Micro-Bounce */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
@@ -46,7 +46,7 @@ const DonationSection = ({ summary, settings, supporters, onOpenDonationModal })
           marginBottom: '2rem'
         }}>
           {/* Card 1: Total Donation */}
-          <div style={{
+          <div className="stat-card-animated" style={{
             backgroundColor: '#FFFFFF',
             borderRadius: 'var(--border-radius-md)',
             padding: '1rem 1.15rem',
@@ -65,12 +65,13 @@ const DonationSection = ({ summary, settings, supporters, onOpenDonationModal })
               रु. {totalDonation.toLocaleString('ne-NP')}
             </div>
             <div style={{ fontSize: '0.72rem', color: 'var(--color-green)', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
-              <span>✓ १००% पारदर्शी</span>
+              <span className="live-pulse-dot" style={{ width: '6px', height: '6px' }} />
+              <span>१००% पारदर्शी</span>
             </div>
           </div>
 
           {/* Card 2: Total Expense */}
-          <div style={{
+          <div className="stat-card-animated" style={{
             backgroundColor: '#FFFFFF',
             borderRadius: 'var(--border-radius-md)',
             padding: '1rem 1.15rem',
@@ -94,7 +95,7 @@ const DonationSection = ({ summary, settings, supporters, onOpenDonationModal })
           </div>
 
           {/* Card 3: Current Net Balance (Green) */}
-          <div style={{
+          <div className="stat-card-animated" style={{
             backgroundColor: 'var(--color-green-subtle)',
             borderRadius: 'var(--border-radius-md)',
             padding: '1rem 1.15rem',
@@ -118,7 +119,7 @@ const DonationSection = ({ summary, settings, supporters, onOpenDonationModal })
           </div>
 
           {/* Card 4: Total Members / Donors */}
-          <div style={{
+          <div className="stat-card-animated" style={{
             backgroundColor: '#FFFFFF',
             borderRadius: 'var(--border-radius-md)',
             padding: '1rem 1.15rem',
@@ -150,7 +151,7 @@ const DonationSection = ({ summary, settings, supporters, onOpenDonationModal })
           alignItems: 'stretch'
         }}>
           {/* Left Column: Bank Details & Digital QR Instructions */}
-          <div className="temple-card" style={{ padding: 'clamp(1.25rem, 3vw, 2rem)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div className="temple-card card-interactive" style={{ padding: 'clamp(1.25rem, 3vw, 2rem)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1rem' }}>
                 <Landmark size={20} color="#7A121D" />
@@ -241,11 +242,11 @@ const DonationSection = ({ summary, settings, supporters, onOpenDonationModal })
               </div>
             </div>
 
-            {/* Donation Action Button */}
+            {/* Donation Action Button with Shimmer Sweep */}
             <button
               onClick={onOpenDonationModal}
-              className="btn btn-lg btn-green"
-              style={{ width: '100%', gap: '0.5rem' }}
+              className="btn btn-lg btn-green btn-shimmer"
+              style={{ width: '100%', gap: '0.5rem', boxShadow: '0 6px 18px rgba(45, 106, 79, 0.3)' }}
             >
               <Heart size={18} />
               <span>{t('donation.submitReceiptBtn')}</span>
