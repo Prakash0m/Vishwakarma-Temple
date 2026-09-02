@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useToast } from '../../context/ToastContext';
 import api from '../../services/api';
+import { compressImageToBase64, getImageUrl } from '../../utils/imageOptimizer';
 import {
   Image as ImageIcon,
   Plus,
@@ -9,7 +10,8 @@ import {
   Edit2,
   X,
   Upload,
-  Sparkles
+  Sparkles,
+  CheckCircle2
 } from 'lucide-react';
 
 const GalleryView = () => {
@@ -81,7 +83,7 @@ const GalleryView = () => {
 
   const handleOpenEditModal = (item) => {
     setEditingItem(item);
-    setPreviewUrl(item.imageUrl);
+    setPreviewUrl(getImageUrl(item.imageUrl));
     setFormData({
       title: item.title,
       titleEnglish: item.titleEnglish || '',
@@ -107,21 +109,17 @@ const GalleryView = () => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const data = new FormData();
-    data.append('image', file);
-
     setUploading(true);
     try {
-      const res = await api.post('/upload', data, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-      if (res.data.success) {
-        setFormData(prev => ({ ...prev, imageUrl: res.data.url }));
-        setPreviewUrl(res.data.url);
-        addToast('तस्बिर सफलतापूर्वक अपलोड भयो।', 'success');
-      }
+      // 1. Optimize and compress image into a permanent Base64 Data URI
+      const optimizedBase64 = await compressImageToBase64(file, 1200, 1200, 0.85);
+      
+      setFormData(prev => ({ ...prev, imageUrl: optimizedBase64 }));
+      setPreviewUrl(optimizedBase64);
+      addToast('तस्बिर सफलतापूर्वक लोड भयो (Instant Ready)।', 'success');
     } catch (err) {
-      addToast('तस्बिर अपलोड गर्न सकिएन।', 'error');
+      console.error('Upload compression error:', err);
+      addToast('तस्बिर प्रोसेस गर्न सकिएन। कृपया अर्को तस्बिर छनौट गर्नुहोस्।', 'error');
     } finally {
       setUploading(false);
     }
@@ -192,7 +190,7 @@ const GalleryView = () => {
           </h2>
         </div>
 
-        <button onClick={handleOpenAddModal} className="btn btn-primary">
+        <button onClick={handleOpenAddModal} className="btn btn-primary btn-shimmer">
           <Plus size={16} />
           <span>नयाँ तस्बिर थप्नुहोस् (Add Photo)</span>
         </button>
@@ -241,14 +239,18 @@ const GalleryView = () => {
           filteredGallery.map((item) => (
             <div
               key={item._id}
-              className="temple-card"
-              style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+              className="temple-card card-interactive"
+              style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', backgroundColor: '#FFFFFF' }}
             >
-              <div style={{ position: 'relative', height: '190px', overflow: 'hidden' }}>
+              <div style={{ position: 'relative', height: '190px', overflow: 'hidden', backgroundColor: '#FAF7F2' }}>
                 <img
-                  src={item.imageUrl}
+                  src={getImageUrl(item.imageUrl)}
                   alt={item.title}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/assets/images/temple-structure.jpg';
+                  }}
                 />
                 <div style={{
                   position: 'absolute',
@@ -260,7 +262,8 @@ const GalleryView = () => {
                   fontSize: '0.72rem',
                   fontWeight: '700',
                   color: 'var(--color-primary-dark)',
-                  border: '1px solid var(--border-gold)'
+                  border: '1px solid var(--border-gold)',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
                 }}>
                   {item.categoryNepali || item.category}
                 </div>
@@ -323,30 +326,52 @@ const GalleryView = () => {
                 <div style={{
                   backgroundColor: 'var(--bg-cream-alt)',
                   borderRadius: '12px',
-                  padding: '1rem',
-                  border: '1px dashed var(--border-gold)',
+                  padding: '1.25rem',
+                  border: '1.5px dashed var(--border-gold)',
                   textAlign: 'center',
                   marginBottom: '1.25rem'
                 }}>
                   {previewUrl && (
-                    <img
-                      src={previewUrl}
-                      alt="Preview"
-                      style={{
-                        maxHeight: '160px',
-                        maxWidth: '100%',
-                        objectFit: 'contain',
-                        margin: '0 auto 10px auto',
-                        borderRadius: '8px',
-                        border: '1px solid var(--border-gold)'
-                      }}
-                    />
+                    <div style={{ position: 'relative', display: 'inline-block', marginBottom: '10px' }}>
+                      <img
+                        src={getImageUrl(previewUrl)}
+                        alt="Preview"
+                        style={{
+                          maxHeight: '170px',
+                          maxWidth: '100%',
+                          objectFit: 'contain',
+                          borderRadius: '8px',
+                          border: '1px solid var(--border-gold)',
+                          boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
+                        }}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = '/assets/images/temple-structure.jpg';
+                        }}
+                      />
+                      <div style={{
+                        position: 'absolute',
+                        bottom: '6px',
+                        right: '6px',
+                        backgroundColor: '#2D6A4F',
+                        color: '#FFF',
+                        padding: '2px 6px',
+                        borderRadius: '4px',
+                        fontSize: '0.7rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '3px'
+                      }}>
+                        <CheckCircle2 size={11} />
+                        <span>Ready</span>
+                      </div>
+                    </div>
                   )}
 
-                  <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem' }}>
-                    <label className="btn btn-sm btn-outline" style={{ cursor: 'pointer', backgroundColor: '#FFFFFF' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                    <label className="btn btn-sm btn-primary btn-shimmer" style={{ cursor: 'pointer' }}>
                       <Upload size={14} />
-                      <span>{uploading ? 'अपलोड हुँदैछ...' : 'कम्प्युटरबाट नयाँ तस्बिर छनौट गर्नुहोस्'}</span>
+                      <span>{uploading ? 'तस्बिर प्रोसेस हुँदैछ...' : 'कम्प्युटरबाट नयाँ फोटो छनौट गर्नुहोस्'}</span>
                       <input
                         type="file"
                         accept="image/*"
@@ -355,23 +380,31 @@ const GalleryView = () => {
                         disabled={uploading}
                       />
                     </label>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                      JPG, PNG, WebP supported • Automatic high-res optimization
+                    </span>
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">तस्बिरको URL / Asset Path</label>
+                  <label className="form-label">तस्बिर छनौट वा URL (Preset / Custom URL)</label>
                   <select
-                    value={formData.imageUrl}
+                    value={formData.imageUrl.startsWith('data:') ? 'custom' : formData.imageUrl}
                     onChange={(e) => {
-                      setFormData({ ...formData, imageUrl: e.target.value });
-                      setPreviewUrl(e.target.value);
+                      if (e.target.value !== 'custom') {
+                        setFormData({ ...formData, imageUrl: e.target.value });
+                        setPreviewUrl(e.target.value);
+                      }
                     }}
                     className="form-control"
                   >
+                    {formData.imageUrl.startsWith('data:') && (
+                      <option value="custom">✓ नयाँ अपलोड गरिएको तस्बिर (Custom Uploaded Image)</option>
+                    )}
+                    <option value="/assets/images/temple-structure.jpg">मन्दिर भवन तथा तुलसी मठ (Temple Structure)</option>
                     <option value="/assets/images/deity-portrait.jpg">भगवान विश्वकर्मा मुख्य विग्रह (Deity Portrait)</option>
                     <option value="/assets/images/deity-altar-lamps.jpg">गर्भगृह पञ्चदीप प्रज्वलन (Altar Lamps)</option>
                     <option value="/assets/images/deity-sanctum.jpg">पवित्र मण्डप पुष्प सज्जा (Sanctum Drapes)</option>
-                    <option value="/assets/images/temple-structure.jpg">मन्दिर भवन तथा तुलसी मठ (Temple Structure)</option>
                   </select>
                 </div>
 
@@ -433,7 +466,7 @@ const GalleryView = () => {
                   <button type="button" onClick={() => setIsModalOpen(false)} className="btn btn-outline">
                     रद्द गर्नुहोस्
                   </button>
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary btn-shimmer">
                     {editingItem ? 'परिवर्तन सुरक्षित गर्नुहोस्' : 'तस्बिर थप्नुहोस्'}
                   </button>
                 </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { ShieldCheck, Users, CalendarCheck, Sparkles, HeartHandshake } from 'lucide-react';
+import { getImageUrl } from '../../utils/imageOptimizer';
 
 const AboutSection = ({ settings }) => {
   const { language, t } = useLanguage();
@@ -66,7 +67,7 @@ const AboutSection = ({ settings }) => {
                 position: 'relative'
               }}>
                 <img
-                  src={aboutImage}
+                  src={getImageUrl(aboutImage)}
                   alt="Vishwakarma Temple Structure - Chhapki, Saptari, Nepal"
                   style={{
                     width: '100%',
@@ -75,6 +76,10 @@ const AboutSection = ({ settings }) => {
                     objectPosition: 'center 40%',
                     display: 'block',
                     transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+                  }}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/assets/images/temple-structure.jpg';
                   }}
                   onMouseEnter={(e) => e.target.style.transform = 'scale(1.04)'}
                   onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}

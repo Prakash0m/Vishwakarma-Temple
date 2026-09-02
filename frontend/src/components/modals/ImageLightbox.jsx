@@ -1,5 +1,6 @@
 import React from 'react';
 import { X } from 'lucide-react';
+import { getImageUrl } from '../../utils/imageOptimizer';
 
 const ImageLightbox = ({ image, onClose }) => {
   if (!image) return null;
@@ -66,7 +67,7 @@ const ImageLightbox = ({ image, onClose }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <img
-          src={image.imageUrl}
+          src={getImageUrl(image.imageUrl)}
           alt={image.title}
           style={{
             maxWidth: '100%',
@@ -74,7 +75,12 @@ const ImageLightbox = ({ image, onClose }) => {
             objectFit: 'contain',
             borderRadius: '12px',
             boxShadow: '0 12px 40px rgba(0, 0, 0, 0.6)',
-            border: '1.5px solid rgba(197, 155, 39, 0.4)'
+            border: '1.5px solid rgba(197, 155, 39, 0.4)',
+            backgroundColor: '#1F1510'
+          }}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = '/assets/images/temple-structure.jpg';
           }}
         />
 

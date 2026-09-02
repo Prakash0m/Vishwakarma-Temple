@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../../services/api';
 import { useLanguage } from '../../../context/LanguageContext';
+import { compressImageToBase64, getImageUrl } from '../../../utils/imageOptimizer';
 import {
   Award,
   Users,
@@ -12,7 +13,8 @@ import {
   XCircle,
   Image as ImageIcon,
   X,
-  Upload
+  Upload,
+  CheckCircle2
 } from 'lucide-react';
 
 const LeadershipView = () => {
@@ -21,6 +23,7 @@ const LeadershipView = () => {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editingCandidate, setEditingCandidate] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -89,6 +92,22 @@ const LeadershipView = () => {
     setShowModal(true);
   };
 
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const base64 = await compressImageToBase64(file, 800, 800, 0.85);
+      setFormData(prev => ({ ...prev, profileImage: base64 }));
+    } catch (err) {
+      console.error('Leadership photo upload error:', err);
+      alert('तस्बिर प्रोसेस गर्न सकिएन।');
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const handleToggleStatus = async (id) => {
     try {
       await api.patch(`/tole/leadership/${id}/status`);
@@ -142,18 +161,13 @@ const LeadershipView = () => {
 
         <button
           onClick={handleOpenAdd}
+          className="btn btn-primary btn-shimmer"
           style={{
-            backgroundColor: 'var(--color-primary)',
-            color: '#FFFFFF',
-            border: 'none',
-            borderRadius: '8px',
             padding: '0.65rem 1.25rem',
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
-            fontWeight: '600',
-            cursor: 'pointer',
-            boxShadow: '0 4px 12px rgba(122, 18, 29, 0.25)'
+            fontWeight: '600'
           }}
         >
           <Plus size={18} />
@@ -172,100 +186,113 @@ const LeadershipView = () => {
             कुनै उम्मेदवार दर्ता भएको छैन।
           </div>
         ) : (
-          candidates.map((c, idx) => (
-            <div
-              key={c._id}
-              style={{
-                backgroundColor: '#FFFFFF',
-                borderRadius: '16px',
-                border: c.status === 'Active' ? '2px solid var(--border-gold)' : '1px solid #E8E2D9',
-                overflow: 'hidden',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.04)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                position: 'relative'
-              }}
-            >
-              {/* Top Badge: Candidate Number */}
-              <div style={{ position: 'absolute', top: '12px', left: '12px', zIndex: 2, backgroundColor: 'var(--color-primary)', color: '#FFF', padding: '0.2rem 0.6rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: '700' }}>
-                उम्मेदवार #{idx + 1} ({c.candidateId})
-              </div>
+          candidates.map((c, idx) => {
+            const isLogo = c.profileImage?.includes('logo') || c.profileImage?.endsWith('.svg');
+            return (
+              <div
+                key={c._id}
+                className="temple-card card-interactive"
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: '16px',
+                  border: c.status === 'Active' ? '2px solid var(--border-gold)' : '1px solid #E8E2D9',
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.04)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  position: 'relative'
+                }}
+              >
+                {/* Top Badge: Candidate Number */}
+                <div style={{ position: 'absolute', top: '12px', left: '12px', zIndex: 2, backgroundColor: 'var(--color-primary)', color: '#FFF', padding: '0.2rem 0.6rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: '700' }}>
+                  उम्मेदवार #{idx + 1} ({c.candidateId})
+                </div>
 
-              {/* Status Badge */}
-              <div style={{ position: 'absolute', top: '12px', right: '12px', zIndex: 2 }}>
-                <button
-                  onClick={() => handleToggleStatus(c._id)}
-                  style={{
-                    backgroundColor: c.status === 'Active' ? '#2E7D32' : '#757575',
-                    color: '#FFF',
-                    border: 'none',
-                    padding: '0.2rem 0.6rem',
-                    borderRadius: '20px',
-                    fontSize: '0.72rem',
-                    fontWeight: '700',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {c.status === 'Active' ? '✓ सक्रिय' : 'निष्क्रिय'}
-                </button>
-              </div>
+                {/* Status Badge */}
+                <div style={{ position: 'absolute', top: '12px', right: '12px', zIndex: 2 }}>
+                  <button
+                    onClick={() => handleToggleStatus(c._id)}
+                    style={{
+                      backgroundColor: c.status === 'Active' ? '#2E7D32' : '#757575',
+                      color: '#FFF',
+                      border: 'none',
+                      padding: '0.2rem 0.6rem',
+                      borderRadius: '20px',
+                      fontSize: '0.72rem',
+                      fontWeight: '700',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {c.status === 'Active' ? '✓ सक्रिय' : 'निष्क्रिय'}
+                  </button>
+                </div>
 
-              <div>
-                {/* Image Container */}
-                <div style={{ width: '100%', height: '220px', backgroundColor: '#F0ECE4', position: 'relative', overflow: 'hidden' }}>
-                  <img
-                    src={c.profileImage || '/assets/images/deity-portrait.jpg'}
-                    alt={c.fullName}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    onError={(e) => { e.target.src = '/assets/images/deity-portrait.jpg'; }}
-                  />
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%)' }} />
-                  <div style={{ position: 'absolute', bottom: '10px', left: '12px', right: '12px', color: '#FFF' }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: '700', color: '#FFD166' }}>
-                      {c.positionDevanagari || c.position}
+                <div>
+                  {/* Image Container */}
+                  <div style={{ width: '100%', height: '220px', backgroundColor: isLogo ? '#38060D' : '#FAF7F2', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <img
+                      src={getImageUrl(c.profileImage)}
+                      alt={c.fullName}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: isLogo ? 'contain' : 'cover',
+                        objectPosition: isLogo ? 'center' : 'center 22%',
+                        padding: isLogo ? '20px' : '0'
+                      }}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/assets/images/deity-portrait.jpg';
+                      }}
+                    />
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%)' }} />
+                    <div style={{ position: 'absolute', bottom: '10px', left: '12px', right: '12px', color: '#FFF' }}>
+                      <div style={{ fontSize: '0.8rem', fontWeight: '700', color: '#FFD166' }}>
+                        {c.positionDevanagari || c.position}
+                      </div>
+                      <div style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-heading)' }}>
+                        {c.fullNameDevanagari || c.fullName}
+                      </div>
                     </div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-heading)' }}>
-                      {c.fullNameDevanagari || c.fullName}
+                  </div>
+
+                  {/* Content */}
+                  <div style={{ padding: '1rem' }}>
+                    <div style={{ fontSize: '0.8rem', color: '#666', marginBottom: '0.5rem' }}>
+                      घर नम्बर: <strong>{c.houseNumber || '१०१'}</strong> • फोन: <strong>{c.phone}</strong>
                     </div>
+
+                    <p style={{ fontSize: '0.82rem', color: '#444', lineHeight: 1.4, margin: 0, minHeight: '50px' }}>
+                      {c.bio || 'छापकी टोलको विकास, धार्मिक तथा सामाजिक कार्यहरूमा नेतृत्वदायी भूमिका।'}
+                    </p>
                   </div>
                 </div>
 
-                {/* Content */}
-                <div style={{ padding: '1rem' }}>
-                  <div style={{ fontSize: '0.8rem', color: '#666', marginBottom: '0.5rem' }}>
-                    घर नम्बर: <strong>{c.houseNumber || '१०१'}</strong> • फोन: <strong>{c.phone}</strong>
+                {/* Actions Footer */}
+                <div style={{ padding: '0.75rem 1rem', borderTop: '1px solid #F0ECE4', backgroundColor: '#FAF7F2', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.72rem', color: '#888' }}>
+                    क्रम: {c.displayOrder}
+                  </span>
+                  <div style={{ display: 'flex', gap: '0.4rem' }}>
+                    <button
+                      onClick={() => handleOpenEdit(c)}
+                      style={{ padding: '0.35rem 0.6rem', borderRadius: '6px', border: '1px solid #D0C9BE', backgroundColor: '#FFF', color: '#555', cursor: 'pointer', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                    >
+                      <Edit2 size={13} />
+                      <span>सम्पादन</span>
+                    </button>
+                    <button
+                      onClick={() => handleDelete(c._id, c.fullName)}
+                      style={{ padding: '0.35rem 0.6rem', borderRadius: '6px', border: '1px solid #FFCDD2', backgroundColor: '#FFF', color: '#C62828', cursor: 'pointer', fontSize: '0.78rem' }}
+                    >
+                      <Trash2 size={13} />
+                    </button>
                   </div>
-
-                  <p style={{ fontSize: '0.82rem', color: '#444', lineHeight: 1.4, margin: 0, minHeight: '50px' }}>
-                    {c.bio || 'छापकी टोलको विकास, धार्मिक तथा सामाजिक कार्यहरूमा नेतृत्वदायी भूमिका।'}
-                  </p>
                 </div>
               </div>
-
-              {/* Actions Footer */}
-              <div style={{ padding: '0.75rem 1rem', borderTop: '1px solid #F0ECE4', backgroundColor: '#FAF7F2', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.72rem', color: '#888' }}>
-                  क्रम: {c.displayOrder}
-                </span>
-                <div style={{ display: 'flex', gap: '0.4rem' }}>
-                  <button
-                    onClick={() => handleOpenEdit(c)}
-                    style={{ padding: '0.35rem 0.6rem', borderRadius: '6px', border: '1px solid #D0C9BE', backgroundColor: '#FFF', color: '#555', cursor: 'pointer', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
-                  >
-                    <Edit2 size={13} />
-                    <span>सम्पादन</span>
-                  </button>
-                  <button
-                    onClick={() => handleDelete(c._id, c.fullName)}
-                    style={{ padding: '0.35rem 0.6rem', borderRadius: '6px', border: '1px solid #FFCDD2', backgroundColor: '#FFF', color: '#C62828', cursor: 'pointer', fontSize: '0.78rem' }}
-                  >
-                    <Trash2 size={13} />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
 
@@ -339,15 +366,67 @@ const LeadershipView = () => {
                 </div>
               </div>
 
+              {/* Upload Photo with Live Preview */}
+              <div style={{
+                backgroundColor: 'var(--bg-cream-alt)',
+                borderRadius: '12px',
+                padding: '1rem',
+                border: '1.5px dashed var(--border-gold)',
+                marginBottom: '1rem',
+                textAlign: 'center'
+              }}>
+                {formData.profileImage && (
+                  <img
+                    src={getImageUrl(formData.profileImage)}
+                    alt="Preview"
+                    style={{
+                      width: '80px',
+                      height: '80px',
+                      borderRadius: '50%',
+                      objectFit: 'cover',
+                      margin: '0 auto 8px auto',
+                      border: '2px solid var(--color-gold)',
+                      display: 'block'
+                    }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/assets/images/deity-portrait.jpg';
+                    }}
+                  />
+                )}
+                <label className="btn btn-sm btn-outline" style={{ cursor: 'pointer', backgroundColor: '#FFFFFF' }}>
+                  <Upload size={14} />
+                  <span>{uploading ? 'तस्बिर लोड हुँदैछ...' : 'कम्प्युटरबाट नयाँ फोटो छनौट गर्नुहोस्'}</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileUpload}
+                    style={{ display: 'none' }}
+                    disabled={uploading}
+                  />
+                </label>
+              </div>
+
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', marginBottom: '0.35rem' }}>फोटो URL / Path (Profile Image)</label>
-                <input
-                  type="text"
-                  placeholder="/assets/images/deity-portrait.jpg"
-                  value={formData.profileImage}
-                  onChange={(e) => setFormData(prev => ({ ...prev, profileImage: e.target.value }))}
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', marginBottom: '0.35rem' }}>फोटो Preset वा URL</label>
+                <select
+                  value={formData.profileImage.startsWith('data:') ? 'custom' : formData.profileImage}
+                  onChange={(e) => {
+                    if (e.target.value !== 'custom') {
+                      setFormData(prev => ({ ...prev, profileImage: e.target.value }));
+                    }
+                  }}
                   style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', border: '1px solid #D0C9BE' }}
-                />
+                >
+                  {formData.profileImage.startsWith('data:') && (
+                    <option value="custom">✓ नयाँ अपलोड गरिएको तस्बिर (Custom Upload)</option>
+                  )}
+                  <option value="/assets/images/deity-altar-lamps.jpg">पण्डित / पुजारी तस्बिर (Altar Lamps)</option>
+                  <option value="/assets/images/temple-structure.jpg">मन्दिर भवन तथा तुलसी मठ (Temple Structure)</option>
+                  <option value="/assets/images/deity-portrait.jpg">भगवान विश्वकर्मा विग्रह (Lord Vishwakarma)</option>
+                  <option value="/assets/images/deity-sanctum.jpg">गर्भगृह मण्डप (Sanctum Drapes)</option>
+                  <option value="/assets/images/temple-logo.svg">मन्दिर आधिकारिक लोगो (Official Emblem)</option>
+                </select>
               </div>
 
               <div style={{ marginBottom: '1rem' }}>

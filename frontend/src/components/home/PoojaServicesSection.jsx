@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { Clock, Sparkles, Send } from 'lucide-react';
+import { getImageUrl } from '../../utils/imageOptimizer';
 
 const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
   const { language, t, getLocalized } = useLanguage();
@@ -48,13 +49,17 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                   {/* Card Image Banner */}
                   <div style={{ position: 'relative', height: '190px', overflow: 'hidden' }}>
                     <img
-                      src={image}
+                      src={getImageUrl(image)}
                       alt={title}
                       style={{
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
                         transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+                      }}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/assets/images/deity-altar-lamps.jpg';
                       }}
                       onMouseEnter={(e) => e.target.style.transform = 'scale(1.06)'}
                       onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}

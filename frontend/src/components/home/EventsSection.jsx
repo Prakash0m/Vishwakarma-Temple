@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { Clock, MapPin, Video, Sparkles } from 'lucide-react';
+import { getImageUrl } from '../../utils/imageOptimizer';
 
 const EventsSection = ({ events }) => {
   const { language, t, getLocalized } = useLanguage();
@@ -48,13 +49,17 @@ const EventsSection = ({ events }) => {
                   {/* Event Banner */}
                   <div style={{ position: 'relative', height: '180px', overflow: 'hidden' }}>
                     <img
-                      src={event.bannerImage || '/assets/images/temple-structure.jpg'}
+                      src={getImageUrl(event.bannerImage)}
                       alt={title}
                       style={{
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
                         transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+                      }}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/assets/images/temple-structure.jpg';
                       }}
                       onMouseEnter={(e) => e.target.style.transform = 'scale(1.06)'}
                       onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}

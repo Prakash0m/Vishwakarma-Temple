@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { ZoomIn } from 'lucide-react';
 import ImageLightbox from '../modals/ImageLightbox';
+import { getImageUrl } from '../../utils/imageOptimizer';
 
 const GallerySection = ({ gallery }) => {
   const { language, t, getLocalized } = useLanguage();
@@ -30,7 +31,7 @@ const GallerySection = ({ gallery }) => {
         {/* Section Header */}
         <div className="section-header">
           <div className="section-eyebrow">
-            <span>📷</span>
+            <span className="diya-flame">📷</span>
             <span>{t('gallery.eyebrow')}</span>
           </div>
           <h2 className="section-title">{t('gallery.title')}</h2>
@@ -86,11 +87,12 @@ const GallerySection = ({ gallery }) => {
               return (
                 <div
                   key={item._id}
+                  className="temple-card card-interactive"
                   style={{
                     position: 'relative',
                     borderRadius: '16px',
                     overflow: 'hidden',
-                    backgroundColor: 'var(--bg-cream-alt)',
+                    backgroundColor: '#FAF7F2',
                     border: '1px solid var(--border-gold)',
                     boxShadow: 'var(--shadow-sm)',
                     cursor: 'pointer',
@@ -99,17 +101,21 @@ const GallerySection = ({ gallery }) => {
                   onClick={() => setLightboxImage(item)}
                 >
                   <img
-                    src={item.imageUrl}
+                    src={getImageUrl(item.imageUrl)}
                     alt={title}
                     style={{
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
                       objectPosition: 'center 25%',
-                      transition: 'transform 0.4s ease'
+                      transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
                     }}
-                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.06)'}
                     onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/assets/images/temple-structure.jpg';
+                    }}
                   />
 
                   {/* Gradient Overlay & Hover Caption */}
@@ -121,7 +127,8 @@ const GallerySection = ({ gallery }) => {
                     flexDirection: 'column',
                     justifyContent: 'flex-end',
                     padding: '0.85rem',
-                    color: '#FFFFFF'
+                    color: '#FFFFFF',
+                    pointerEvents: 'none'
                   }}>
                     <div style={{
                       display: 'flex',

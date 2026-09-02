@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { Heart, Sparkles, Video, ChevronRight } from 'lucide-react';
+import { getImageUrl } from '../../utils/imageOptimizer';
 
 const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
   const { language, t } = useLanguage();
@@ -220,7 +221,7 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
                 }}>
                   {/* Real Deity Image */}
                   <img
-                    src={heroImage}
+                    src={getImageUrl(heroImage)}
                     alt="Lord Vishwakarma Bhagwan Idol - Chhapki, Saptari, Nepal"
                     style={{
                       width: '100%',
@@ -230,6 +231,10 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
                       borderRadius: '14px',
                       display: 'block',
                       transition: 'transform 0.4s ease'
+                    }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/assets/images/deity-portrait.jpg';
                     }}
                     onMouseEnter={(e) => e.target.style.transform = 'scale(1.03)'}
                     onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
