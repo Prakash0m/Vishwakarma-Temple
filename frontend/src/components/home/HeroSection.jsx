@@ -1,9 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { Heart, Sparkles, Video, ChevronRight } from 'lucide-react';
+import { Heart, Sparkles, Video, ChevronRight, ChevronLeft, Eye, Play, Pause } from 'lucide-react';
 import { getImageUrl } from '../../utils/imageOptimizer';
 
-const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
+const DEFAULT_SLIDES = [
+  {
+    _id: 'default-1',
+    title: 'भगवान श्री विश्वकर्माको मुख्य दिव्य विग्रह',
+    subtitle: 'गर्भगृह दिव्य विग्रह दर्शन • छापकी, सप्तरी',
+    imageUrl: '/assets/images/deity-portrait.jpg',
+    categoryNepali: 'भगवान'
+  },
+  {
+    _id: 'default-2',
+    title: 'गर्भगृह पञ्चदीप प्रज्वलन तथा पूजा आराधना',
+    subtitle: 'पाँच दियोहरूको पवित्र ज्योति एवं आरती स्वरूप',
+    imageUrl: '/assets/images/deity-altar-lamps.jpg',
+    categoryNepali: 'पूजा'
+  },
+  {
+    _id: 'default-3',
+    title: 'पवित्र मण्डप तथा पुष्प सज्जा दर्शन',
+    subtitle: 'कमल, सयपत्री र गुलाफका मालाले सजिएको मण्डप',
+    imageUrl: '/assets/images/deity-sanctum.jpg',
+    categoryNepali: 'पूजा'
+  },
+  {
+    _id: 'default-4',
+    title: 'श्री विश्वकर्मा मन्दिर भवन तथा तुलसी मठ',
+    subtitle: 'शिखर शैलीको मन्दिर भवन र खुला प्राङ्गण',
+    imageUrl: '/assets/images/temple-structure.jpg',
+    categoryNepali: 'मन्दिर'
+  }
+];
+
+const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal }) => {
   const { language, t } = useLanguage();
 
   const heroEyebrow = language === 'ne'
@@ -18,12 +49,60 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
     ? (settings?.heroSubtitleNepali || 'सृष्टि, वास्तुकला, विज्ञान र शिल्पकलाका अधिष्ठाता भगवान विश्वकर्माको पवित्र प्राङ्गणमा हार्दिक नमन गर्दछौं।')
     : (settings?.heroSubtitleEnglish || 'Devoted to the divine supreme architect, engineer, and cosmic creator. Experience peace, prayers, and community harmony.');
 
-  const heroImage = settings?.heroImage || '/assets/images/deity-portrait.jpg';
+  // Extract slides from gallery (priority to featured, then all gallery items)
+  const dynamicSlides = gallery && gallery.length > 0
+    ? gallery.slice(0, 8).map(item => ({
+        _id: item._id,
+        title: item.title,
+        subtitle: item.description || (item.categoryNepali ? `${item.categoryNepali} दर्शन • छापकी, सप्तरी` : 'पवित्र दर्शन'),
+        imageUrl: item.imageUrl,
+        categoryNepali: item.categoryNepali || item.category
+      }))
+    : DEFAULT_SLIDES;
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
+  // Autoplay Timer (4.5s interval)
+  useEffect(() => {
+    if (isPaused || dynamicSlides.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % dynamicSlides.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isPaused, dynamicSlides.length]);
+
+  const goToPrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? dynamicSlides.length - 1 : prev - 1));
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % dynamicSlides.length);
+  };
+
+  // Mobile Swipe Support
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current;
+    if (diff > 50) goToNext();
+    if (diff < -50) goToPrev();
+  };
 
   const scrollToAbout = () => {
     const el = document.getElementById('about');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const currentSlide = dynamicSlides[currentIndex] || dynamicSlides[0];
 
   return (
     <section id="hero" style={{
@@ -63,13 +142,13 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))',
           alignItems: 'center',
           gap: 'clamp(1.75rem, 4vw, 3rem)'
         }}>
           {/* Left Hero Content */}
           <div>
-            {/* Spiritual Eyebrow with Gentle Floating Levitation */}
+            {/* Spiritual Eyebrow with Floating Levitation */}
             <div className="animate-float" style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -189,13 +268,20 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
             </div>
           </div>
 
-          {/* Right Hero: Real Vishwakarma Bhagwan Deity Presentation with Golden Shimmer & Floating Aura */}
-          <div style={{ display: 'flex', justifyContent: 'center', width: '100%', position: 'relative' }}>
+          {/* Right Hero: DYNAMIC GALLERY IMAGE SLIDER (PART 18) */}
+          <div
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', position: 'relative' }}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             {/* Floating Spiritual Golden Sparks */}
-            <div className="floating-sparkle-1" style={{ top: '10%', right: '15%' }}>
+            <div className="floating-sparkle-1" style={{ top: '6%', right: '12%' }}>
               <span style={{ fontSize: '1.2rem', color: '#FFD166', filter: 'drop-shadow(0 0 8px #FFAA00)' }}>✨</span>
             </div>
-            <div className="floating-sparkle-2" style={{ bottom: '25%', left: '8%' }}>
+            <div className="floating-sparkle-2" style={{ bottom: '22%', left: '4%' }}>
               <span style={{ fontSize: '1.1rem', color: '#FFB703', filter: 'drop-shadow(0 0 6px #D9531E)' }}>🌸</span>
             </div>
 
@@ -219,10 +305,11 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
                   alignItems: 'center',
                   justifyContent: 'center'
                 }}>
-                  {/* Real Deity Image */}
+                  {/* Real Dynamic Slider Image with Smooth Fade Transition */}
                   <img
-                    src={getImageUrl(heroImage)}
-                    alt="Lord Vishwakarma Bhagwan Idol - Chhapki, Saptari, Nepal"
+                    key={currentSlide._id || currentIndex}
+                    src={getImageUrl(currentSlide.imageUrl)}
+                    alt={currentSlide.title}
                     style={{
                       width: '100%',
                       height: '100%',
@@ -230,15 +317,93 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
                       objectPosition: 'center 22%',
                       borderRadius: '14px',
                       display: 'block',
-                      transition: 'transform 0.4s ease'
+                      animation: 'fadeIn 0.5s ease-in-out'
                     }}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = '/assets/images/deity-portrait.jpg';
                     }}
-                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.03)'}
-                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                   />
+
+                  {/* Previous Slide Button */}
+                  {dynamicSlides.length > 1 && (
+                    <button
+                      onClick={goToPrev}
+                      style={{
+                        position: 'absolute',
+                        left: '10px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: '50%',
+                        backgroundColor: 'rgba(255,255,255,0.85)',
+                        border: '1px solid var(--border-gold)',
+                        color: 'var(--color-primary-dark)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                        zIndex: 3,
+                        transition: 'all 0.2s ease'
+                      }}
+                      aria-label="Previous Slide"
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
+                  )}
+
+                  {/* Next Slide Button */}
+                  {dynamicSlides.length > 1 && (
+                    <button
+                      onClick={goToNext}
+                      style={{
+                        position: 'absolute',
+                        right: '10px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: '50%',
+                        backgroundColor: 'rgba(255,255,255,0.85)',
+                        border: '1px solid var(--border-gold)',
+                        color: 'var(--color-primary-dark)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                        zIndex: 3,
+                        transition: 'all 0.2s ease'
+                      }}
+                      aria-label="Next Slide"
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                  )}
+
+                  {/* Slide Category & Counter Top Badge */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '12px',
+                    left: '12px',
+                    backgroundColor: 'rgba(10, 6, 4, 0.75)',
+                    backdropFilter: 'blur(4px)',
+                    color: '#FFD166',
+                    padding: '2px 8px',
+                    borderRadius: '12px',
+                    fontSize: '0.72rem',
+                    fontWeight: '700',
+                    zIndex: 2,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}>
+                    <span>{currentSlide.categoryNepali || 'दर्शन'}</span>
+                    <span>•</span>
+                    <span>{currentIndex + 1}/{dynamicSlides.length}</span>
+                  </div>
 
                   {/* Respectful Deity Caption Ribbon */}
                   <div style={{
@@ -257,14 +422,15 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
                     justifyContent: 'space-between',
                     gap: '6px',
                     border: '1px solid rgba(197, 155, 39, 0.4)',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                    zIndex: 2
                   }}>
                     <div style={{ minWidth: 0, overflow: 'hidden' }}>
                       <div style={{ fontFamily: 'var(--font-heading)', fontSize: '0.88rem', fontWeight: '700', color: '#FFD166', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        श्री विश्वकर्मा भगवान
+                        {currentSlide.title}
                       </div>
                       <div style={{ fontSize: '0.72rem', opacity: 0.9, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        गर्भगृह दिव्य विग्रह दर्शन • छापकी, सप्तरी
+                        {currentSlide.subtitle}
                       </div>
                     </div>
                     <span className="diya-flame" style={{ fontSize: '1.1rem', flexShrink: 0 }}>🪔</span>
@@ -272,6 +438,65 @@ const HeroSection = ({ settings, meetingData, onOpenDonationModal }) => {
                 </div>
               </div>
             </div>
+
+            {/* Slider Dots Indicator & Thumbnail Navigation (PART 18) */}
+            {dynamicSlides.length > 1 && (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', marginTop: '12px', zIndex: 2 }}>
+                {/* Dots */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  {dynamicSlides.map((slide, idx) => (
+                    <button
+                      key={slide._id || idx}
+                      onClick={() => setCurrentIndex(idx)}
+                      style={{
+                        width: currentIndex === idx ? '22px' : '8px',
+                        height: '8px',
+                        borderRadius: '4px',
+                        backgroundColor: currentIndex === idx ? 'var(--color-primary)' : 'rgba(122, 18, 29, 0.25)',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: 0,
+                        transition: 'all 0.3s ease'
+                      }}
+                      aria-label={`Slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+
+                {/* Mini Thumbnails */}
+                <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', maxWidth: '320px', padding: '2px' }}>
+                  {dynamicSlides.map((slide, idx) => (
+                    <button
+                      key={'thumb-' + (slide._id || idx)}
+                      onClick={() => setCurrentIndex(idx)}
+                      style={{
+                        width: '38px',
+                        height: '38px',
+                        borderRadius: '6px',
+                        overflow: 'hidden',
+                        padding: 0,
+                        border: currentIndex === idx ? '2px solid var(--color-primary)' : '1px solid var(--border-gold)',
+                        opacity: currentIndex === idx ? 1 : 0.6,
+                        cursor: 'pointer',
+                        flexShrink: 0,
+                        transition: 'all 0.2s ease',
+                        backgroundColor: '#FAF7F2'
+                      }}
+                    >
+                      <img
+                        src={getImageUrl(slide.imageUrl)}
+                        alt={`Thumb ${idx + 1}`}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = '/assets/images/temple-structure.jpg';
+                        }}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

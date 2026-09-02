@@ -9,28 +9,39 @@ const gallerySchema = new mongoose.Schema(
     },
     titleEnglish: {
       type: String,
-      default: ''
+      default: '',
+      trim: true
     },
-    imageUrl: {
+    description: {
       type: String,
-      required: [true, 'Image URL is required']
+      default: '',
+      trim: true
     },
     category: {
       type: String,
-      enum: ['Temple', 'Bhagwan', 'Pooja', 'Events', 'Devotees', 'Donation', 'Festival', 'Other'],
+      enum: ['Temple', 'Bhagwan', 'Pooja', 'Events', 'Bhajan', 'Devotees', 'Donation', 'Festival', 'Other'],
       default: 'Temple'
     },
     categoryNepali: {
       type: String,
       default: 'मन्दिर'
     },
+    imageUrl: {
+      type: String,
+      required: [true, 'Image URL is required']
+    },
+    blobPathname: {
+      type: String,
+      default: ''
+    },
+    altText: {
+      type: String,
+      default: '',
+      trim: true
+    },
     isFeatured: {
       type: Boolean,
       default: false
-    },
-    description: {
-      type: String,
-      default: ''
     },
     order: {
       type: Number,
@@ -40,6 +51,6 @@ const gallerySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-gallerySchema.index({ category: 1, isFeatured: 1 });
+gallerySchema.index({ category: 1, isFeatured: 1, order: 1 });
 
 export default mongoose.model('Gallery', gallerySchema);

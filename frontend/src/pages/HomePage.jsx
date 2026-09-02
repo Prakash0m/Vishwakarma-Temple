@@ -116,9 +116,10 @@ const HomePage = () => {
         onOpenToleFundModal={() => setIsToleFundModalOpen(true)}
       />
 
-      {/* 2. Hero Section */}
+      {/* 2. Hero Section with Dynamic Gallery Slider */}
       <HeroSection
         settings={settings}
+        gallery={gallery}
         meetingData={meetingData}
         onOpenDonationModal={() => setIsDonationModalOpen(true)}
         onOpenToleFundModal={() => setIsToleFundModalOpen(true)}
