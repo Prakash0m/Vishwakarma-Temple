@@ -60,7 +60,7 @@ export const seedDatabase = async () => {
         heroTitleEnglish: 'Welcome to the Divine Presence of Lord Vishwakarma',
         heroSubtitleNepali: 'सृष्टि, वास्तुकला, विज्ञान र शिल्पकलाका अधिष्ठाता भगवान विश्वकर्माको पवित्र भूमि छापकी, सप्तरी (मधेश प्रदेश) मा हार्दिक स्वागत गर्दछौं।',
         heroSubtitleEnglish: 'Devoted to the supreme divine architect, engineer, and cosmic creator. Experience spirituality, peace, Vedic pujas, and community seva in Chhapki, Saptari.',
-        heroImage: '/assets/images/deity-portrait.jpg',
+        heroImage: '/assets/images/deity-hd-transparent.png',
         aboutTitleNepali: 'हाम्रो मन्दिरको बारेमा',
         aboutTitleEnglish: 'About Vishwakarma Temple',
         aboutDescriptionNepali: 'सप्तरी जिल्लाको अग्निसाइर कृष्णासवरण गाउँपालिका वडा नं. ५, छापकीको पवित्र भूमिमा अवस्थित श्री विश्वकर्मा मन्दिर शिल्पकार, प्राविधिक, श्रमिक तथा सम्पूर्ण श्रद्धालु भक्तजनहरूको आस्था र भक्तिको केन्द्र हो। मन्दिरले दैनिक पूजा, विशेष अनुष्ठान, सांस्कृतिक संरक्षण र सामाजिक सेवाका कार्यहरू निरन्तर सञ्चालन गर्दै आएको छ।',

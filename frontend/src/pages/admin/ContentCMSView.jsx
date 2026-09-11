@@ -29,7 +29,7 @@ const ContentCMSView = () => {
     heroTitleEnglish: 'Welcome to the Divine Presence of Lord Vishwakarma',
     heroSubtitleNepali: '',
     heroSubtitleEnglish: '',
-    heroImage: '/assets/images/deity-portrait.jpg',
+    heroImage: '/assets/images/deity-hd-transparent.png',
     aboutTitleNepali: 'हाम्रो मन्दिरको बारेमा',
     aboutTitleEnglish: 'About Vishwakarma Temple',
     aboutDescriptionNepali: '',

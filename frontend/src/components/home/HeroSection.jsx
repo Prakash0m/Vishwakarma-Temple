@@ -1,40 +1,61 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { Heart, Sparkles, Video, ChevronRight, ChevronLeft, Eye, Play, Pause } from 'lucide-react';
+import { Heart, ChevronRight, Video } from 'lucide-react';
 import { getImageUrl } from '../../utils/imageOptimizer';
 
-const DEFAULT_SLIDES = [
-  {
-    _id: 'default-1',
-    title: 'भगवान श्री विश्वकर्माको मुख्य दिव्य विग्रह',
-    subtitle: 'गर्भगृह दिव्य विग्रह दर्शन • छापकी, सप्तरी',
-    imageUrl: '/assets/images/deity-portrait.jpg',
-    categoryNepali: 'भगवान'
-  },
-  {
-    _id: 'default-2',
-    title: 'गर्भगृह पञ्चदीप प्रज्वलन तथा पूजा आराधना',
-    subtitle: 'पाँच दियोहरूको पवित्र ज्योति एवं आरती स्वरूप',
-    imageUrl: '/assets/images/deity-altar-lamps.jpg',
-    categoryNepali: 'पूजा'
-  },
-  {
-    _id: 'default-3',
-    title: 'पवित्र मण्डप तथा पुष्प सज्जा दर्शन',
-    subtitle: 'कमल, सयपत्री र गुलाफका मालाले सजिएको मण्डप',
-    imageUrl: '/assets/images/deity-sanctum.jpg',
-    categoryNepali: 'पूजा'
-  },
-  {
-    _id: 'default-4',
-    title: 'श्री विश्वकर्मा मन्दिर भवन तथा तुलसी मठ',
-    subtitle: 'शिखर शैलीको मन्दिर भवन र खुला प्राङ्गण',
-    imageUrl: '/assets/images/temple-structure.jpg',
-    categoryNepali: 'मन्दिर'
-  }
-];
+// Outer 24-Ray Sacred Surya Chakra & Lotus Spoke Wheel
+const OuterChakraSVG = () => (
+  <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
+    <defs>
+      <linearGradient id="outerChakraGold" x1="0" y1="0" x2="400" y2="400" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stopColor="#FFE89E" stopOpacity="0.85" />
+        <stop offset="50%" stopColor="#D4AF37" stopOpacity="0.65" />
+        <stop offset="100%" stopColor="#D9531E" stopOpacity="0.45" />
+      </linearGradient>
+    </defs>
+    <circle cx="200" cy="200" r="192" stroke="url(#outerChakraGold)" strokeWidth="1.5" strokeDasharray="6 6" />
+    <circle cx="200" cy="200" r="174" stroke="url(#outerChakraGold)" strokeWidth="2" />
+    <circle cx="200" cy="200" r="150" stroke="url(#outerChakraGold)" strokeWidth="1" strokeDasharray="4 4" />
+    {Array.from({ length: 24 }).map((_, i) => {
+      const angle = (i * 360) / 24;
+      return (
+        <g key={i} transform={`rotate(${angle} 200 200)`}>
+          <path d="M 200 8 L 206 28 L 200 36 L 194 28 Z" fill="url(#outerChakraGold)" opacity="0.9" />
+          <line x1="200" y1="36" x2="200" y2="174" stroke="url(#outerChakraGold)" strokeWidth="1" opacity="0.35" />
+          <circle cx="200" cy="16" r="2.5" fill="#FFE89E" />
+        </g>
+      );
+    })}
+  </svg>
+);
 
-const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal }) => {
+// Inner Concentric Sacred Mandala Geometry
+const InnerMandalaSVG = () => (
+  <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
+    <defs>
+      <linearGradient id="innerMandalaGold" x1="300" y1="0" x2="0" y2="300" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stopColor="#FFF2A3" stopOpacity="0.9" />
+        <stop offset="60%" stopColor="#C59B27" stopOpacity="0.7" />
+        <stop offset="100%" stopColor="#B23D10" stopOpacity="0.5" />
+      </linearGradient>
+    </defs>
+    <circle cx="150" cy="150" r="136" stroke="url(#innerMandalaGold)" strokeWidth="1.5" />
+    <circle cx="150" cy="150" r="116" stroke="url(#innerMandalaGold)" strokeWidth="1" strokeDasharray="4 4" />
+    <circle cx="150" cy="150" r="92" stroke="url(#innerMandalaGold)" strokeWidth="1.8" />
+    {Array.from({ length: 12 }).map((_, i) => {
+      const angle = (i * 360) / 12;
+      return (
+        <g key={i} transform={`rotate(${angle} 150 150)`}>
+          <path d="M 150 22 C 160 52 160 82 150 116 C 140 82 140 52 150 22 Z" stroke="url(#innerMandalaGold)" strokeWidth="1.2" fill="none" opacity="0.65" />
+          <circle cx="150" cy="22" r="3" fill="#FFE89E" />
+          <polygon points="150,34 154,44 146,44" fill="url(#innerMandalaGold)" />
+        </g>
+      );
+    })}
+  </svg>
+);
+
+const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal, onOpenToleFundModal }) => {
   const { language, t } = useLanguage();
 
   const heroEyebrow = language === 'ne'
@@ -49,60 +70,27 @@ const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal 
     ? (settings?.heroSubtitleNepali || 'सृष्टि, वास्तुकला, विज्ञान र शिल्पकलाका अधिष्ठाता भगवान विश्वकर्माको पवित्र प्राङ्गणमा हार्दिक नमन गर्दछौं।')
     : (settings?.heroSubtitleEnglish || 'Devoted to the divine supreme architect, engineer, and cosmic creator. Experience peace, prayers, and community harmony.');
 
-  // Extract slides from gallery (priority to featured, then all gallery items)
-  const dynamicSlides = gallery && gallery.length > 0
-    ? gallery.slice(0, 8).map(item => ({
-        _id: item._id,
-        title: item.title,
-        subtitle: item.description || (item.categoryNepali ? `${item.categoryNepali} दर्शन • छापकी, सप्तरी` : 'पवित्र दर्शन'),
-        imageUrl: item.imageUrl,
-        categoryNepali: item.categoryNepali || item.category
-      }))
-    : DEFAULT_SLIDES;
+  // High-Definition transparent PNG deity cutout seamlessly blending without any square box
+  const fixedDeityImage = (settings?.heroImage && !settings.heroImage.includes('deity-portrait.jpg') && !settings.heroImage.includes('deity-cream-blend.jpg'))
+    ? settings.heroImage
+    : '/assets/images/deity-hd-transparent.png';
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
+  const captionTitle = language === 'ne'
+    ? 'गर्भगृह पञ्चदीप प्रज्वलन तथा पूजा आराधना'
+    : 'Sanctum Panchadeep & Sacred Puja Darshan';
 
-  // Autoplay Timer (4.5s interval)
-  useEffect(() => {
-    if (isPaused || dynamicSlides.length <= 1) return;
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % dynamicSlides.length);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [isPaused, dynamicSlides.length]);
+  const captionSubtitle = language === 'ne'
+    ? 'पाँच दियोहरूको पवित्र ज्योति, नैवेद्य, फलफूल तथा कलश सहितको आरती स्वरूप।'
+    : 'Divine Aarti with five sacred lamps, naivedya offerings, fruits & kalash.';
 
-  const goToPrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? dynamicSlides.length - 1 : prev - 1));
-  };
-
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % dynamicSlides.length);
-  };
-
-  // Mobile Swipe Support
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.targetTouches[0].clientX;
-  };
-
-  const handleTouchMove = (e) => {
-    touchEndX.current = e.targetTouches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    const diff = touchStartX.current - touchEndX.current;
-    if (diff > 50) goToNext();
-    if (diff < -50) goToPrev();
-  };
+  const badgeText = language === 'ne'
+    ? '🪔 गर्भगृह दिव्य आरती दर्शन'
+    : '🪔 Sacred Sanctum Aarti Darshan';
 
   const scrollToAbout = () => {
     const el = document.getElementById('about');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
-
-  const currentSlide = dynamicSlides[currentIndex] || dynamicSlides[0];
 
   return (
     <section id="hero" style={{
@@ -121,20 +109,7 @@ const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal 
         width: 'clamp(320px, 45vw, 600px)',
         height: 'clamp(320px, 45vw, 600px)',
         borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(255, 183, 3, 0.12) 0%, rgba(217, 83, 30, 0.07) 40%, transparent 70%)',
-        pointerEvents: 'none',
-        zIndex: 0
-      }} />
-
-      {/* 2. Rotating Subtle Sacred Chakra Outline */}
-      <div className="animate-spin-slow" style={{
-        position: 'absolute',
-        top: '5%',
-        right: '4%',
-        width: '420px',
-        height: '420px',
-        borderRadius: '50%',
-        border: '1px dashed rgba(197, 155, 39, 0.18)',
+        background: 'radial-gradient(circle, rgba(255, 183, 3, 0.16) 0%, rgba(217, 83, 30, 0.08) 40%, transparent 70%)',
         pointerEvents: 'none',
         zIndex: 0
       }} />
@@ -144,7 +119,7 @@ const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal 
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))',
           alignItems: 'center',
-          gap: 'clamp(1.75rem, 4vw, 3rem)'
+          gap: 'clamp(2rem, 4vw, 3.5rem)'
         }}>
           {/* Left Hero Content */}
           <div>
@@ -268,236 +243,197 @@ const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal 
             </div>
           </div>
 
-          {/* Right Hero: DYNAMIC GALLERY IMAGE SLIDER (PART 18) */}
-          <div
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', position: 'relative' }}
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            {/* Floating Spiritual Golden Sparks */}
-            <div className="floating-sparkle-1" style={{ top: '6%', right: '12%' }}>
-              <span style={{ fontSize: '1.2rem', color: '#FFD166', filter: 'drop-shadow(0 0 8px #FFAA00)' }}>✨</span>
-            </div>
-            <div className="floating-sparkle-2" style={{ bottom: '22%', left: '4%' }}>
-              <span style={{ fontSize: '1.1rem', color: '#FFB703', filter: 'drop-shadow(0 0 6px #D9531E)' }}>🌸</span>
-            </div>
-
-            <div className="deity-halo-container" style={{ width: '100%', maxWidth: '440px' }}>
-              {/* Animated Golden Shimmer Border Frame */}
-              <div className="gold-shimmer-border" style={{
-                position: 'relative',
-                zIndex: 1,
-                padding: '8px',
-                borderRadius: '24px',
-                boxShadow: '0 16px 40px rgba(43, 30, 22, 0.18)'
+          {/* Right Hero: SEAMLESS TRANSPARENT PNG DEITY CUTOUT (NO BOX) WITH ROTATING CHAKRA & PUSHPA VARSHA */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', position: 'relative' }}>
+            
+            <div className="divine-cutout-wrapper" style={{
+              position: 'relative',
+              width: '100%',
+              maxWidth: '480px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              
+              {/* 1. SACRED ROTATING SURYA CHAKRA MANDALA (Behind Deity) */}
+              <div className="sacred-chakra-container" style={{
+                position: 'absolute',
+                top: '40%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '560px',
+                height: '560px',
+                maxWidth: '135vw',
+                maxHeight: '135vw',
+                pointerEvents: 'none',
+                zIndex: 0
               }}>
-                <div style={{
-                  backgroundColor: '#FAF7F2',
-                  borderRadius: '18px',
-                  padding: '4px',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  aspectRatio: '4 / 4.8',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  {/* Real Dynamic Slider Image with Smooth Fade Transition */}
-                  <img
-                    key={currentSlide._id || currentIndex}
-                    src={getImageUrl(currentSlide.imageUrl)}
-                    alt={currentSlide.title}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      objectPosition: 'center 22%',
-                      borderRadius: '14px',
-                      display: 'block',
-                      animation: 'fadeIn 0.5s ease-in-out'
-                    }}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = '/assets/images/deity-portrait.jpg';
-                    }}
-                  />
-
-                  {/* Previous Slide Button */}
-                  {dynamicSlides.length > 1 && (
-                    <button
-                      onClick={goToPrev}
-                      style={{
-                        position: 'absolute',
-                        left: '10px',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        width: '36px',
-                        height: '36px',
-                        borderRadius: '50%',
-                        backgroundColor: 'rgba(255,255,255,0.85)',
-                        border: '1px solid var(--border-gold)',
-                        color: 'var(--color-primary-dark)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                        zIndex: 3,
-                        transition: 'all 0.2s ease'
-                      }}
-                      aria-label="Previous Slide"
-                    >
-                      <ChevronLeft size={20} />
-                    </button>
-                  )}
-
-                  {/* Next Slide Button */}
-                  {dynamicSlides.length > 1 && (
-                    <button
-                      onClick={goToNext}
-                      style={{
-                        position: 'absolute',
-                        right: '10px',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        width: '36px',
-                        height: '36px',
-                        borderRadius: '50%',
-                        backgroundColor: 'rgba(255,255,255,0.85)',
-                        border: '1px solid var(--border-gold)',
-                        color: 'var(--color-primary-dark)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                        zIndex: 3,
-                        transition: 'all 0.2s ease'
-                      }}
-                      aria-label="Next Slide"
-                    >
-                      <ChevronRight size={20} />
-                    </button>
-                  )}
-
-                  {/* Slide Category & Counter Top Badge */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '12px',
-                    left: '12px',
-                    backgroundColor: 'rgba(10, 6, 4, 0.75)',
-                    backdropFilter: 'blur(4px)',
-                    color: '#FFD166',
-                    padding: '2px 8px',
-                    borderRadius: '12px',
-                    fontSize: '0.72rem',
-                    fontWeight: '700',
-                    zIndex: 2,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px'
-                  }}>
-                    <span>{currentSlide.categoryNepali || 'दर्शन'}</span>
-                    <span>•</span>
-                    <span>{currentIndex + 1}/{dynamicSlides.length}</span>
-                  </div>
-
-                  {/* Respectful Deity Caption Ribbon */}
-                  <div style={{
-                    position: 'absolute',
-                    bottom: '10px',
-                    left: '10px',
-                    right: '10px',
-                    backgroundColor: 'rgba(88, 11, 20, 0.94)',
-                    backdropFilter: 'blur(6px)',
-                    WebkitBackdropFilter: 'blur(6px)',
-                    color: '#F4EFE6',
-                    padding: '8px 12px',
-                    borderRadius: '10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    gap: '6px',
-                    border: '1px solid rgba(197, 155, 39, 0.4)',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                    zIndex: 2
-                  }}>
-                    <div style={{ minWidth: 0, overflow: 'hidden' }}>
-                      <div style={{ fontFamily: 'var(--font-heading)', fontSize: '0.88rem', fontWeight: '700', color: '#FFD166', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        {currentSlide.title}
-                      </div>
-                      <div style={{ fontSize: '0.72rem', opacity: 0.9, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        {currentSlide.subtitle}
-                      </div>
-                    </div>
-                    <span className="diya-flame" style={{ fontSize: '1.1rem', flexShrink: 0 }}>🪔</span>
-                  </div>
+                {/* Breathing Golden Halo Glow Core */}
+                <div className="chakra-glow-core" />
+                {/* Outer 24-Spoke Surya Chakra (Clockwise Spin) */}
+                <div className="chakra-spin-outer">
+                  <OuterChakraSVG />
+                </div>
+                {/* Inner Sacred Mandala Wheel (Counter-Clockwise Spin) */}
+                <div className="chakra-spin-inner">
+                  <InnerMandalaSVG />
                 </div>
               </div>
+
+              {/* 2. PUSHPA VARSHA (Sacred Flower Petal Shower) */}
+              <div className="flower-shower-viewport" style={{ position: 'absolute', inset: '-30px', pointerEvents: 'none', overflow: 'hidden', zIndex: 3 }}>
+                {/* Petal 1: Golden Marigold */}
+                <div className="sacred-petal petal-cascade-1 petal-marigold" style={{ top: '-10px', left: '12%', fontSize: '1.65rem', animationDelay: '0s' }}>
+                  🌼
+                </div>
+                {/* Petal 2: Sacred Pink Lotus */}
+                <div className="sacred-petal petal-cascade-2 petal-lotus" style={{ top: '-15px', left: '78%', fontSize: '1.75rem', animationDelay: '1.8s' }}>
+                  🪷
+                </div>
+                {/* Petal 3: Fragrant Jasmine Petal */}
+                <div className="sacred-petal petal-cascade-3 petal-jasmine" style={{ top: '-10px', left: '42%', fontSize: '1.35rem', animationDelay: '3.2s' }}>
+                  🌸
+                </div>
+                {/* Petal 4: Red Hibiscus Petal */}
+                <div className="sacred-petal petal-cascade-1 petal-lotus" style={{ top: '-20px', left: '88%', fontSize: '1.5rem', animationDelay: '4.5s' }}>
+                  🌺
+                </div>
+                {/* Petal 5: Golden Marigold Petal */}
+                <div className="sacred-petal petal-cascade-2 petal-marigold" style={{ top: '-10px', left: '8%', fontSize: '1.45rem', animationDelay: '2.4s' }}>
+                  🌼
+                </div>
+                {/* Petal 6: Golden Divine Sparkle */}
+                <div className="sacred-petal petal-cascade-3 petal-sparkle" style={{ top: '-10px', left: '62%', fontSize: '1.3rem', color: '#FFD166', animationDelay: '0.8s' }}>
+                  ✨
+                </div>
+                {/* Petal 7: Scented Pink Petal */}
+                <div className="sacred-petal petal-cascade-1 petal-jasmine" style={{ top: '-15px', left: '26%', fontSize: '1.4rem', animationDelay: '5.6s' }}>
+                  🌸
+                </div>
+                {/* Petal 8: Sacred Lotus Blossom */}
+                <div className="sacred-petal petal-cascade-2 petal-lotus" style={{ top: '-10px', left: '50%', fontSize: '1.6rem', animationDelay: '6.2s' }}>
+                  🪷
+                </div>
+                {/* Petal 9: Divine Celestial Sparkle */}
+                <div className="sacred-petal petal-cascade-3 petal-sparkle" style={{ top: '-10px', left: '18%', fontSize: '1.25rem', color: '#FFE082', animationDelay: '3.8s' }}>
+                  ✨
+                </div>
+                {/* Petal 10: Red Hibiscus Blossom */}
+                <div className="sacred-petal petal-cascade-2 petal-lotus" style={{ top: '-15px', left: '70%', fontSize: '1.5rem', animationDelay: '7.2s' }}>
+                  🌺
+                </div>
+
+                {/* Ambient Corner Blooms */}
+                <div className="sacred-petal petal-ambient petal-marigold" style={{ top: '6%', left: '-8px', fontSize: '1.4rem' }}>
+                  🌼
+                </div>
+                <div className="sacred-petal petal-ambient petal-lotus" style={{ bottom: '22%', right: '-8px', fontSize: '1.5rem', animationDelay: '2.5s' }}>
+                  🪷
+                </div>
+              </div>
+
+              {/* 3. Top Floating Spiritual Darshan Pill */}
+              <div className="animate-float" style={{
+                marginBottom: '6px',
+                backgroundColor: 'rgba(88, 11, 20, 0.92)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                color: '#FFE89E',
+                padding: '5px 16px',
+                borderRadius: 'var(--border-radius-full)',
+                fontSize: '0.82rem',
+                fontWeight: '700',
+                border: '1.5px solid rgba(255, 215, 0, 0.55)',
+                boxShadow: '0 6px 16px rgba(122, 18, 29, 0.25)',
+                zIndex: 4,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px'
+              }}>
+                <span className="diya-flame">🪔</span>
+                <span>{badgeText}</span>
+              </div>
+
+              {/* 4. SEAMLESS PNG DEITY CUTOUT (NO BOX, NO FRAME) */}
+              <div className="divine-deity-hero-image" style={{
+                position: 'relative',
+                zIndex: 2,
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                filter: 'drop-shadow(0 14px 28px rgba(43, 30, 22, 0.16)) drop-shadow(0 0 24px rgba(255, 183, 3, 0.22))'
+              }}>
+                <img
+                  src={getImageUrl(fixedDeityImage)}
+                  alt="भगवान श्री विश्वकर्मा गर्भगृह पञ्चदीप पूजा - छापकी, सप्तरी"
+                  style={{
+                    width: '100%',
+                    maxWidth: '460px',
+                    height: 'auto',
+                    display: 'block',
+                    objectFit: 'contain',
+                    transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+                  }}
+                  onMouseEnter={(e) => e.target.style.transform = 'scale(1.025)'}
+                  onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/assets/images/deity-hd-transparent.png';
+                  }}
+                />
+              </div>
+
+              {/* 5. Respectful Floating Deity Caption Ribbon */}
+              <div style={{
+                marginTop: '8px',
+                width: '100%',
+                maxWidth: '440px',
+                backgroundColor: 'rgba(255, 255, 255, 0.94)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
+                color: 'var(--text-brown)',
+                padding: '10px 16px',
+                borderRadius: '14px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '10px',
+                border: '1.5px solid var(--border-gold)',
+                boxShadow: '0 8px 24px rgba(43, 30, 22, 0.08)',
+                zIndex: 4
+              }}>
+                <div style={{ minWidth: 0, overflow: 'hidden' }}>
+                  <div style={{
+                    fontFamily: 'var(--font-heading)',
+                    fontSize: '0.92rem',
+                    fontWeight: '800',
+                    color: 'var(--color-primary)',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                  }}>
+                    {captionTitle}
+                  </div>
+                  <div style={{
+                    fontSize: '0.76rem',
+                    color: 'var(--text-muted)',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    marginTop: '2px'
+                  }}>
+                    {captionSubtitle}
+                  </div>
+                </div>
+                <span className="diya-flame" style={{ fontSize: '1.25rem', flexShrink: 0 }}>🪔</span>
+              </div>
+
             </div>
 
-            {/* Slider Dots Indicator & Thumbnail Navigation (PART 18) */}
-            {dynamicSlides.length > 1 && (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', marginTop: '12px', zIndex: 2 }}>
-                {/* Dots */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  {dynamicSlides.map((slide, idx) => (
-                    <button
-                      key={slide._id || idx}
-                      onClick={() => setCurrentIndex(idx)}
-                      style={{
-                        width: currentIndex === idx ? '22px' : '8px',
-                        height: '8px',
-                        borderRadius: '4px',
-                        backgroundColor: currentIndex === idx ? 'var(--color-primary)' : 'rgba(122, 18, 29, 0.25)',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: 0,
-                        transition: 'all 0.3s ease'
-                      }}
-                      aria-label={`Slide ${idx + 1}`}
-                    />
-                  ))}
-                </div>
-
-                {/* Mini Thumbnails */}
-                <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', maxWidth: '320px', padding: '2px' }}>
-                  {dynamicSlides.map((slide, idx) => (
-                    <button
-                      key={'thumb-' + (slide._id || idx)}
-                      onClick={() => setCurrentIndex(idx)}
-                      style={{
-                        width: '38px',
-                        height: '38px',
-                        borderRadius: '6px',
-                        overflow: 'hidden',
-                        padding: 0,
-                        border: currentIndex === idx ? '2px solid var(--color-primary)' : '1px solid var(--border-gold)',
-                        opacity: currentIndex === idx ? 1 : 0.6,
-                        cursor: 'pointer',
-                        flexShrink: 0,
-                        transition: 'all 0.2s ease',
-                        backgroundColor: '#FAF7F2'
-                      }}
-                    >
-                      <img
-                        src={getImageUrl(slide.imageUrl)}
-                        alt={`Thumb ${idx + 1}`}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = '/assets/images/temple-structure.jpg';
-                        }}
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
+
         </div>
       </div>
     </section>
