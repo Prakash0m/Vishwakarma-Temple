@@ -62,9 +62,11 @@ const AboutSection = ({ settings }) => {
                 borderRadius: '16px',
                 overflow: 'hidden',
                 backgroundColor: '#FAF7F2',
-                aspectRatio: '16 / 11',
+                aspectRatio: '4 / 4.2',
+                maxHeight: '520px',
                 width: '100%',
-                position: 'relative'
+                position: 'relative',
+                boxShadow: 'inset 0 0 0 1px rgba(212, 175, 55, 0.2)'
               }}>
                 <img
                   src={getImageUrl(aboutImage)}
@@ -73,7 +75,7 @@ const AboutSection = ({ settings }) => {
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    objectPosition: 'center 40%',
+                    objectPosition: 'center top',
                     display: 'block',
                     transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
                   }}
@@ -81,9 +83,17 @@ const AboutSection = ({ settings }) => {
                     e.target.onerror = null;
                     e.target.src = '/assets/images/temple-structure.jpg';
                   }}
-                  onMouseEnter={(e) => e.target.style.transform = 'scale(1.04)'}
+                  onMouseEnter={(e) => e.target.style.transform = 'scale(1.03)'}
                   onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                 />
+
+                {/* Subtle bottom shadow gradient to elevate caption readability */}
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(to top, rgba(30, 20, 15, 0.45) 0%, rgba(30, 20, 15, 0.05) 25%, transparent 45%)',
+                  pointerEvents: 'none'
+                }} />
               </div>
 
               {/* Floating Real Temple Badge with Smooth Float Animation */}
@@ -99,21 +109,22 @@ const AboutSection = ({ settings }) => {
                 fontSize: '0.82rem',
                 fontWeight: '700',
                 boxShadow: '0 6px 16px rgba(122, 18, 29, 0.35)',
-                border: '1.5px solid var(--color-gold)'
+                border: '1.5px solid var(--color-gold)',
+                zIndex: 3
               }}>
-                🏛️ श्री विश्वकर्मा मन्दिर परिसर
+                🏛️ {language === 'ne' ? 'श्री विश्वकर्मा मन्दिर परिसर' : 'Vishwakarma Temple Sanctum'}
               </div>
 
               {/* Bottom Caption Pill */}
               <div style={{
                 position: 'absolute',
-                bottom: '14px',
-                left: '14px',
-                right: '14px',
-                backgroundColor: 'rgba(250, 247, 242, 0.95)',
-                backdropFilter: 'blur(6px)',
-                WebkitBackdropFilter: 'blur(6px)',
-                padding: '8px 12px',
+                bottom: '12px',
+                left: '12px',
+                right: '12px',
+                backgroundColor: 'rgba(255, 255, 255, 0.94)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                padding: '7px 12px',
                 borderRadius: '10px',
                 border: '1px solid var(--border-gold)',
                 fontSize: '0.78rem',
@@ -121,13 +132,16 @@ const AboutSection = ({ settings }) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                gap: '4px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.06)'
+                gap: '6px',
+                boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
+                zIndex: 3
               }}>
-                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>📍 छापकी (सप्तरी) • शिखर शैली</span>
+                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: '600' }}>
+                  📍 {language === 'ne' ? 'छापकी (सप्तरी) • शिखर शैली' : 'Chhapki (Saptari) • Shikhara Style'}
+                </span>
                 <span style={{ color: '#2D6A4F', fontWeight: 'bold', flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                   <span className="live-pulse-dot" style={{ width: '6px', height: '6px' }} />
-                  प्रमाणित तीर्थ
+                  {language === 'ne' ? 'प्रमाणित तीर्थ' : 'Sanctified Shrine'}
                 </span>
               </div>
             </div>

@@ -38,7 +38,7 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
               return (
                 <div
                   key={item._id}
-                  className="temple-card card-interactive"
+                  className="temple-card pooja-service-card card-interactive"
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -47,24 +47,35 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                   }}
                 >
                   {/* Card Image Banner */}
-                  <div style={{ position: 'relative', height: '190px', overflow: 'hidden' }}>
+                  <div className="pooja-image-container" style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
                     <img
                       src={getImageUrl(image)}
                       alt={title}
+                      className="pooja-card-img"
                       style={{
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
+                        objectPosition: 'center 18%',
                         transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
                       }}
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = '/assets/images/deity-altar-lamps.jpg';
                       }}
-                      onMouseEnter={(e) => e.target.style.transform = 'scale(1.06)'}
-                      onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                     />
                     
+                    {/* Subtle bottom gradient to blend image nicely */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: '40px',
+                      background: 'linear-gradient(to top, rgba(0,0,0,0.25), transparent)',
+                      pointerEvents: 'none'
+                    }} />
+
                     {/* Price Tag Badge */}
                     <div style={{
                       position: 'absolute',
@@ -81,10 +92,11 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                       border: '1px solid var(--color-gold)',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '4px'
+                      gap: '4px',
+                      zIndex: 2
                     }}>
-                      <span>रु.</span>
-                      <span>{item.price ? item.price.toLocaleString('ne-NP') : '५००'}</span>
+                      <span>{language === 'en' ? 'Rs.' : 'रु.'}</span>
+                      <span>{item.price ? (language === 'en' ? item.price.toLocaleString('en-US') : item.price.toLocaleString('ne-NP')) : (language === 'en' ? '500' : '५००')}</span>
                     </div>
 
                     {item.featured && (
@@ -101,10 +113,11 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '4px',
-                        boxShadow: '0 2px 8px rgba(255, 183, 3, 0.4)'
+                        boxShadow: '0 2px 8px rgba(255, 183, 3, 0.4)',
+                        zIndex: 2
                       }}>
                         <Sparkles size={12} />
-                        <span>विशेष सेवा</span>
+                        <span>{language === 'en' ? 'Special Seva' : 'विशेष सेवा'}</span>
                       </div>
                     )}
                   </div>
@@ -146,11 +159,9 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                     {/* Booking Action Button with Hover Shimmer */}
                     <button
                       onClick={() => onSelectPooja(item)}
-                      className="btn btn-outline btn-shimmer"
+                      className="btn btn-outline btn-shimmer pooja-book-btn"
                       style={{
                         width: '100%',
-                        backgroundColor: '#FFFFFF',
-                        borderColor: 'var(--color-primary)',
                         gap: '0.5rem',
                         fontWeight: '600',
                         minHeight: '44px'

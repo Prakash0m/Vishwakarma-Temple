@@ -1,7 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
-import { Menu, X, Heart, Globe, Shield, Phone, Clock, MapPin, DollarSign, Home, Sparkles } from 'lucide-react';
+import { 
+  Menu, 
+  X, 
+  Heart, 
+  Globe, 
+  Shield, 
+  Phone, 
+  Clock, 
+  MapPin, 
+  Home, 
+  Sparkles, 
+  Users, 
+  Calendar, 
+  Image as ImageIcon, 
+  FileText, 
+  ChevronRight, 
+  Info,
+  Compass
+} from 'lucide-react';
 
 const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModal }) => {
   const { language, toggleLanguage, t } = useLanguage();
@@ -37,17 +55,28 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Prevent background body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   const navLinks = [
-    { id: 'hero', label: t('nav.home'), href: '#hero' },
-    { id: 'about', label: t('nav.about'), href: '#about' },
-    { id: 'leadership', label: language === 'ne' ? 'टोल नेतृत्व' : 'Leadership', href: '#leadership' },
-    { id: 'pooja', label: t('nav.pooja'), href: '#pooja' },
-    { id: 'events', label: t('nav.events'), href: '#events' },
-    { id: 'gallery', label: t('nav.gallery'), href: '#gallery' },
-    { id: 'donation', label: t('nav.donation'), href: '#donation' },
-    { id: 'transparency', label: t('nav.transparency'), href: '#transparency' },
-    { id: 'location', label: t('nav.location'), href: '#location' },
-    { id: 'contact', label: t('nav.contact'), href: '#contact' },
+    { id: 'hero', label: t('nav.home'), icon: <Home size={19} color="#7A121D" />, href: '#hero' },
+    { id: 'about', label: t('nav.about'), icon: <Info size={19} color="#D9531E" />, href: '#about' },
+    { id: 'leadership', label: language === 'ne' ? 'टोल नेतृत्व' : 'Leadership', icon: <Users size={19} color="#C59B27" />, href: '#leadership' },
+    { id: 'pooja', label: t('nav.pooja'), icon: <Sparkles size={19} color="#7A121D" />, href: '#pooja' },
+    { id: 'events', label: t('nav.events'), icon: <Calendar size={19} color="#D9531E" />, href: '#events' },
+    { id: 'gallery', label: t('nav.gallery'), icon: <ImageIcon size={19} color="#2D6A4F" />, href: '#gallery' },
+    { id: 'transparency', label: t('nav.transparency'), icon: <FileText size={19} color="#2D6A4F" />, href: '#transparency' },
+    { id: 'location', label: t('nav.location'), icon: <Compass size={19} color="#C59B27" />, href: '#location' },
+    { id: 'contact', label: t('nav.contact'), icon: <Phone size={19} color="#580B14" />, href: '#contact' },
   ];
 
   const handleNavClick = (e, href) => {
@@ -175,7 +204,7 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
           gap: '0.85rem',
           transition: 'all 0.25s ease'
         }}>
-          {/* Logo & Brand Name (Zero Truncation Guaranteed) */}
+          {/* Logo & Brand Name */}
           <Link
             to="/"
             style={{
@@ -337,8 +366,8 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
                 e.currentTarget.style.color = 'var(--color-primary)';
               }}
             >
-              <DollarSign size={14} />
-              <span>{language === 'ne' ? 'मासिक टोल कोष' : 'Tole Fund'}</span>
+              <span style={{ fontWeight: '800', fontSize: '0.84rem' }}>{language === 'ne' ? 'रु.' : 'Rs.'}</span>
+              <span>{language === 'ne' ? 'टोल कोष' : 'Tole Fund'}</span>
             </button>
 
             {/* Desktop Only: Donate CTA Button */}
@@ -357,152 +386,383 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
               <Heart size={14} />
               <span>{t('nav.donateNow')}</span>
             </button>
-
-            {/* Hamburger Toggle (Visible when desktop nav is hidden) */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'none',
-                border: '1.5px solid var(--border-gold)',
-                borderRadius: '8px',
-                padding: '6px',
-                minHeight: '40px',
-                minWidth: '40px',
-                color: 'var(--color-primary)',
-                cursor: 'pointer'
-              }}
-              className="mobile-hamburger-btn"
-              aria-label="Toggle Navigation Menu"
-            >
-              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
           </div>
         </div>
       </header>
 
-      {/* 3. Mobile Drawer Menu */}
+      {/* 3. SIMPLE DIGITAL MOBILE APP HUB (Clean, Modern, Native App Bottom Sheet) */}
       {mobileMenuOpen && (
         <div style={{
           position: 'fixed',
-          top: isScrolled ? '56px' : '64px',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(250, 247, 242, 0.98)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-          zIndex: 915,
-          padding: '1.25rem 1.25rem calc(70px + env(safe-area-inset-bottom, 0px)) 1.25rem',
+          inset: 0,
+          zIndex: 950,
+          backgroundColor: 'rgba(20, 10, 8, 0.65)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
-          overflowY: 'auto',
-          animation: 'fadeIn 0.2s ease-out'
-        }}>
-          <div>
+          justifyContent: 'flex-end',
+          animation: 'fadeIn 0.22s ease-out'
+        }}
+        onClick={() => setMobileMenuOpen(false)}
+        >
+          {/* Bottom Sheet Modal Container */}
+          <div
+            style={{
+              backgroundColor: '#FAF7F2',
+              borderRadius: '24px 24px 0 0',
+              maxHeight: '88vh',
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              boxShadow: '0 -10px 40px rgba(0, 0, 0, 0.35)',
+              borderTop: '2px solid var(--color-gold)',
+              overflow: 'hidden',
+              animation: 'slideUpSheet 0.28s cubic-bezier(0.16, 1, 0.3, 1)',
+              paddingBottom: 'calc(68px + env(safe-area-inset-bottom, 0px))'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Clean Header */}
             <div style={{
-              fontSize: '0.75rem',
-              fontWeight: '700',
-              textTransform: 'uppercase',
-              color: 'var(--color-saffron-dark)',
-              letterSpacing: '0.8px',
-              marginBottom: '0.75rem',
-              paddingLeft: '0.5rem'
+              padding: '0.75rem 1.25rem',
+              backgroundColor: '#FFFFFF',
+              borderBottom: '1px solid var(--border-gold)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
             }}>
-              {language === 'ne' ? 'नेभिगेसन मेनु' : 'Navigation Menu'}
+              {/* Handle Bar */}
+              <div style={{
+                width: '38px',
+                height: '4px',
+                borderRadius: '2px',
+                backgroundColor: 'rgba(197, 155, 39, 0.5)',
+                marginBottom: '0.6rem'
+              }} />
+
+              {/* Title & Close */}
+              <div style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <div style={{
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: '50%',
+                    backgroundColor: '#FAF7F2',
+                    border: '1.5px solid var(--color-gold)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    overflow: 'hidden',
+                    flexShrink: 0
+                  }}>
+                    <img src="/assets/images/temple-logo.svg" alt="Logo" style={{ width: '85%', height: '85%' }} />
+                  </div>
+                  <div>
+                    <div style={{
+                      fontFamily: 'var(--font-heading)',
+                      fontSize: '1rem',
+                      fontWeight: '800',
+                      color: 'var(--color-primary-dark)',
+                      lineHeight: 1.15
+                    }}>
+                      {templeTitle}
+                    </div>
+                    <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
+                      {templeCity}
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    backgroundColor: 'var(--bg-cream-alt)',
+                    border: '1px solid var(--border-gold)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--color-primary)',
+                    cursor: 'pointer'
+                  }}
+                  aria-label="Close Menu"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Clean Segmented Language Bar */}
+              <div style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                backgroundColor: 'var(--bg-cream-alt)',
+                borderRadius: '10px',
+                padding: '3px',
+                marginTop: '0.75rem',
+                border: '1px solid var(--border-subtle)'
+              }}>
+                <button
+                  onClick={() => { if (language !== 'ne') toggleLanguage(); }}
+                  style={{
+                    flex: 1,
+                    padding: '6px 0',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontSize: '0.8rem',
+                    fontWeight: language === 'ne' ? '800' : '600',
+                    backgroundColor: language === 'ne' ? 'var(--color-primary)' : 'transparent',
+                    color: language === 'ne' ? '#FFFFFF' : 'var(--text-brown)',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  🇳🇵 नेपाली
+                </button>
+                <button
+                  onClick={() => { if (language !== 'en') toggleLanguage(); }}
+                  style={{
+                    flex: 1,
+                    padding: '6px 0',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontSize: '0.8rem',
+                    fontWeight: language === 'en' ? '800' : '600',
+                    backgroundColor: language === 'en' ? 'var(--color-primary)' : 'transparent',
+                    color: language === 'en' ? '#FFFFFF' : 'var(--text-brown)',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  🌐 English
+                </button>
+              </div>
             </div>
 
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.3rem', margin: 0, padding: 0 }}>
-              {navLinks.map((item) => {
-                const isActive = activeSection === item.id;
-                return (
-                  <li key={item.id}>
+            {/* Scrollable Clean App Hub Body */}
+            <div style={{
+              padding: '1rem',
+              overflowY: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.85rem'
+            }}>
+              
+              {/* 2 Big Primary Digital Action Cards (Tole Fund & Donate) */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '0.65rem'
+              }}>
+                {/* 1. Tole Fund Card */}
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (onOpenToleFundModal) onOpenToleFundModal();
+                  }}
+                  style={{
+                    background: 'linear-gradient(135deg, #7A121D 0%, #580B14 100%)',
+                    color: '#FFFFFF',
+                    padding: '0.85rem 0.8rem',
+                    borderRadius: '14px',
+                    border: '1.5px solid rgba(255, 215, 0, 0.45)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    gap: '0.4rem',
+                    boxShadow: '0 4px 14px rgba(122, 18, 29, 0.2)',
+                    cursor: 'pointer',
+                    textAlign: 'left'
+                  }}
+                >
+                  <div style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '8px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.18)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: '800',
+                    fontSize: '0.95rem',
+                    color: '#FFE89E'
+                  }}>
+                    {language === 'ne' ? 'रु.' : 'Rs.'}
+                  </div>
+                  <div style={{ fontSize: '0.88rem', fontWeight: '800', lineHeight: 1.2 }}>
+                    {language === 'ne' ? 'मासिक टोल कोष' : 'Monthly Tole Fund'}
+                  </div>
+                  <div style={{ fontSize: '0.72rem', color: '#FFE89E', opacity: 0.9 }}>
+                    {language === 'ne' ? 'भुक्तानी गर्नुहोस् →' : 'Pay Online →'}
+                  </div>
+                </button>
+
+                {/* 2. Donate Card */}
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenDonationModal();
+                  }}
+                  style={{
+                    background: 'linear-gradient(135deg, #2D6A4F 0%, #1B4332 100%)',
+                    color: '#FFFFFF',
+                    padding: '0.85rem 0.8rem',
+                    borderRadius: '14px',
+                    border: '1.5px solid rgba(82, 183, 136, 0.5)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    gap: '0.4rem',
+                    boxShadow: '0 4px 14px rgba(45, 106, 79, 0.2)',
+                    cursor: 'pointer',
+                    textAlign: 'left'
+                  }}
+                >
+                  <div style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '8px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.18)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#D8F3DC'
+                  }}>
+                    <Heart size={18} />
+                  </div>
+                  <div style={{ fontSize: '0.88rem', fontWeight: '800', lineHeight: 1.2 }}>
+                    {language === 'ne' ? 'दान तथा चन्दा' : 'Temple Donation'}
+                  </div>
+                  <div style={{ fontSize: '0.72rem', color: '#D8F3DC', opacity: 0.9 }}>
+                    {language === 'ne' ? 'सेवा गर्नुहोस् →' : 'Donate Seva →'}
+                  </div>
+                </button>
+              </div>
+
+              {/* Clean Digital Navigation Links (2-Column Grid) */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: '0.5rem'
+              }}>
+                {navLinks.map((item) => {
+                  const isActive = activeSection === item.id;
+                  return (
                     <a
+                      key={item.id}
                       href={item.href}
                       onClick={(e) => handleNavClick(e, item.href)}
                       style={{
+                        backgroundColor: isActive ? 'var(--color-primary-subtle)' : '#FFFFFF',
+                        borderRadius: '12px',
+                        padding: '0.75rem 0.75rem',
+                        textDecoration: 'none',
+                        border: isActive ? '1.5px solid var(--color-primary)' : '1px solid var(--border-gold)',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'space-between',
-                        fontSize: '1rem',
-                        fontWeight: '600',
-                        color: isActive ? 'var(--color-primary)' : 'var(--text-brown)',
-                        padding: '0.75rem 0.85rem',
-                        borderRadius: '10px',
-                        backgroundColor: isActive ? 'var(--color-primary-subtle)' : '#FFFFFF',
-                        border: isActive ? '1px solid rgba(122, 18, 29, 0.2)' : '1px solid var(--border-subtle)',
-                        boxShadow: '0 1px 4px rgba(0,0,0,0.02)'
+                        gap: '0.65rem',
+                        transition: 'all 0.15s ease'
                       }}
                     >
-                      <span>{item.label}</span>
-                      {isActive && <span style={{ color: 'var(--color-primary)', fontWeight: 'bold' }}>●</span>}
+                      <div style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '8px',
+                        backgroundColor: isActive ? '#FFFFFF' : 'var(--bg-cream)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}>
+                        {item.icon}
+                      </div>
+
+                      <div style={{
+                        fontSize: '0.88rem',
+                        fontWeight: isActive ? '800' : '700',
+                        color: isActive ? 'var(--color-primary)' : 'var(--text-brown)',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
+                      }}>
+                        {item.label}
+                      </div>
                     </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+                  );
+                })}
+              </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid var(--border-gold)' }}>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                if (onOpenToleFundModal) onOpenToleFundModal();
-              }}
-              style={{
-                width: '100%',
-                padding: '0.85rem',
-                minHeight: '46px',
-                borderRadius: '10px',
-                backgroundColor: 'var(--color-primary)',
-                color: '#FFF',
-                fontWeight: '700',
-                fontSize: '0.95rem',
-                border: 'none',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.4rem',
-                boxShadow: '0 4px 12px rgba(122, 18, 29, 0.25)'
-              }}
-            >
-              <DollarSign size={18} />
-              <span>{language === 'ne' ? 'मासिक टोल कोष बुझाउनुहोस्' : 'Pay Monthly Tole Fund'}</span>
-            </button>
+              {/* Clean Footer Utilities (Admin & Hotline) */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '0.5rem',
+                paddingTop: '0.2rem'
+              }}>
+                <Link
+                  to="/admin"
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.4rem',
+                    backgroundColor: '#FFFFFF',
+                    color: 'var(--color-primary)',
+                    border: '1.5px solid var(--border-gold)',
+                    borderRadius: '12px',
+                    padding: '0.75rem',
+                    textDecoration: 'none',
+                    fontSize: '0.84rem',
+                    fontWeight: '700',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+                  }}
+                >
+                  <Shield size={16} color="#7A121D" />
+                  <span>{t('nav.adminPortal')}</span>
+                </Link>
 
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenDonationModal();
-              }}
-              className="btn btn-green"
-              style={{ width: '100%', justifyContent: 'center', padding: '0.85rem', minHeight: '46px', fontSize: '0.95rem' }}
-            >
-              <Heart size={18} />
-              <span>{t('nav.donateNow')}</span>
-            </button>
+                <a
+                  href="tel:+97721523456"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.4rem',
+                    backgroundColor: '#FFFFFF',
+                    color: 'var(--color-saffron-dark)',
+                    border: '1.5px solid var(--border-gold)',
+                    borderRadius: '12px',
+                    padding: '0.75rem',
+                    textDecoration: 'none',
+                    fontSize: '0.84rem',
+                    fontWeight: '700',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+                  }}
+                >
+                  <Phone size={16} color="#D9531E" />
+                  <span>+९७७-२१-५२३४५६</span>
+                </a>
+              </div>
 
-            <Link
-              to="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="btn btn-outline-gold"
-              style={{ width: '100%', justifyContent: 'center', backgroundColor: '#FFFFFF', minHeight: '44px', fontSize: '0.9rem' }}
-            >
-              <Shield size={16} />
-              <span>{t('nav.adminPortal')}</span>
-            </Link>
+            </div>
           </div>
         </div>
       )}
 
-      {/* 4. Native-Feel Mobile App Bottom Bar */}
+      {/* 4. Native-Feel Mobile App Bottom Bar (Single Primary Navigation) */}
       <div className="mobile-app-bottom-bar">
         <button
-          className={`mobile-bottom-item ${activeSection === 'hero' ? 'active' : ''}`}
+          className={`mobile-bottom-item ${activeSection === 'hero' && !mobileMenuOpen ? 'active' : ''}`}
           onClick={(e) => handleNavClick(e, '#hero')}
         >
           <Home size={20} />
@@ -510,7 +770,7 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
         </button>
 
         <button
-          className={`mobile-bottom-item ${activeSection === 'pooja' ? 'active' : ''}`}
+          className={`mobile-bottom-item ${activeSection === 'pooja' && !mobileMenuOpen ? 'active' : ''}`}
           onClick={(e) => handleNavClick(e, '#pooja')}
         >
           <Sparkles size={20} />
@@ -524,7 +784,7 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
           }}
           style={{ color: '#FFD166' }}
         >
-          <DollarSign size={21} />
+          <span style={{ fontWeight: '800', fontSize: '1.05rem', lineHeight: '1' }}>{language === 'ne' ? 'रु.' : 'Rs.'}</span>
           <span>{language === 'ne' ? 'टोल कोष' : 'Tole Fund'}</span>
         </button>
 
@@ -551,9 +811,6 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
           .desktop-navbar-nav {
             display: block !important;
           }
-          .mobile-hamburger-btn {
-            display: none !important;
-          }
         }
         @media (max-width: 900px) {
           .desktop-only-btn {
@@ -561,6 +818,16 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
           }
           .desktop-only-strip {
             display: none !important;
+          }
+        }
+        @keyframes slideUpSheet {
+          from {
+            transform: translateY(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
           }
         }
       `}</style>

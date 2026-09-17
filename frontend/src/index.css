@@ -301,6 +301,7 @@ img {
   box-shadow: var(--shadow-sm);
   transition: var(--transition-smooth);
   overflow: hidden;
+  position: relative;
 }
 
 .temple-card:hover {
@@ -309,8 +310,69 @@ img {
   transform: translateY(-3px);
 }
 
+/* Pooja Service Cards - Sacred Emerald Green Sidebar & Glow */
+.pooja-service-card {
+  position: relative;
+  background: var(--bg-cream-card);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--border-gold);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease;
+  overflow: hidden;
+}
+
+/* Green Sidebar Accent Indicator on Hover */
+.pooja-service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 6px;
+  background: linear-gradient(180deg, #2D6A4F 0%, #1B4332 100%);
+  opacity: 0;
+  transform: scaleY(0.2);
+  transform-origin: center;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+  border-radius: 4px 0 0 4px;
+}
+
+.pooja-service-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(45, 106, 79, 0.45);
+  box-shadow: 0 16px 36px rgba(45, 106, 79, 0.18), 0 4px 12px rgba(45, 106, 79, 0.08);
+}
+
+.pooja-service-card:hover::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.pooja-service-card:hover .pooja-card-img {
+  transform: scale(1.06);
+}
+
+.pooja-service-card .pooja-book-btn {
+  background-color: #FFFFFF;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pooja-service-card:hover .pooja-book-btn,
+.pooja-service-card .pooja-book-btn:hover {
+  background-color: #2D6A4F !important;
+  border-color: #2D6A4F !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(45, 106, 79, 0.35) !important;
+}
+
 @media (max-width: 640px) {
-  .temple-card {
+  .temple-card,
+  .pooja-service-card {
     border-radius: var(--border-radius-md);
   }
 }

@@ -83,9 +83,6 @@ const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal,
     ? 'पाँच दियोहरूको पवित्र ज्योति, नैवेद्य, फलफूल तथा कलश सहितको आरती स्वरूप।'
     : 'Divine Aarti with five sacred lamps, naivedya offerings, fruits & kalash.';
 
-  const badgeText = language === 'ne'
-    ? '🪔 गर्भगृह दिव्य आरती दर्शन'
-    : '🪔 Sacred Sanctum Aarti Darshan';
 
   const scrollToAbout = () => {
     const el = document.getElementById('about');
@@ -216,29 +213,39 @@ const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal,
               )}
             </div>
 
-            {/* Quick Micro Trust Indicators */}
+            {/* Quick Micro Trust Indicators Glassmorphic Bar */}
             <div style={{
-              display: 'flex',
+              display: 'inline-flex',
               flexWrap: 'wrap',
               alignItems: 'center',
-              gap: 'clamp(0.75rem, 2vw, 1.5rem)',
+              gap: 'clamp(0.6rem, 1.8vw, 1.25rem)',
               marginTop: '1.75rem',
-              paddingTop: '1.25rem',
-              borderTop: '1px solid var(--border-subtle)',
-              fontSize: 'clamp(0.8rem, 2vw, 0.88rem)',
-              color: 'var(--text-muted)'
+              padding: '0.6rem 1rem',
+              backgroundColor: 'rgba(255, 255, 255, 0.92)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+              border: '1px solid var(--border-gold)',
+              borderRadius: '12px',
+              fontSize: 'clamp(0.78rem, 1.8vw, 0.85rem)',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.03)'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <span className="live-pulse-dot" />
-                <span>दैनिक नित्य पूजा</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                <span className="live-pulse-dot" style={{ width: '7px', height: '7px', backgroundColor: '#2D6A4F', flexShrink: 0 }} />
+                <span style={{ fontWeight: '600', color: 'var(--text-brown)' }}>
+                  {language === 'ne' ? 'दैनिक नित्य पूजा' : 'Daily Vedic Puja'}
+                </span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <span style={{ color: '#2D6A4F', fontWeight: 'bold' }}>✓</span>
-                <span>१००% पारदर्शी सेवा</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <span style={{ color: '#2D6A4F', fontWeight: '800', fontSize: '0.88rem' }}>✓</span>
+                <span style={{ fontWeight: '600', color: 'var(--text-brown)' }}>
+                  {language === 'ne' ? '१००% पारदर्शी सेवा' : '100% Transparent Seva'}
+                </span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <span style={{ color: '#2D6A4F', fontWeight: 'bold' }}>✓</span>
-                <span>वैदिक अनुष्ठान</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <span style={{ color: '#2D6A4F', fontWeight: '800', fontSize: '0.88rem' }}>✓</span>
+                <span style={{ fontWeight: '600', color: 'var(--text-brown)' }}>
+                  {language === 'ne' ? 'वैदिक अनुष्ठान' : 'Vedic Rituals'}
+                </span>
               </div>
             </div>
           </div>
@@ -262,10 +269,10 @@ const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal,
                 top: '40%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '560px',
-                height: '560px',
-                maxWidth: '135vw',
-                maxHeight: '135vw',
+                width: '520px',
+                height: '520px',
+                maxWidth: 'min(520px, 94vw)',
+                maxHeight: 'min(520px, 94vw)',
                 pointerEvents: 'none',
                 zIndex: 0
               }}>
@@ -333,27 +340,6 @@ const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal,
                 </div>
               </div>
 
-              {/* 3. Top Floating Spiritual Darshan Pill */}
-              <div className="animate-float" style={{
-                marginBottom: '6px',
-                backgroundColor: 'rgba(88, 11, 20, 0.92)',
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
-                color: '#FFE89E',
-                padding: '5px 16px',
-                borderRadius: 'var(--border-radius-full)',
-                fontSize: '0.82rem',
-                fontWeight: '700',
-                border: '1.5px solid rgba(255, 215, 0, 0.55)',
-                boxShadow: '0 6px 16px rgba(122, 18, 29, 0.25)',
-                zIndex: 4,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px'
-              }}>
-                <span className="diya-flame">🪔</span>
-                <span>{badgeText}</span>
-              </div>
 
               {/* 4. SEAMLESS PNG DEITY CUTOUT (NO BOX, NO FRAME) */}
               <div className="divine-deity-hero-image" style={{
