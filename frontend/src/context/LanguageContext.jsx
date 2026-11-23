@@ -15,10 +15,10 @@ export const LanguageProvider = ({ children }) => {
 
     // Dynamic Branding SEO Title & Meta Description synchronization
     if (language === 'ne') {
-      document.title = 'विश्वकर्मा मन्दिर, छापकी (सप्तरी) | Shri Vishwakarma Temple Chhapki, Saptari, Nepal';
+      document.title = 'विश्वकर्मा मन्दिर, छपकी (सप्तरी) | Shri Vishwakarma Temple Chhapki, Saptari, Nepal';
       const descEl = document.querySelector('meta[name="description"]');
       if (descEl) {
-        descEl.setAttribute('content', 'श्री विश्वकर्मा मन्दिर, छापकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपालको आधिकारिक डिजिटल पोर्टल। भगवान विश्वकर्माको दैनिक पूजा, प्रत्यक्ष दर्शन, अनलाइन पूजा बुकिङ, १००% पारदर्शी चन्दा रसिद तथा टोल व्यवस्थापन।');
+        descEl.setAttribute('content', 'श्री विश्वकर्मा मन्दिर, छपकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपालको आधिकारिक डिजिटल पोर्टल। भगवान विश्वकर्माको दैनिक पूजा, प्रत्यक्ष दर्शन, अनलाइन पूजा बुकिङ, १००% पारदर्शी चन्दा रसिद तथा टोल व्यवस्थापन।');
       }
     } else {
       document.title = 'Lord Vishwakarma Temple, Chhapki (Saptari) | Official Digital Portal, Madhesh Province, Nepal';

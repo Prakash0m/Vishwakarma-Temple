@@ -218,7 +218,7 @@ const DonationModal = ({ isOpen, onClose, onDonationSuccess }) => {
                     value={formData.donorAddress}
                     onChange={handleChange}
                     className="form-control"
-                    placeholder="छापकी-५, सप्तरी"
+                    placeholder="छपकी-५, सप्तरी"
                   />
                 </div>
               </div>

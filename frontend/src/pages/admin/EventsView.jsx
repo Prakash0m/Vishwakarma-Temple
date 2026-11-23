@@ -32,7 +32,7 @@ const EventsView = () => {
     date: new Date().toISOString().split('T')[0],
     time: 'बिहान ९:०० बजे',
     timeEnglish: '9:00 AM onwards',
-    location: 'विश्वकर्मा मन्दिर परिसर, छापकी, सप्तरी',
+    location: 'विश्वकर्मा मन्दिर परिसर, छपकी, सप्तरी',
     locationEnglish: 'Vishwakarma Temple Premises, Chhapki, Saptari',
     bannerImage: '/assets/images/temple-structure.jpg',
     meetingUrl: '',
@@ -72,7 +72,7 @@ const EventsView = () => {
       date: new Date().toISOString().split('T')[0],
       time: 'बिहान ९:०० बजे',
       timeEnglish: '9:00 AM onwards',
-      location: 'विश्वकर्मा मन्दिर परिसर, छापकी, सप्तरी',
+      location: 'विश्वकर्मा मन्दिर परिसर, छपकी, सप्तरी',
       locationEnglish: 'Vishwakarma Temple Premises, Chhapki, Saptari',
       bannerImage: '/assets/images/temple-structure.jpg',
       meetingUrl: '',
@@ -94,7 +94,7 @@ const EventsView = () => {
       date: event.date ? new Date(event.date).toISOString().split('T')[0] : '',
       time: event.time || 'बिहान ९:०० बजे',
       timeEnglish: event.timeEnglish || '9:00 AM',
-      location: event.location || 'विश्वकर्मा मन्दिर परिसर, छापकी, सप्तरी',
+      location: event.location || 'विश्वकर्मा मन्दिर परिसर, छपकी, सप्तरी',
       locationEnglish: event.locationEnglish || '',
       bannerImage: event.bannerImage || '/assets/images/temple-structure.jpg',
       meetingUrl: event.meetingUrl || '',
@@ -356,7 +356,7 @@ const EventsView = () => {
                       value={formData.location}
                       onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                       className="form-control"
-                      placeholder="विश्वकर्मा मन्दिर परिसर, छापकी, सप्तरी"
+                      placeholder="विश्वकर्मा मन्दिर परिसर, छपकी, सप्तरी"
                     />
                   </div>
                 </div>

@@ -11,7 +11,7 @@ const AboutSection = ({ settings }) => {
     : (settings?.aboutTitleEnglish || 'About Vishwakarma Temple');
 
   const aboutDesc = language === 'ne'
-    ? (settings?.aboutDescriptionNepali || 'सप्तरी जिल्लाको अग्निसाइर कृष्णासवरण गाउँपालिका वडा नं. ५, छापकीको पवित्र भूमिमा अवस्थित श्री विश्वकर्मा मन्दिर शिल्पकार, श्रमिक, प्राविधिक तथा सम्पूर्ण श्रद्धालु भक्तजनहरूको आस्थाको धरोहर हो। मन्दिरले सनातन धर्म, संस्कृति संरक्षण, दैनिक पूजा-आराधना र सामाजिक सेवाका विभिन्न कार्यहरू निरन्तर सञ्चालन गर्दै आएको छ।')
+    ? (settings?.aboutDescriptionNepali || 'सप्तरी जिल्लाको अग्निसाइर कृष्णासवरण गाउँपालिका वडा नं. ५, छपकीको पवित्र भूमिमा अवस्थित श्री विश्वकर्मा मन्दिर शिल्पकार, श्रमिक, प्राविधिक तथा सम्पूर्ण श्रद्धालु भक्तजनहरूको आस्थाको धरोहर हो। मन्दिरले सनातन धर्म, संस्कृति संरक्षण, दैनिक पूजा-आराधना र सामाजिक सेवाका विभिन्न कार्यहरू निरन्तर सञ्चालन गर्दै आएको छ।')
     : (settings?.aboutDescriptionEnglish || 'Located in the sacred settlement of Chhapki (Ward No. 5), Agnisair Krishnasavaran Rural Municipality, Saptari District (Madhesh Province, Nepal), the Vishwakarma Temple serves as a sanctum of spiritual devotion, cultural heritage, and community empowerment. We conduct daily morning and evening aartis, Vedic pujas, and charitable outreach programs.');
 
   const aboutImage = settings?.aboutImage || '/assets/images/temple-structure.jpg';
@@ -139,7 +139,7 @@ const AboutSection = ({ settings }) => {
                 zIndex: 3
               }}>
                 <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: '600' }}>
-                  📍 {language === 'ne' ? 'छापकी (सप्तरी) • शिखर शैली' : 'Chhapki (Saptari) • Shikhara Style'}
+                  📍 {language === 'ne' ? 'छपकी (सप्तरी) • शिखर शैली' : 'Chhapki (Saptari) • Shikhara Style'}
                 </span>
                 <span style={{ color: '#2D6A4F', fontWeight: 'bold', flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                   <span className="live-pulse-dot" style={{ width: '6px', height: '6px' }} />

@@ -53,7 +53,7 @@ const HousesView = () => {
     representativeName: '',
     representativePhone: '',
     alternatePhone: '',
-    address: 'छापकी-५, सप्तरी',
+    address: 'छपकी-५, सप्तरी',
     notes: '',
     familyMembers: [
       { memberId: 'MEM-0001', fullName: '', gender: 'Male', relationship: 'घरमुली (Head)', phone: '', age: '', occupation: '', isRepresentative: true, status: 'Active' }
@@ -111,7 +111,7 @@ const HousesView = () => {
       representativeName: '',
       representativePhone: '',
       alternatePhone: '',
-      address: 'छापकी-५, सप्तरी',
+      address: 'छपकी-५, सप्तरी',
       notes: '',
       familyMembers: [
         { memberId: 'MEM-0001', fullName: '', gender: 'Male', relationship: 'घरमुली (Head)', phone: '', age: '', occupation: '', isRepresentative: true, status: 'Active' }
@@ -229,7 +229,7 @@ const HousesView = () => {
             टोल घरधुरी तथा परिवार व्यवस्थापन (House Directory)
           </h1>
           <p style={{ color: '#666', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-            छापकी (वडा नं. ५), सप्तरी • एकल तथा संयुक्त परिवार अभिलेखीकरण
+            छपकी (वडा नं. ५), सप्तरी • एकल तथा संयुक्त परिवार अभिलेखीकरण
           </p>
         </div>
 
@@ -518,7 +518,7 @@ const HousesView = () => {
               {editingHouse ? `घर नं. ${editingHouse.houseNumber} सम्पादन` : 'नयाँ घरधुरी दर्ता फारम'}
             </h2>
             <p style={{ color: '#666', fontSize: '0.85rem', marginBottom: '1.25rem' }}>
-              छापकी टोल व्यवस्थापन प्रणाली • घर र सम्पूर्ण परिवार सदस्यहरूको विवरण
+              छपकी टोल व्यवस्थापन प्रणाली • घर र सम्पूर्ण परिवार सदस्यहरूको विवरण
             </p>
 
             <form onSubmit={handleSubmit}>

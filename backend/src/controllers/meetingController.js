@@ -21,7 +21,7 @@ export const getMeetings = async (req, res, next) => {
         date: 'प्रत्येक शनिबार (Every Saturday)',
         time: 'साँझ ६:०० देखि ७:०० बजे सम्म',
         timeEnglish: '6:00 PM to 7:00 PM',
-        description: 'विश्वकर्मा मन्दिर छापकी, सप्तरीको नियमित साप्ताहिक समीक्षा तथा आध्यात्मिक सत्संग। सम्पूर्ण भक्तजनहरू आमन्त्रित हुनुहुन्छ।',
+        description: 'विश्वकर्मा मन्दिर छपकी, सप्तरीको नियमित साप्ताहिक समीक्षा तथा आध्यात्मिक सत्संग। सम्पूर्ण भक्तजनहरू आमन्त्रित हुनुहुन्छ।',
         descriptionEnglish: 'Weekly spiritual discourse and temple development updates. All devotees worldwide are warmly invited.',
         isActive: true
       });

@@ -14,7 +14,7 @@ const QuickInfoStrip = ({ settings }) => {
     : (settings?.specialPoojaTimeEnglish || 'Every Saturday & Sankranti');
 
   const locationText = language === 'ne'
-    ? (settings?.addressNepali || 'छापकी (वडा नं. ५), सप्तरी')
+    ? (settings?.addressNepali || 'छपकी (वडा नं. ५), सप्तरी')
     : (settings?.addressEnglish || 'Chhapki (Ward No. 5), Saptari');
 
   const phoneText = settings?.phone || '+९७७-३१-५२०१२३ / ९८५२८९९९९९';
@@ -36,7 +36,7 @@ const QuickInfoStrip = ({ settings }) => {
       icon: <MapPin size={22} color="#2D6A4F" />,
       title: t('quickInfo.locationTitle'),
       desc: locationText,
-      badge: 'छापकी (Chhapki)'
+      badge: 'छपकी (Chhapki)'
     },
     {
       icon: <Phone size={22} color="#7A121D" />,

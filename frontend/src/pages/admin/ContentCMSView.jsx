@@ -44,7 +44,7 @@ const ContentCMSView = () => {
     phone: '+९७७-३१-५२०१२३',
     secondaryPhone: '+९७७ ९८५२८९९९९९',
     email: 'info@vishwakarmatemple.org.np',
-    addressNepali: 'छापकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपाल',
+    addressNepali: 'छपकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपाल',
     addressEnglish: 'Chhapki (Ward No. 5), Agnisair Krishnasavaran Rural Municipality, Saptari District, Madhesh Province, Nepal',
     googleMapsUrl: 'https://www.google.com/maps/place/Vishwakarma+Temple/@26.6052464,86.8144002,974m/',
     donorPrivacyDisplay: 'public',

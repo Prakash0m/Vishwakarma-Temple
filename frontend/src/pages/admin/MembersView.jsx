@@ -78,7 +78,7 @@ const MembersView = () => {
       nameDevanagari: '',
       phone: '',
       email: '',
-      address: 'छापकी-५, सप्तरी',
+      address: 'छपकी-५, सप्तरी',
       membershipType: 'General Member',
       status: 'Active',
       occupation: '',
@@ -405,7 +405,7 @@ const MembersView = () => {
                       value={formData.address}
                       onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                       className="form-control"
-                      placeholder="छापकी-५, सप्तरी"
+                      placeholder="छपकी-५, सप्तरी"
                       required
                     />
                   </div>

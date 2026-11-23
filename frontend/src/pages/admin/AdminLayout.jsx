@@ -237,7 +237,7 @@ const AdminLayout = () => {
                 विश्वकर्मा मन्दिर
               </div>
               <div style={{ fontSize: '0.72rem', color: 'rgba(255, 255, 255, 0.7)', whiteSpace: 'nowrap' }}>
-                छापकी टोल व्यवस्थापन
+                छपकी टोल व्यवस्थापन
               </div>
             </div>
           </Link>
@@ -349,7 +349,7 @@ const AdminLayout = () => {
                   {user?.fullName || 'Temple Admin'}
                 </div>
                 <div style={{ fontSize: '0.68rem', color: '#FFD166', whiteSpace: 'nowrap' }}>
-                  छापकी टोल प्रशासन
+                  छपकी टोल प्रशासन
                 </div>
               </div>
             </div>
@@ -423,8 +423,8 @@ const AdminLayout = () => {
               <Menu size={20} />
             </button>
             <div style={{ fontSize: '0.88rem', color: '#444', fontWeight: '700', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              <span className="desktop-admin-title">श्री विश्वकर्मा मन्दिर तथा छापकी टोल विकास समिति</span>
-              <span className="mobile-admin-title" style={{ display: 'none' }}>छापकी टोल प्रशासन</span>
+              <span className="desktop-admin-title">श्री विश्वकर्मा मन्दिर तथा छपकी टोल विकास समिति</span>
+              <span className="mobile-admin-title" style={{ display: 'none' }}>छपकी टोल प्रशासन</span>
             </div>
           </div>
 

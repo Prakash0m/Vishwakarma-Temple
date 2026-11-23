@@ -218,9 +218,9 @@ export const createHouse = async (req, res, next) => {
     const house = await House.create({
       houseId,
       houseNumber,
-      tole: tole || 'छापकी (Chhapki)',
+      tole: tole || 'छपकी (Chhapki)',
       ward: ward || '५',
-      address: address || 'छापकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी',
+      address: address || 'छपकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी',
       familyType: familyType || 'Single Family',
       representativeName,
       representativePhone,

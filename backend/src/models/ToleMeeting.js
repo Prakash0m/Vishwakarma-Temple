@@ -33,7 +33,7 @@ const toleMeetingSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    default: 'श्री विश्वकर्मा मन्दिर सामुदायिक भवन, छापकी',
+    default: 'श्री विश्वकर्मा मन्दिर सामुदायिक भवन, छपकी',
     trim: true
   },
   meetingType: {

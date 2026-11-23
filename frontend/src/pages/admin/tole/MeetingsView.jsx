@@ -53,7 +53,7 @@ const MeetingsView = () => {
     date: new Date().toISOString().split('T')[0],
     time: 'बिहान ८:०० बजे',
     timeEnglish: '8:00 AM',
-    location: 'श्री विश्वकर्मा मन्दिर सामुदायिक भवन, छापकी',
+    location: 'श्री विश्वकर्मा मन्दिर सामुदायिक भवन, छपकी',
     meetingType: 'Regular Meeting',
     agenda: '',
     description: '',
@@ -156,7 +156,7 @@ const MeetingsView = () => {
       date: new Date().toISOString().split('T')[0],
       time: 'बिहान ८:०० बजे',
       timeEnglish: '8:00 AM',
-      location: 'श्री विश्वकर्मा मन्दिर सामुदायिक भवन, छापकी',
+      location: 'श्री विश्वकर्मा मन्दिर सामुदायिक भवन, छपकी',
       meetingType: 'Regular Meeting',
       agenda: '',
       description: '',
@@ -220,7 +220,7 @@ const MeetingsView = () => {
             टोल बैठक तथा घरधुरी उपस्थिति व्यवस्थापन
           </h1>
           <p style={{ color: '#666', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-            छापकी टोल • नियमित/विशेष बैठकहरू, घर-वार उपस्थिति दर्ता र अनुपस्थिति जरिवाना प्रणाली
+            छपकी टोल • नियमित/विशेष बैठकहरू, घर-वार उपस्थिति दर्ता र अनुपस्थिति जरिवाना प्रणाली
           </p>
         </div>
 
@@ -650,7 +650,7 @@ const MeetingsView = () => {
               {editingMeeting ? 'बैठक सम्पादन गर्नुहोस्' : 'नयाँ बैठक तय गर्नुहोस्'}
             </h2>
             <p style={{ color: '#666', fontSize: '0.85rem', marginBottom: '1.25rem' }}>
-              छापकी टोल विकास समिति बैठक कार्यतालिका
+              छपकी टोल विकास समिति बैठक कार्यतालिका
             </p>
 
             <form onSubmit={handleSubmitMeeting}>

@@ -43,7 +43,7 @@ const WeddingsView = () => {
     weddingType: 'Traditional Hindu',
     contactPerson: '',
     contactPhone: '',
-    location: 'छापकी, सप्तरी (विश्वकर्मा मन्दिर परिसर / वर-वधु निवास)',
+    location: 'छपकी, सप्तरी (विश्वकर्मा मन्दिर परिसर / वर-वधु निवास)',
     notes: ''
   });
 
@@ -84,7 +84,7 @@ const WeddingsView = () => {
       weddingType: 'Traditional Hindu',
       contactPerson: '',
       contactPhone: '',
-      location: 'छापकी, सप्तरी (विश्वकर्मा मन्दिर परिसर / वर-वधु निवास)',
+      location: 'छपकी, सप्तरी (विश्वकर्मा मन्दिर परिसर / वर-वधु निवास)',
       notes: ''
     });
     setShowAddModal(true);
@@ -146,7 +146,7 @@ const WeddingsView = () => {
             टोल विवाह अभिलेख तथा क्यालेन्डर (Wedding Management)
           </h1>
           <p style={{ color: '#666', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-            छापकी टोलका वर-वधु, निश्चित विवाह मिति तथा मन्दिर मण्डप अनुष्ठान अभिलेखीकरण
+            छपकी टोलका वर-वधु, निश्चित विवाह मिति तथा मन्दिर मण्डप अनुष्ठान अभिलेखीकरण
           </p>
         </div>
 
@@ -326,7 +326,7 @@ const WeddingsView = () => {
               {editingWedding ? 'विवाह विवरण सम्पादन' : 'नयाँ विवाह दर्ता फारम'}
             </h2>
             <p style={{ color: '#666', fontSize: '0.85rem', marginBottom: '1.25rem' }}>
-              छापकी टोल विवाह दर्ता तथा क्यालेन्डर प्रणाली
+              छपकी टोल विवाह दर्ता तथा क्यालेन्डर प्रणाली
             </p>
 
             <form onSubmit={handleSubmit}>
@@ -369,10 +369,10 @@ const WeddingsView = () => {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', marginBottom: '0.35rem' }}>दुलहाको घर (छापकी घर नं.)</label>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', marginBottom: '0.35rem' }}>दुलहाको घर (छपकी घर नं.)</label>
                   <input
                     type="text"
-                    placeholder="उदा: छापकी-५, घर नं. १०१"
+                    placeholder="उदा: छपकी-५, घर नं. १०१"
                     value={formData.groomHouse}
                     onChange={(e) => setFormData(prev => ({ ...prev, groomHouse: e.target.value }))}
                     style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', border: '1px solid #D0C9BE' }}

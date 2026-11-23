@@ -95,7 +95,7 @@ const Navbar = ({ settings, meetingData, onOpenDonationModal, onOpenToleFundModa
     : (settings?.templeNameEnglish || 'Vishwakarma Temple');
 
   const templeCity = language === 'ne'
-    ? (settings?.templeLocationNepali || 'छापकी-५, सप्तरी (नेपाल)')
+    ? (settings?.templeLocationNepali || 'छपकी-५, सप्तरी (नेपाल)')
     : (settings?.templeLocationEnglish || 'Chhapki-5, Saptari, Nepal');
 
   return (

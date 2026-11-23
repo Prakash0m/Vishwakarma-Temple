@@ -81,7 +81,7 @@ const FundReportsView = () => {
             घरधुरी टोल कोष हिसाब तथा बक्यौता प्रतिवेदन (Due Report & Statement)
           </h1>
           <p style={{ color: '#666', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-            छापकी टोलका प्रत्येक घरको कुल तोकिएको रकम, चुक्ता गरेको रकम र बाँकी बक्यौता हिसाब विवरण
+            छपकी टोलका प्रत्येक घरको कुल तोकिएको रकम, चुक्ता गरेको रकम र बाँकी बक्यौता हिसाब विवरण
           </p>
         </div>
 
@@ -255,10 +255,10 @@ const FundReportsView = () => {
               <div style={{ textAlign: 'center', borderBottom: '2px solid var(--border-gold)', paddingBottom: '0.75rem', marginBottom: '1rem' }}>
                 <div style={{ fontSize: '0.85rem', color: 'var(--color-primary)', fontWeight: '700' }}>ॐ श्री विश्वकर्मणे नमः</div>
                 <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-primary-dark)', fontSize: '1.35rem', margin: '0.2rem 0' }}>
-                  छापकी टोल विकास समिति
+                  छपकी टोल विकास समिति
                 </h2>
                 <div style={{ fontSize: '0.75rem', color: '#666' }}>
-                  अग्निसाइर कृष्णासवरण गाउँपालिका वडा नं. ५, छापकी, सप्तरी
+                  अग्निसाइर कृष्णासवरण गाउँपालिका वडा नं. ५, छपकी, सप्तरी
                 </div>
                 <div style={{ fontSize: '0.9rem', fontWeight: '700', color: '#D9531E', marginTop: '0.4rem' }}>
                   वार्षिक टोल कोष हिसाब विवरण (Annual Statement {year})

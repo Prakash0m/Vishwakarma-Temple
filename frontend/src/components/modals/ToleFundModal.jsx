@@ -136,7 +136,7 @@ const ToleFundModal = ({ isOpen, onClose }) => {
                   marginBottom: '0.35rem'
                 }}>
                   <ShieldCheck size={13} />
-                  <span>छापकी टोल मासिक कोष</span>
+                  <span>छपकी टोल मासिक कोष</span>
                 </div>
                 <p style={{ fontSize: '0.84rem', color: '#666', margin: 0 }}>
                   सजिलो मोबाइल नम्बर प्रमाणिकरण र अनलाइन भौचर पेश प्रणाली

@@ -65,7 +65,7 @@ app.get('/', (req, res) => {
   res.status(200).json({
     success: true,
     message: 'Vishwakarma Temple API is running',
-    temple: 'श्री विश्वकर्मा मन्दिर, छापकी (सप्तरी)',
+    temple: 'श्री विश्वकर्मा मन्दिर, छपकी (सप्तरी)',
     version: '1.0.0',
     timestamp: new Date().toISOString()
   });

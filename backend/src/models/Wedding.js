@@ -60,7 +60,7 @@ const weddingSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    default: 'छापकी, सप्तरी (विश्वकर्मा मन्दिर परिसर / वर-वधु निवास)',
+    default: 'छपकी, सप्तरी (विश्वकर्मा मन्दिर परिसर / वर-वधु निवास)',
     trim: true
   },
   weddingImage: {

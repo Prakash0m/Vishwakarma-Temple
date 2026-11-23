@@ -119,7 +119,7 @@ export const createMeeting = async (req, res, next) => {
       date: new Date(date),
       time: time || 'बिहान ८:०० बजे',
       timeEnglish: timeEnglish || '8:00 AM',
-      location: location || 'श्री विश्वकर्मा मन्दिर सामुदायिक भवन, छापकी',
+      location: location || 'श्री विश्वकर्मा मन्दिर सामुदायिक भवन, छपकी',
       meetingType: meetingType || 'Regular Meeting',
       agenda,
       description,

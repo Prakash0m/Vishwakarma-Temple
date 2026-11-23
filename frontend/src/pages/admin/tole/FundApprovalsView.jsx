@@ -425,10 +425,10 @@ const FundApprovalsView = () => {
               <div style={{ textAlign: 'center', borderBottom: '2px solid var(--border-gold)', paddingBottom: '0.75rem', marginBottom: '1rem' }}>
                 <div style={{ fontSize: '0.85rem', color: 'var(--color-primary)', fontWeight: '700' }}>ॐ श्री विश्वकर्मणे नमः</div>
                 <h2 style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-primary-dark)', fontSize: '1.4rem', margin: '0.2rem 0' }}>
-                  विश्वकर्मा मन्दिर तथा छापकी टोल विकास समिति
+                  विश्वकर्मा मन्दिर तथा छपकी टोल विकास समिति
                 </h2>
                 <div style={{ fontSize: '0.75rem', color: '#666' }}>
-                  छापकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी, मधेश प्रदेश, नेपाल
+                  छपकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी, मधेश प्रदेश, नेपाल
                 </div>
                 <div style={{ fontSize: '0.9rem', fontWeight: '700', color: '#D9531E', marginTop: '0.4rem', textTransform: 'uppercase' }}>
                   मासिक टोल कोष भुक्तानी रसिद (Tole Fund Receipt)

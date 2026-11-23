@@ -21,7 +21,7 @@ const ContactSection = ({ settings }) => {
   const secondaryPhone = settings?.secondaryPhone || '+977 9852012345';
   const email = settings?.email || 'info@vishwakarmatemple.org.np';
   const address = language === 'ne'
-    ? (settings?.addressNepali || 'छापकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपाल')
+    ? (settings?.addressNepali || 'छपकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपाल')
     : (settings?.addressEnglish || 'Chhapki (Ward No. 5), Agnisair Krishnasavaran Rural Municipality, Saptari District, Madhesh Province, Nepal');
 
   const handleChange = (e) => {

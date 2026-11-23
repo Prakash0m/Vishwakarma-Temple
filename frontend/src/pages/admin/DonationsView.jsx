@@ -90,7 +90,7 @@ const DonationsView = () => {
       receiptNumber: '',
       donorName: '',
       donorPhone: '',
-      donorAddress: 'छापकी, सप्तरी',
+      donorAddress: 'छपकी, सप्तरी',
       memberId: '',
       amount: '',
       purpose: 'सामान्य मन्दिर कोष',
@@ -460,7 +460,7 @@ const DonationsView = () => {
                       value={formData.donorAddress}
                       onChange={(e) => setFormData({ ...formData, donorAddress: e.target.value })}
                       className="form-control"
-                      placeholder="छापकी-५, सप्तरी"
+                      placeholder="छपकी-५, सप्तरी"
                     />
                   </div>
                 </div>
@@ -583,7 +583,7 @@ const DonationsView = () => {
                   <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-primary)', fontSize: '1.35rem' }}>
                     श्री विश्वकर्मा मन्दिर
                   </h3>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>छापकी (वडा नं. ५), अग्निसाइर कृष्णासवरण, सप्तरी, नेपाल</div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>छपकी (वडा नं. ५), अग्निसाइर कृष्णासवरण, सप्तरी, नेपाल</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>फोन: +९७७-३१-५२०१२३</div>
                 </div>
 
@@ -600,7 +600,7 @@ const DonationsView = () => {
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '4px' }}>
                     <span style={{ color: 'var(--text-muted)' }}>ठेगाना / सम्पर्क:</span>
-                    <span>{selectedReceipt.donorAddress || 'छापकी, सप्तरी'} ({selectedReceipt.donorPhone || 'N/A'})</span>
+                    <span>{selectedReceipt.donorAddress || 'छपकी, सप्तरी'} ({selectedReceipt.donorPhone || 'N/A'})</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '4px' }}>
                     <span style={{ color: 'var(--text-muted)' }}>चन्दाको उद्देश्य:</span>

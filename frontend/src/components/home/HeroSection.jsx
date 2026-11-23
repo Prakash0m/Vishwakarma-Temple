@@ -353,7 +353,7 @@ const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal,
               }}>
                 <img
                   src={getImageUrl(fixedDeityImage)}
-                  alt="भगवान श्री विश्वकर्मा गर्भगृह पञ्चदीप पूजा - छापकी, सप्तरी"
+                  alt="भगवान श्री विश्वकर्मा गर्भगृह पञ्चदीप पूजा - छपकी, सप्तरी"
                   fetchPriority="high"
                   decoding="async"
                   style={{

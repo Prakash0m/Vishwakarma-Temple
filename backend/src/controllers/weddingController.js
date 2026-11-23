@@ -117,7 +117,7 @@ export const createWedding = async (req, res, next) => {
       weddingType: weddingType || 'Traditional Hindu',
       contactPerson: contactPerson || `${brideName} / ${groomName}`,
       contactPhone,
-      location: location || 'छापकी, सप्तरी (विश्वकर्मा मन्दिर परिसर / वर-वधु निवास)',
+      location: location || 'छपकी, सप्तरी (विश्वकर्मा मन्दिर परिसर / वर-वधु निवास)',
       weddingImage: weddingImage || '',
       notes,
       status: 'Upcoming'

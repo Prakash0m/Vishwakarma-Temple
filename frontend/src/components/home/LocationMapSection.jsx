@@ -7,7 +7,7 @@ const LocationMapSection = ({ settings }) => {
   const [viewMode, setViewMode] = useState('streetview'); // 'streetview' | 'satellite' | 'map'
 
   const templeAddress = language === 'ne'
-    ? (settings?.addressNepali || 'छापकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपाल')
+    ? (settings?.addressNepali || 'छपकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपाल')
     : (settings?.addressEnglish || 'Chhapki (Ward No. 5), Agnisair Krishnasavaran Rural Municipality, Saptari District, Madhesh Province, Nepal');
 
   // Google Maps URLs
@@ -172,9 +172,9 @@ const LocationMapSection = ({ settings }) => {
                 }} />
                 <strong style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {viewMode === 'streetview' 
-                    ? (language === 'ne' ? 'स्ट्रीट भ्यू • छापकी, सप्तरी' : 'Street View • Chhapki, Saptari')
+                    ? (language === 'ne' ? 'स्ट्रीट भ्यू • छपकी, सप्तरी' : 'Street View • Chhapki, Saptari')
                     : viewMode === 'satellite'
-                      ? (language === 'ne' ? 'स्याटेलाइट • छापकी' : 'Satellite 3D • Chhapki')
+                      ? (language === 'ne' ? 'स्याटेलाइट • छपकी' : 'Satellite 3D • Chhapki')
                       : (language === 'ne' ? 'गुगल म्याप' : 'Google Map')}
                 </strong>
               </div>
@@ -220,7 +220,7 @@ const LocationMapSection = ({ settings }) => {
               gap: '6px'
             }}>
               <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                {language === 'ne' ? 'छापकी-५, सप्तरी' : 'Chhapki-5, Saptari'}
+                {language === 'ne' ? 'छपकी-५, सप्तरी' : 'Chhapki-5, Saptari'}
               </span>
               <a
                 href={streetViewDirectUrl}
@@ -282,7 +282,7 @@ const LocationMapSection = ({ settings }) => {
                   color: 'var(--color-primary)',
                   marginBottom: '2px'
                 }}>
-                  {language === 'ne' ? 'छापकी (Chhapki) - वडा नं. ५' : 'Chhapki Settlement - Ward No. 5'}
+                  {language === 'ne' ? 'छपकी (Chhapki) - वडा नं. ५' : 'Chhapki Settlement - Ward No. 5'}
                 </h4>
                 <p style={{ fontSize: '0.82rem', color: 'var(--text-brown)', lineHeight: 1.45, margin: 0 }}>
                   {language === 'ne'

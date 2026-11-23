@@ -85,7 +85,7 @@ const houseSchema = new mongoose.Schema({
   },
   tole: {
     type: String,
-    default: 'छापकी (Chhapki)',
+    default: 'छपकी (Chhapki)',
     trim: true
   },
   ward: {
@@ -95,7 +95,7 @@ const houseSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    default: 'छापकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी',
+    default: 'छपकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी',
     trim: true
   },
   familyType: {

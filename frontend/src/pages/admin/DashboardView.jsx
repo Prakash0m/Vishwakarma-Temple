@@ -146,7 +146,7 @@ const DashboardView = () => {
             lineHeight: 1.2,
             margin: 0
           }}>
-            विश्वकर्मा मन्दिर तथा छापकी टोल एकीकृत ड्यासबोर्ड
+            विश्वकर्मा मन्दिर तथा छपकी टोल एकीकृत ड्यासबोर्ड
           </h1>
           <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '4px' }}>
             टोल घरधुरी जनसांख्यिकी, बैठक उपस्थिति, मासिक कोष तथा मन्दिर पोखरी आम्दानी अनुगमन
@@ -180,7 +180,7 @@ const DashboardView = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
             <span style={{ width: '4px', height: '18px', backgroundColor: 'var(--color-primary)', borderRadius: '2px' }} />
             <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', color: 'var(--color-primary-dark)', margin: 0 }}>
-              छापकी टोल जनसांख्यिकी तथा समुदाय विश्लेषण (Tole Demographics & Funds)
+              छपकी टोल जनसांख्यिकी तथा समुदाय विश्लेषण (Tole Demographics & Funds)
             </h2>
           </div>
 

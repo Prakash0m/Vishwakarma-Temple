@@ -34,7 +34,7 @@ const eventSchema = new mongoose.Schema(
     },
     location: {
       type: String,
-      default: 'विश्वकर्मा मन्दिर परिसर, छापकी, सप्तरी'
+      default: 'विश्वकर्मा मन्दिर परिसर, छपकी, सप्तरी'
     },
     locationEnglish: {
       type: String,

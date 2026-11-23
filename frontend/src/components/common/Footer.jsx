@@ -11,11 +11,11 @@ const Footer = ({ settings, onOpenDonationModal }) => {
     : (settings?.templeNameEnglish || 'Vishwakarma Temple');
 
   const templeCity = language === 'ne'
-    ? (settings?.templeLocationNepali || 'छापकी (वडा नं. ५), सप्तरी, नेपाल')
+    ? (settings?.templeLocationNepali || 'छपकी (वडा नं. ५), सप्तरी, नेपाल')
     : (settings?.templeLocationEnglish || 'Chhapki (Ward No. 5), Saptari, Nepal');
 
   const address = language === 'ne'
-    ? (settings?.addressNepali || 'छापकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपाल')
+    ? (settings?.addressNepali || 'छपकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपाल')
     : (settings?.addressEnglish || 'Chhapki (Ward No. 5), Agnisair Krishnasavaran Rural Municipality, Saptari District, Madhesh Province, Nepal');
 
   const phone = settings?.phone || '+977-21-523456';

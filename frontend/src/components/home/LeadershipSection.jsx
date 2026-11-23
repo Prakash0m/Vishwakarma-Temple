@@ -60,7 +60,7 @@ const LeadershipSection = () => {
             margin: '0 0 0.5rem 0',
             lineHeight: 1.2
           }}>
-            {language === 'ne' ? 'छापकी टोल विकास समिति नेतृत्व' : 'Chhapki Tole Leadership Committee'}
+            {language === 'ne' ? 'छपकी टोल विकास समिति नेतृत्व' : 'Chhapki Tole Leadership Committee'}
           </h2>
 
           <p style={{
@@ -174,7 +174,7 @@ const LeadershipSection = () => {
                     lineHeight: 1.5,
                     margin: '0 0 0.85rem 0'
                   }}>
-                    {cand.bio || 'छापकी टोलको विकास, धार्मिक अनुष्ठान तथा सामाजिक सद्भावमा निरन्तर क्रियाशील।'}
+                    {cand.bio || 'छपकी टोलको विकास, धार्मिक अनुष्ठान तथा सामाजिक सद्भावमा निरन्तर क्रियाशील।'}
                   </p>
 
                   <div style={{

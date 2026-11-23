@@ -1,6 +1,6 @@
-# Vishwakarma Temple (विश्वकर्मा मन्दिर, छापकी, सप्तरी) — System Walkthrough
+# Vishwakarma Temple (विश्वकर्मा मन्दिर, छपकी, सप्तरी) — System Walkthrough
 
-We have designed, engineered, seeded, and verified the complete production-grade website and management system for **Vishwakarma Temple (श्री विश्वकर्मा मन्दिर)** located in **Chhapki (Ward No. 5), Agnisair Krishnasavaran Rural Municipality, Saptari District, Madhesh Province, Nepal** (Nepali: **छापकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपाल**).
+We have designed, engineered, seeded, and verified the complete production-grade website and management system for **Vishwakarma Temple (श्री विश्वकर्मा मन्दिर)** located in **Chhapki (Ward No. 5), Agnisair Krishnasavaran Rural Municipality, Saptari District, Madhesh Province, Nepal** (Nepali: **छपकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपाल**).
 
 ---
 
@@ -16,12 +16,12 @@ We have designed, engineered, seeded, and verified the complete production-grade
 
 ## 📍 Updated Location & Address Details
 
-- **Settlement (Highlighted)**: **Chhapki** (छापकी)
+- **Settlement (Highlighted)**: **Chhapki** (छपकी)
 - **Ward**: **Ward No. 5** (वडा नं. ५)
 - **Rural Municipality**: **Agnisair Krishnasavaran Rural Municipality** (अग्निसाइर कृष्णासवरण गाउँपालिका)
 - **District**: **Saptari District** (सप्तरी जिल्ला)
 - **Province**: **Madhesh Province, Nepal** (मधेश प्रदेश, नेपाल)
-- **Official Address (Nepali)**: छापकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपाल
+- **Official Address (Nepali)**: छपकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपाल
 - **Official Address (English)**: Chhapki (Ward No. 5), Agnisair Krishnasavaran Rural Municipality, Saptari District, Madhesh Province, Nepal
 - **Helpline Phone Numbers**: +९७७-३१-५२०१२३ / ९८५२८९९९९९
 - **GPS Coordinates**: `26.6052° N, 86.8144° E`
@@ -35,7 +35,7 @@ We have designed, engineered, seeded, and verified the complete production-grade
    - 🛰️ **स्याटेलाइट दृश्य (Satellite 3D Visual)**: High-resolution satellite imagery showing temple architecture, gardens, and Chhapki landscape.
    - 🗺️ **मानचित्र (Standard Roadmap)**: Navigation roadmap with terrain, highways, and connecting routes from Kanchanpur / Rupani.
 2. **Prominent Settlement Highlight Card**:
-   - Specially badges **Chhapki (छापकी) - Ward No. 5** with gold borders, glowing indicator, full municipal hierarchy, and daily opening hours (6:00 AM – 7:00 PM).
+   - Specially badges **Chhapki (छपकी) - Ward No. 5** with gold borders, glowing indicator, full municipal hierarchy, and daily opening hours (6:00 AM – 7:00 PM).
 3. **Direct Street View & Directions Actions**:
    - Direct 1-click button to open full 360° Google Street View.
    - Direct 1-click Google Maps GPS navigation.
