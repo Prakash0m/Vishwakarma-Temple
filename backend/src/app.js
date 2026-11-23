@@ -23,6 +23,7 @@ import contactRoutes from './routes/contactRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import toleRoutes from './routes/toleRoutes.js';
 import templeIncomeRoutes from './routes/templeIncomeRoutes.js';
+import { getHomepageFeed } from './controllers/settingController.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -81,6 +82,9 @@ app.get('/api/health', (req, res) => {
     version: '1.0.0'
   });
 });
+
+// High-Speed Unified Homepage Feed (1 single network roundtrip for all public data)
+app.get('/api/homepage-feed', getHomepageFeed);
 
 // API Routes
 app.use('/api/auth', authRoutes);

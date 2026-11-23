@@ -1,4 +1,15 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Ensure .env is always loaded regardless of execution context
+dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 
 let mongodInstance = null;
 let isConnected = false;
@@ -13,8 +24,11 @@ export const connectDB = async () => {
   
   try {
     const conn = await mongoose.connect(primaryUri, {
-      serverSelectionTimeoutMS: 5000,
-      connectTimeoutMS: 5000
+      serverSelectionTimeoutMS: 8000,
+      connectTimeoutMS: 8000,
+      maxPoolSize: 25,
+      minPoolSize: 2,
+      socketTimeoutMS: 45000
     });
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     isConnected = true;

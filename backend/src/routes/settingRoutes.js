@@ -1,8 +1,10 @@
 import express from 'express';
-import { getSettings, updateSettings } from '../controllers/settingController.js';
+import { getSettings, updateSettings, getHomepageFeed } from '../controllers/settingController.js';
 import { protect } from '../middlewares/auth.js';
 
 const router = express.Router();
+
+router.get('/feed', getHomepageFeed);
 
 router.route('/')
   .get(getSettings)

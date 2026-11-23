@@ -174,6 +174,18 @@ const GallerySection = ({ gallery }) => {
                 </div>
               );
             })
+          ) : !gallery || gallery.length === 0 ? (
+            [1, 2, 3, 4].map((key) => (
+              <div
+                key={key}
+                className="skeleton"
+                style={{
+                  borderRadius: '16px',
+                  height: '220px',
+                  border: '1px solid var(--border-gold-light, rgba(212, 175, 55, 0.2))'
+                }}
+              />
+            ))
           ) : (
             <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
               यस वर्गमा कुनै तस्बिर उपलब्ध छैन।

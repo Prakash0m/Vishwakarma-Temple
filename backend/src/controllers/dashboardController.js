@@ -5,81 +5,131 @@ import Budget from '../models/Budget.js';
 import PoojaBooking from '../models/PoojaBooking.js';
 import ContactMessage from '../models/ContactMessage.js';
 
+// Fast In-Memory Cache for Dashboard Metrics
+let cachedDashboard = null;
+let lastDashboardFetch = 0;
+const DASHBOARD_TTL = 15 * 1000; // 15 seconds memory cache
+
 // @desc    Get complete financial & operational dashboard summary
 // @route   GET /api/dashboard/summary
 // @access  Private
 export const getDashboardSummary = async (req, res, next) => {
   try {
-    // 1. Total Donation calculation
-    const donationAgg = await Donation.aggregate([
-      { $match: { isVerified: true } },
-      { $group: { _id: null, total: { $sum: '$amount' }, count: { $sum: 1 } } }
+    const now = Date.now();
+    if (cachedDashboard && (now - lastDashboardFetch) < DASHBOARD_TTL) {
+      res.set('Cache-Control', 'private, max-age=15');
+      return res.status(200).json({ success: true, cached: true, data: cachedDashboard });
+    }
+
+    const currentYear = new Date().getFullYear();
+    const yearStart = new Date(currentYear, 0, 1);
+
+    // Run ALL independent aggregations concurrently with Promise.all (Eliminates sequential roundtrips)
+    const [
+      donationAgg,
+      expenseAgg,
+      budgetAgg,
+      totalMembers,
+      activeMembers,
+      distinctDonors,
+      monthlyDonations,
+      monthlyExpenses,
+      paymentMethods,
+      donationPurposes,
+      expenseCategories,
+      allBudgets,
+      categoryExpensesAgg,
+      recentDonations,
+      recentExpenses,
+      pendingBookingsCount,
+      newMessagesCount
+    ] = await Promise.all([
+      Donation.aggregate([
+        { $match: { isVerified: true } },
+        { $group: { _id: null, total: { $sum: '$amount' }, count: { $sum: 1 } } }
+      ]),
+      Expense.aggregate([
+        { $group: { _id: null, total: { $sum: '$amount' }, count: { $sum: 1 } } }
+      ]),
+      Budget.aggregate([
+        { $match: { status: 'Active' } },
+        { $group: { _id: null, total: { $sum: '$allocatedAmount' } } }
+      ]),
+      Member.countDocuments(),
+      Member.countDocuments({ status: 'Active' }),
+      Donation.distinct('donorName'),
+      Donation.aggregate([
+        {
+          $match: {
+            isVerified: true,
+            date: { $gte: yearStart }
+          }
+        },
+        {
+          $group: {
+            _id: { $month: '$date' },
+            total: { $sum: '$amount' },
+            count: { $sum: 1 }
+          }
+        },
+        { $sort: { '_id': 1 } }
+      ]),
+      Expense.aggregate([
+        {
+          $match: {
+            date: { $gte: yearStart }
+          }
+        },
+        {
+          $group: {
+            _id: { $month: '$date' },
+            total: { $sum: '$amount' },
+            count: { $sum: 1 }
+          }
+        },
+        { $sort: { '_id': 1 } }
+      ]),
+      Donation.aggregate([
+        { $match: { isVerified: true } },
+        { $group: { _id: '$paymentMethod', total: { $sum: '$amount' }, count: { $sum: 1 } } },
+        { $sort: { total: -1 } }
+      ]),
+      Donation.aggregate([
+        { $match: { isVerified: true } },
+        { $group: { _id: '$purpose', total: { $sum: '$amount' }, count: { $sum: 1 } } },
+        { $sort: { total: -1 } }
+      ]),
+      Expense.aggregate([
+        { $group: { _id: '$category', total: { $sum: '$amount' }, count: { $sum: 1 } } },
+        { $sort: { total: -1 } }
+      ]),
+      Budget.find({ status: 'Active' }).lean(),
+      Expense.aggregate([
+        { $group: { _id: '$category', spent: { $sum: '$amount' } } }
+      ]),
+      Donation.find({ isVerified: true })
+        .sort({ date: -1 })
+        .limit(5)
+        .populate('member', 'name memberId')
+        .lean(),
+      Expense.find()
+        .sort({ date: -1 })
+        .limit(5)
+        .lean(),
+      PoojaBooking.countDocuments({ status: 'Pending' }),
+      ContactMessage.countDocuments({ status: 'New' })
     ]);
+
     const totalDonation = donationAgg.length > 0 ? donationAgg[0].total : 0;
     const totalDonationCount = donationAgg.length > 0 ? donationAgg[0].count : 0;
-
-    // 2. Total Expense calculation
-    const expenseAgg = await Expense.aggregate([
-      { $group: { _id: null, total: { $sum: '$amount' }, count: { $sum: 1 } } }
-    ]);
     const totalExpense = expenseAgg.length > 0 ? expenseAgg[0].total : 0;
     const totalExpenseCount = expenseAgg.length > 0 ? expenseAgg[0].count : 0;
-
-    // 3. Current Net Balance
     const balance = totalDonation - totalExpense;
-
-    // 4. Total Budget allocated
-    const budgetAgg = await Budget.aggregate([
-      { $match: { status: 'Active' } },
-      { $group: { _id: null, total: { $sum: '$allocatedAmount' } } }
-    ]);
     const totalBudget = budgetAgg.length > 0 ? budgetAgg[0].total : 0;
     const remainingBudget = Math.max(0, totalBudget - totalExpense);
-
-    // 5. Total Members
-    const totalMembers = await Member.countDocuments();
-    const activeMembers = await Member.countDocuments({ status: 'Active' });
-
-    // 6. Distinct Donors count
-    const distinctDonors = await Donation.distinct('donorName');
     const totalDonors = distinctDonors.length;
 
-    // 7. Monthly donations & expenses (Last 6-12 months aggregation)
-    const currentYear = new Date().getFullYear();
-    const monthlyDonations = await Donation.aggregate([
-      {
-        $match: {
-          isVerified: true,
-          date: { $gte: new Date(currentYear, 0, 1) }
-        }
-      },
-      {
-        $group: {
-          _id: { $month: '$date' },
-          total: { $sum: '$amount' },
-          count: { $sum: 1 }
-        }
-      },
-      { $sort: { '_id': 1 } }
-    ]);
-
-    const monthlyExpenses = await Expense.aggregate([
-      {
-        $match: {
-          date: { $gte: new Date(currentYear, 0, 1) }
-        }
-      },
-      {
-        $group: {
-          _id: { $month: '$date' },
-          total: { $sum: '$amount' },
-          count: { $sum: 1 }
-        }
-      },
-      { $sort: { '_id': 1 } }
-    ]);
-
-    // Build monthly combined array (Jan - Dec)
+    // Monthly trends
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const monthNamesNepali = ['बैशाख', 'जेठ', 'असार', 'श्रावण', 'भाद्र', 'आश्विन', 'कार्तिक', 'मंसिर', 'पौष', 'माघ', 'फाल्गुन', 'चैत'];
 
@@ -95,91 +145,58 @@ export const getDashboardSummary = async (req, res, next) => {
       };
     });
 
-    // 8. Payment Method distribution
-    const paymentMethods = await Donation.aggregate([
-      { $match: { isVerified: true } },
-      { $group: { _id: '$paymentMethod', total: { $sum: '$amount' }, count: { $sum: 1 } } },
-      { $sort: { total: -1 } }
-    ]);
+    // Zero-query in-memory Map for Budget utilization (completely eliminates N+1 loop)
+    const catExpenseMap = new Map(categoryExpensesAgg.map(c => [c._id, c.spent]));
+    const budgetUtilization = allBudgets.map(b => {
+      const spent = catExpenseMap.get(b.category) || 0;
+      const remaining = b.allocatedAmount - spent;
+      const percentage = b.allocatedAmount > 0 ? Math.round((spent / b.allocatedAmount) * 100) : 0;
 
-    // 9. Donation Purpose distribution
-    const donationPurposes = await Donation.aggregate([
-      { $match: { isVerified: true } },
-      { $group: { _id: '$purpose', total: { $sum: '$amount' }, count: { $sum: 1 } } },
-      { $sort: { total: -1 } }
-    ]);
+      let health = 'green';
+      if (percentage >= 100) health = 'red';
+      else if (percentage >= 80) health = 'orange';
 
-    // 10. Expense Category breakdown
-    const expenseCategories = await Expense.aggregate([
-      { $group: { _id: '$category', total: { $sum: '$amount' }, count: { $sum: 1 } } },
-      { $sort: { total: -1 } }
-    ]);
+      return {
+        _id: b._id,
+        category: b.category,
+        categoryEnglish: b.categoryEnglish,
+        allocated: b.allocatedAmount,
+        spent,
+        remaining,
+        percentage,
+        health
+      };
+    });
 
-    // 11. Budget utilization per category
-    const allBudgets = await Budget.find({ status: 'Active' });
-    const budgetUtilization = await Promise.all(
-      allBudgets.map(async (b) => {
-        const spentAgg = await Expense.aggregate([
-          { $match: { category: b.category } },
-          { $group: { _id: null, spent: { $sum: '$amount' } } }
-        ]);
-        const spent = spentAgg.length > 0 ? spentAgg[0].spent : 0;
-        const remaining = b.allocatedAmount - spent;
-        const percentage = b.allocatedAmount > 0 ? Math.round((spent / b.allocatedAmount) * 100) : 0;
-        
-        let health = 'green';
-        if (percentage >= 100) health = 'red';
-        else if (percentage >= 80) health = 'orange';
+    const responseData = {
+      totalDonation,
+      totalDonationCount,
+      totalExpense,
+      totalExpenseCount,
+      balance,
+      totalBudget,
+      remainingBudget,
+      totalMembers,
+      activeMembers,
+      totalDonors,
+      monthlyTrends,
+      paymentMethods,
+      donationPurposes,
+      expenseCategories,
+      budgetUtilization,
+      recentDonations,
+      recentExpenses,
+      pendingBookingsCount,
+      newMessagesCount
+    };
 
-        return {
-          _id: b._id,
-          category: b.category,
-          categoryEnglish: b.categoryEnglish,
-          allocated: b.allocatedAmount,
-          spent,
-          remaining,
-          percentage,
-          health
-        };
-      })
-    );
+    cachedDashboard = responseData;
+    lastDashboardFetch = now;
 
-    // 12. Recent Activity & Counts
-    const recentDonations = await Donation.find({ isVerified: true })
-      .sort({ date: -1 })
-      .limit(5)
-      .populate('member', 'name memberId');
-
-    const recentExpenses = await Expense.find()
-      .sort({ date: -1 })
-      .limit(5);
-
-    const pendingBookingsCount = await PoojaBooking.countDocuments({ status: 'Pending' });
-    const newMessagesCount = await ContactMessage.countDocuments({ status: 'New' });
-
+    res.set('Cache-Control', 'private, max-age=15');
     res.status(200).json({
       success: true,
-      data: {
-        totalDonation,
-        totalDonationCount,
-        totalExpense,
-        totalExpenseCount,
-        balance,
-        totalBudget,
-        remainingBudget,
-        totalMembers,
-        activeMembers,
-        totalDonors,
-        monthlyTrends,
-        paymentMethods,
-        donationPurposes,
-        expenseCategories,
-        budgetUtilization,
-        recentDonations,
-        recentExpenses,
-        pendingBookingsCount,
-        newMessagesCount
-      }
+      data: responseData
     });
   } catch (error) {
     next(error);

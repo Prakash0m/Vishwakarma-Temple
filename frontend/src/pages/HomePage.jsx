@@ -57,6 +57,45 @@ const HomePage = () => {
 
   const fetchAllData = async () => {
     try {
+      // 1. Fast path: 1 single network roundtrip to unified cached feed
+      try {
+        const feedRes = await api.get('/homepage-feed');
+        if (feedRes.data && feedRes.data.success && feedRes.data.data) {
+          const feed = feedRes.data.data;
+          if (feed.settings) setSettings(feed.settings);
+          if (feed.poojas?.length) setPoojas(feed.poojas);
+          if (feed.events?.length) setEvents(feed.events);
+          if (feed.gallery?.length) setGallery(feed.gallery);
+          if (feed.meetingData) setMeetingData(feed.meetingData);
+          if (feed.supporters?.length) setSupporters(feed.supporters);
+          if (feed.budgets?.length) setBudgets(feed.budgets);
+          if (feed.summary) setSummary(feed.summary);
+
+          // Persist in SWR cache for instant load next time
+          try {
+            sessionStorage.setItem(CACHE_KEY, JSON.stringify({
+              timestamp: Date.now(),
+              payload: {
+                settings: feed.settings || settings,
+                summary: feed.summary,
+                poojas: feed.poojas,
+                events: feed.events,
+                gallery: feed.gallery,
+                meetingData: feed.meetingData,
+                supporters: feed.supporters,
+                budgets: feed.budgets
+              }
+            }));
+          } catch (e) {
+            // Ignore session storage quota errors
+          }
+          return; // Fast path successful
+        }
+      } catch (feedErr) {
+        console.warn('Unified feed failed, falling back to separate endpoints:', feedErr.message);
+      }
+
+      // 2. Fallback path: Individual endpoints
       const [
         settingsRes,
         poojasRes,

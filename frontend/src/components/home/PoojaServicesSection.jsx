@@ -177,9 +177,28 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
               );
             })
           ) : (
-            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
-              पूजा सेवाहरू लोड हुँदैछन्...
-            </div>
+            [1, 2, 3].map((key) => (
+              <div
+                key={key}
+                className="temple-card skeleton-card"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  height: '420px',
+                  padding: 0
+                }}
+              >
+                <div className="skeleton" style={{ width: '100%', height: '220px' }} />
+                <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', flex: 1 }}>
+                  <div className="skeleton" style={{ width: '70%', height: '22px' }} />
+                  <div className="skeleton" style={{ width: '40%', height: '16px' }} />
+                  <div className="skeleton" style={{ width: '100%', height: '14px', marginTop: '0.5rem' }} />
+                  <div className="skeleton" style={{ width: '90%', height: '14px' }} />
+                  <div className="skeleton" style={{ width: '100%', height: '42px', marginTop: 'auto', borderRadius: '8px' }} />
+                </div>
+              </div>
+            ))
           )}
         </div>
       </div>

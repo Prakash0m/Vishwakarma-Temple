@@ -26,8 +26,18 @@ import FundPayment from '../models/FundPayment.js';
 
 dotenv.config();
 
-export const seedDatabase = async () => {
+export const seedDatabase = async (force = false) => {
   try {
+    // Fast Startup: Skip 200+ sequential seed checks if database is already populated
+    if (!force) {
+      const existingAdmin = await User.findOne({ email: 'admin@vishwakarmatemple.org' });
+      const settingCount = await Setting.countDocuments();
+      if (existingAdmin && settingCount > 0) {
+        console.log('⚡ Database already initialized. Startup completed in milliseconds.');
+        return;
+      }
+    }
+
     console.log('🌱 Checking / Seeding Vishwakarma Temple Database...');
 
     // 1. Admin User

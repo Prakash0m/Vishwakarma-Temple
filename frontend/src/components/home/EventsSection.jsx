@@ -183,9 +183,27 @@ const EventsSection = ({ events }) => {
               );
             })
           ) : (
-            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
-              कार्यक्रमहरू लोड हुँदैछन्...
-            </div>
+            [1, 2, 3].map((key) => (
+              <div
+                key={key}
+                className="temple-card skeleton-card"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: '380px',
+                  padding: 0
+                }}
+              >
+                <div className="skeleton" style={{ width: '100%', height: '180px' }} />
+                <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', flex: 1 }}>
+                  <div className="skeleton" style={{ width: '75%', height: '20px' }} />
+                  <div className="skeleton" style={{ width: '50%', height: '15px' }} />
+                  <div className="skeleton" style={{ width: '100%', height: '14px', marginTop: '0.5rem' }} />
+                  <div className="skeleton" style={{ width: '85%', height: '14px' }} />
+                  <div className="skeleton" style={{ width: '100%', height: '36px', marginTop: 'auto', borderRadius: '8px' }} />
+                </div>
+              </div>
+            ))
           )}
         </div>
       </div>
