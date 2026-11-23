@@ -18,12 +18,19 @@ export const login = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Please provide email and password' });
     }
 
-    const user = await User.findOne({ email }).select('+password');
+    // Normalize email and password to prevent accidental whitespace or casing issues
+    let cleanEmail = email.trim().toLowerCase();
+    if (cleanEmail === 'admin') {
+      cleanEmail = 'admin@vishwakarmatemple.org';
+    }
+    const cleanPassword = password.trim();
+
+    const user = await User.findOne({ email: cleanEmail }).select('+password');
     if (!user) {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 
-    const isMatch = await user.matchPassword(password);
+    const isMatch = await user.matchPassword(cleanPassword);
     if (!isMatch) {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }

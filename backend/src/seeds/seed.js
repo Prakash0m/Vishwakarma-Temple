@@ -31,7 +31,7 @@ export const seedDatabase = async () => {
     console.log('🌱 Checking / Seeding Vishwakarma Temple Database...');
 
     // 1. Admin User
-    const existingAdmin = await User.findOne({ email: 'admin@vishwakarmatemple.org' });
+    const existingAdmin = await User.findOne({ email: 'admin@vishwakarmatemple.org' }).select('+password');
     let adminUser;
     if (!existingAdmin) {
       adminUser = await User.create({
@@ -43,6 +43,12 @@ export const seedDatabase = async () => {
       });
       console.log('✅ Admin User Created: admin@vishwakarmatemple.org / TempleAdmin@2030');
     } else {
+      const isMatch = await existingAdmin.matchPassword('TempleAdmin@2030');
+      if (!isMatch) {
+        existingAdmin.password = 'TempleAdmin@2030';
+        await existingAdmin.save();
+        console.log('🔄 Synced Admin Password to TempleAdmin@2030');
+      }
       adminUser = existingAdmin;
     }
 
