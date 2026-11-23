@@ -32,8 +32,9 @@ export const getGallery = async (req, res, next) => {
       query.isFeatured = isFeatured === 'true';
     }
 
-    const images = await Gallery.find(query).sort({ order: 1, createdAt: -1 });
+    const images = await Gallery.find(query).sort({ order: 1, createdAt: -1 }).lean();
 
+    res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
     res.status(200).json({
       success: true,
       count: images.length,

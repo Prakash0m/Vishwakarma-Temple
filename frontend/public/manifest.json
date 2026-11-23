@@ -1,0 +1,26 @@
+{
+  "name": "श्री विश्वकर्मा मन्दिर, छापकी (सप्तरी)",
+  "short_name": "विश्वकर्मा मन्दिर",
+  "description": "श्री विश्वकर्मा मन्दिर, छापकी (वडा नं. ५), अग्निसाइर कृष्णासवरण गाउँपालिका, सप्तरी जिल्ला, मधेश प्रदेश, नेपालको आधिकारिक डिजिटल पोर्टल।",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF7F2",
+  "theme_color": "#7A121D",
+  "orientation": "portrait-primary",
+  "lang": "ne",
+  "categories": ["religion", "lifestyle", "community"],
+  "icons": [
+    {
+      "src": "/assets/images/temple-logo.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/images/deity-portrait.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ]
+}

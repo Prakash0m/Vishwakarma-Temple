@@ -5,14 +5,14 @@ import Meeting from '../models/Meeting.js';
 // @access  Public
 export const getMeetings = async (req, res, next) => {
   try {
-    const meetings = await Meeting.find();
+    const meetings = await Meeting.find().lean();
     
     // Ensure default meeting and live darshan entries exist
     let virtualMeeting = meetings.find(m => m.type === 'VirtualMeeting');
     let liveDarshan = meetings.find(m => m.type === 'LiveDarshan');
 
     if (!virtualMeeting) {
-      virtualMeeting = await Meeting.create({
+      const createdVM = await Meeting.create({
         type: 'VirtualMeeting',
         title: 'विश्वकर्मा मन्दिर साप्ताहिक भर्चुअल सत्संग तथा बैठक',
         titleEnglish: 'Vishwakarma Temple Weekly Virtual Satsang & Meeting',
@@ -25,10 +25,11 @@ export const getMeetings = async (req, res, next) => {
         descriptionEnglish: 'Weekly spiritual discourse and temple development updates. All devotees worldwide are warmly invited.',
         isActive: true
       });
+      virtualMeeting = createdVM.toObject();
     }
 
     if (!liveDarshan) {
-      liveDarshan = await Meeting.create({
+      const createdLD = await Meeting.create({
         type: 'LiveDarshan',
         title: 'प्रत्यक्ष मन्दिर दर्शन (Live Darshan)',
         titleEnglish: 'Live Temple Darshan & Aarti',
@@ -41,8 +42,10 @@ export const getMeetings = async (req, res, next) => {
         isActive: true,
         isLiveNow: false
       });
+      liveDarshan = createdLD.toObject();
     }
 
+    res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
     res.status(200).json({
       success: true,
       data: {

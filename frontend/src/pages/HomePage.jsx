@@ -14,19 +14,40 @@ import TransparencySection from '../components/home/TransparencySection';
 import LocationMapSection from '../components/home/LocationMapSection';
 import ContactSection from '../components/home/ContactSection';
 import Footer from '../components/common/Footer';
-import PoojaBookingModal from '../components/modals/PoojaBookingModal';
-import DonationModal from '../components/modals/DonationModal';
-import ToleFundModal from '../components/modals/ToleFundModal';
+
+// Lazy-loaded modals so canvas-confetti and modal forms are not in initial page load
+const PoojaBookingModal = React.lazy(() => import('../components/modals/PoojaBookingModal'));
+const DonationModal = React.lazy(() => import('../components/modals/DonationModal'));
+const ToleFundModal = React.lazy(() => import('../components/modals/ToleFundModal'));
+
+const CACHE_KEY = 'temple_homepage_swr_cache_v1';
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes cache validity
+
+const loadCachedData = () => {
+  try {
+    const raw = sessionStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (parsed && (Date.now() - parsed.timestamp) < CACHE_TTL_MS) {
+      return parsed.payload;
+    }
+  } catch (err) {
+    // Ignore cache parse errors
+  }
+  return null;
+};
 
 const HomePage = () => {
-  const [settings, setSettings] = useState(null);
-  const [summary, setSummary] = useState(null);
-  const [poojas, setPoojas] = useState([]);
-  const [events, setEvents] = useState([]);
-  const [gallery, setGallery] = useState([]);
-  const [meetingData, setMeetingData] = useState(null);
-  const [supporters, setSupporters] = useState([]);
-  const [budgets, setBudgets] = useState([]);
+  const cached = loadCachedData();
+
+  const [settings, setSettings] = useState(cached?.settings || null);
+  const [summary, setSummary] = useState(cached?.summary || null);
+  const [poojas, setPoojas] = useState(cached?.poojas || []);
+  const [events, setEvents] = useState(cached?.events || []);
+  const [gallery, setGallery] = useState(cached?.gallery || []);
+  const [meetingData, setMeetingData] = useState(cached?.meetingData || null);
+  const [supporters, setSupporters] = useState(cached?.supporters || []);
+  const [budgets, setBudgets] = useState(cached?.budgets || []);
 
   // Modals state
   const [isPoojaModalOpen, setIsPoojaModalOpen] = useState(false);
@@ -54,43 +75,59 @@ const HomePage = () => {
         api.get('/budgets')
       ]);
 
-      if (settingsRes.status === 'fulfilled' && settingsRes.value.data.success) {
-        setSettings(settingsRes.value.data.data);
-      }
-      if (poojasRes.status === 'fulfilled' && poojasRes.value.data.success) {
-        setPoojas(poojasRes.value.data.data);
-      }
-      if (eventsRes.status === 'fulfilled' && eventsRes.value.data.success) {
-        setEvents(eventsRes.value.data.data);
-      }
-      if (galleryRes.status === 'fulfilled' && galleryRes.value.data.success) {
-        setGallery(galleryRes.value.data.data);
-      }
-      if (meetingsRes.status === 'fulfilled' && meetingsRes.value.data.success) {
-        setMeetingData(meetingsRes.value.data.data);
-      }
-      if (supportersRes.status === 'fulfilled' && supportersRes.value.data.success) {
-        setSupporters(supportersRes.value.data.data);
-      }
-      if (budgetsRes.status === 'fulfilled' && budgetsRes.value.data.success) {
-        setBudgets(budgetsRes.value.data.data);
-        setSummary(prev => ({ ...prev, totalBudget: budgetsRes.value.data.summary?.totalAllocated || 0 }));
-      }
+      const freshSettings = settingsRes.status === 'fulfilled' && settingsRes.value.data.success ? settingsRes.value.data.data : null;
+      const freshPoojas = poojasRes.status === 'fulfilled' && poojasRes.value.data.success ? poojasRes.value.data.data : [];
+      const freshEvents = eventsRes.status === 'fulfilled' && eventsRes.value.data.success ? eventsRes.value.data.data : [];
+      const freshGallery = galleryRes.status === 'fulfilled' && galleryRes.value.data.success ? galleryRes.value.data.data : [];
+      const freshMeetings = meetingsRes.status === 'fulfilled' && meetingsRes.value.data.success ? meetingsRes.value.data.data : null;
+      const freshSupporters = supportersRes.status === 'fulfilled' && supportersRes.value.data.success ? supportersRes.value.data.data : [];
+      const freshBudgets = budgetsRes.status === 'fulfilled' && budgetsRes.value.data.success ? budgetsRes.value.data.data : [];
 
-      // Also fetch public summary for financial KPI calculation
+      if (freshSettings) setSettings(freshSettings);
+      if (freshPoojas.length) setPoojas(freshPoojas);
+      if (freshEvents.length) setEvents(freshEvents);
+      if (freshGallery.length) setGallery(freshGallery);
+      if (freshMeetings) setMeetingData(freshMeetings);
+      if (freshSupporters.length) setSupporters(freshSupporters);
+      if (freshBudgets.length) setBudgets(freshBudgets);
+
+      let freshSummary = summary;
       try {
-        const donRes = await api.get('/donations?limit=1');
-        const expRes = await api.get('/expenses?limit=1');
-        const memRes = await api.get('/members?limit=1');
+        const [donRes, expRes, memRes] = await Promise.allSettled([
+          api.get('/donations?limit=1'),
+          api.get('/expenses?limit=1'),
+          api.get('/members?limit=1')
+        ]);
 
-        setSummary({
-          totalDonation: donRes.data?.filteredTotalAmount || 0,
-          totalExpense: expRes.data?.filteredTotalAmount || 0,
-          totalMembers: memRes.data?.total || 0,
-          totalDonors: supportersRes.status === 'fulfilled' ? supportersRes.value.data?.data?.length || 0 : 0
-        });
+        freshSummary = {
+          totalDonation: donRes.status === 'fulfilled' ? donRes.value.data?.filteredTotalAmount || 0 : 0,
+          totalExpense: expRes.status === 'fulfilled' ? expRes.value.data?.filteredTotalAmount || 0 : 0,
+          totalMembers: memRes.status === 'fulfilled' ? memRes.value.data?.total || 0 : 0,
+          totalDonors: freshSupporters.length || 0,
+          totalBudget: budgetsRes.status === 'fulfilled' ? budgetsRes.value.data?.summary?.totalAllocated || 0 : 0
+        };
+        setSummary(freshSummary);
       } catch (err) {
         // Fallback gracefully
+      }
+
+      // Persist in SWR cache for instant load next time
+      try {
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify({
+          timestamp: Date.now(),
+          payload: {
+            settings: freshSettings || settings,
+            summary: freshSummary,
+            poojas: freshPoojas,
+            events: freshEvents,
+            gallery: freshGallery,
+            meetingData: freshMeetings,
+            supporters: freshSupporters,
+            budgets: freshBudgets
+          }
+        }));
+      } catch (e) {
+        // Ignore session storage quota errors
       }
     } catch (error) {
       console.error('Error fetching homepage data:', error);
@@ -116,71 +153,74 @@ const HomePage = () => {
         onOpenToleFundModal={() => setIsToleFundModalOpen(true)}
       />
 
-      {/* 2. Hero Section with Dynamic Gallery Slider */}
-      <HeroSection
-        settings={settings}
-        gallery={gallery}
-        meetingData={meetingData}
-        onOpenDonationModal={() => setIsDonationModalOpen(true)}
-        onOpenToleFundModal={() => setIsToleFundModalOpen(true)}
-      />
-
-      {/* 3. Quick Info Strip */}
-      <QuickInfoStrip settings={settings} />
-
-      {/* 4. About Temple */}
-      <AboutSection settings={settings} />
-
-      {/* 5. Tole Leadership & 5 Candidates Presentation */}
-      <LeadershipSection />
-
-      {/* 6. Pooja & Services */}
-      {(settings?.showPooja !== false) && (
-        <PoojaServicesSection
-          poojas={poojas}
-          onSelectPooja={handleOpenPoojaBooking}
-        />
-      )}
-
-      {/* 7. Upcoming Events */}
-      {(settings?.showEvents !== false) && (
-        <EventsSection events={events} />
-      )}
-
-      {/* 8. Live Darshan & Virtual Meeting */}
-      {((settings?.showLiveDarshan !== false) || (settings?.showMeeting !== false)) && (
-        <LiveDarshanMeetingSection meetingData={meetingData} />
-      )}
-
-      {/* 9. Photo Gallery */}
-      {(settings?.showGallery !== false) && (
-        <GallerySection gallery={gallery} />
-      )}
-
-      {/* 10. Donation & Chanda with Supporters Ticker */}
-      {(settings?.showDonationSection !== false) && (
-        <DonationSection
-          summary={summary}
+      {/* Main Landmark for SEO and Screen Readers */}
+      <main id="main-content" role="main">
+        {/* 2. Hero Section with Dynamic Gallery Slider */}
+        <HeroSection
           settings={settings}
-          supporters={supporters}
+          gallery={gallery}
+          meetingData={meetingData}
           onOpenDonationModal={() => setIsDonationModalOpen(true)}
+          onOpenToleFundModal={() => setIsToleFundModalOpen(true)}
         />
-      )}
 
-      {/* 11. Financial Transparency */}
-      {(settings?.showTransparency !== false) && (
-        <TransparencySection
-          summary={summary}
-          budgets={budgets}
-          settings={settings}
-        />
-      )}
+        {/* 3. Quick Info Strip */}
+        <QuickInfoStrip settings={settings} />
 
-      {/* 12. Location & Google Map */}
-      <LocationMapSection settings={settings} />
+        {/* 4. About Temple */}
+        <AboutSection settings={settings} />
 
-      {/* 13. Contact Us */}
-      <ContactSection settings={settings} />
+        {/* 5. Tole Leadership & 5 Candidates Presentation */}
+        <LeadershipSection />
+
+        {/* 6. Pooja & Services */}
+        {(settings?.showPooja !== false) && (
+          <PoojaServicesSection
+            poojas={poojas}
+            onSelectPooja={handleOpenPoojaBooking}
+          />
+        )}
+
+        {/* 7. Upcoming Events */}
+        {(settings?.showEvents !== false) && (
+          <EventsSection events={events} />
+        )}
+
+        {/* 8. Live Darshan & Virtual Meeting */}
+        {((settings?.showLiveDarshan !== false) || (settings?.showMeeting !== false)) && (
+          <LiveDarshanMeetingSection meetingData={meetingData} />
+        )}
+
+        {/* 9. Photo Gallery */}
+        {(settings?.showGallery !== false) && (
+          <GallerySection gallery={gallery} />
+        )}
+
+        {/* 10. Donation & Chanda with Supporters Ticker */}
+        {(settings?.showDonationSection !== false) && (
+          <DonationSection
+            summary={summary}
+            settings={settings}
+            supporters={supporters}
+            onOpenDonationModal={() => setIsDonationModalOpen(true)}
+          />
+        )}
+
+        {/* 11. Financial Transparency */}
+        {(settings?.showTransparency !== false) && (
+          <TransparencySection
+            summary={summary}
+            budgets={budgets}
+            settings={settings}
+          />
+        )}
+
+        {/* 12. Location & Google Map */}
+        <LocationMapSection settings={settings} />
+
+        {/* 13. Contact Us */}
+        <ContactSection settings={settings} />
+      </main>
 
       {/* 14. Footer */}
       <Footer
@@ -189,24 +229,36 @@ const HomePage = () => {
         onOpenToleFundModal={() => setIsToleFundModalOpen(true)}
       />
 
-      {/* Modals */}
-      <PoojaBookingModal
-        isOpen={isPoojaModalOpen}
-        onClose={() => setIsPoojaModalOpen(false)}
-        selectedPooja={selectedPooja}
-        poojas={poojas}
-      />
+      {/* On-demand Lazy-loaded Modals */}
+      {isPoojaModalOpen && (
+        <React.Suspense fallback={null}>
+          <PoojaBookingModal
+            isOpen={isPoojaModalOpen}
+            onClose={() => setIsPoojaModalOpen(false)}
+            selectedPooja={selectedPooja}
+            poojas={poojas}
+          />
+        </React.Suspense>
+      )}
 
-      <DonationModal
-        isOpen={isDonationModalOpen}
-        onClose={() => setIsDonationModalOpen(false)}
-        onDonationSuccess={fetchAllData}
-      />
+      {isDonationModalOpen && (
+        <React.Suspense fallback={null}>
+          <DonationModal
+            isOpen={isDonationModalOpen}
+            onClose={() => setIsDonationModalOpen(false)}
+            onDonationSuccess={fetchAllData}
+          />
+        </React.Suspense>
+      )}
 
-      <ToleFundModal
-        isOpen={isToleFundModalOpen}
-        onClose={() => setIsToleFundModalOpen(false)}
-      />
+      {isToleFundModalOpen && (
+        <React.Suspense fallback={null}>
+          <ToleFundModal
+            isOpen={isToleFundModalOpen}
+            onClose={() => setIsToleFundModalOpen(false)}
+          />
+        </React.Suspense>
+      )}
     </div>
   );
 };

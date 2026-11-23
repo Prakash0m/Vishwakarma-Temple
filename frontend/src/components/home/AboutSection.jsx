@@ -71,6 +71,8 @@ const AboutSection = ({ settings }) => {
                 <img
                   src={getImageUrl(aboutImage)}
                   alt="Vishwakarma Temple Structure - Chhapki, Saptari, Nepal"
+                  loading="lazy"
+                  decoding="async"
                   style={{
                     width: '100%',
                     height: '100%',

@@ -25,7 +25,8 @@ export const getEvents = async (req, res, next) => {
       query.isFeatured = true;
     }
 
-    const events = await Event.find(query).sort({ date: 1 });
+    const events = await Event.find(query).sort({ date: 1 }).lean();
+    res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
     res.status(200).json({ success: true, count: events.length, data: events });
   } catch (error) {
     next(error);
@@ -37,7 +38,7 @@ export const getEvents = async (req, res, next) => {
 // @access  Public
 export const getEventById = async (req, res, next) => {
   try {
-    const event = await Event.findById(req.params.id);
+    const event = await Event.findById(req.params.id).lean();
     if (!event) {
       return res.status(404).json({ success: false, message: 'Event not found' });
     }

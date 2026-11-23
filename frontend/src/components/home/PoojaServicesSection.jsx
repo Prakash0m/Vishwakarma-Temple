@@ -52,6 +52,8 @@ const PoojaServicesSection = ({ poojas, onSelectPooja }) => {
                       src={getImageUrl(image)}
                       alt={title}
                       className="pooja-card-img"
+                      loading="lazy"
+                      decoding="async"
                       style={{
                         width: '100%',
                         height: '100%',

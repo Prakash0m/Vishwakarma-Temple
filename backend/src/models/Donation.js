@@ -91,6 +91,7 @@ const donationSchema = new mongoose.Schema(
 
 donationSchema.index({ donorName: 'text', receiptNumber: 'text' });
 donationSchema.index({ date: -1 });
+donationSchema.index({ isVerified: 1, date: -1 });
 donationSchema.index({ member: 1 });
 
 export default mongoose.model('Donation', donationSchema);

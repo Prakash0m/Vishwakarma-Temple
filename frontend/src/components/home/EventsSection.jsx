@@ -51,6 +51,8 @@ const EventsSection = ({ events }) => {
                     <img
                       src={getImageUrl(event.bannerImage)}
                       alt={title}
+                      loading="lazy"
+                      decoding="async"
                       style={{
                         width: '100%',
                         height: '100%',

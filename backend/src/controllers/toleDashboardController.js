@@ -27,16 +27,16 @@ export const getToleDashboardMetrics = async (req, res, next) => {
       templeDonations,
       templeExpenses
     ] = await Promise.all([
-      House.find(),
-      ToleMeeting.find().sort({ date: -1 }),
-      Fine.find().sort({ date: -1 }),
-      Wedding.find().sort({ weddingDate: 1 }),
-      ToleCandidate.find({ status: { $in: ['Active', 'सक्रिय'] } }).sort({ displayOrder: 1 }),
-      TempleIncome.find(),
-      FundCampaign.find().sort({ createdAt: -1 }),
-      FundPayment.find().sort({ submittedDate: -1 }),
-      Donation.find(),
-      Expense.find()
+      House.find().lean(),
+      ToleMeeting.find().sort({ date: -1 }).lean(),
+      Fine.find().sort({ date: -1 }).lean(),
+      Wedding.find().sort({ weddingDate: 1 }).lean(),
+      ToleCandidate.find({ status: { $in: ['Active', 'सक्रिय'] } }).sort({ displayOrder: 1 }).lean(),
+      TempleIncome.find().lean(),
+      FundCampaign.find().sort({ createdAt: -1 }).lean(),
+      FundPayment.find().sort({ submittedDate: -1 }).lean(),
+      Donation.find().lean(),
+      Expense.find().lean()
     ]);
 
     // 1. Tole Demographics

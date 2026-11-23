@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import compression from 'compression';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -28,6 +29,12 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
+// High-Performance HTTP Compression (Gzip / Brotli for JSON & assets)
+app.use(compression({
+  threshold: 1024, // only compress responses above 1KB
+  level: 6
+}));
+
 // Body Parser Middleware
 app.use(express.json({ limit: '15mb' }));
 app.use(express.urlencoded({ extended: true, limit: '15mb' }));
@@ -44,9 +51,14 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
-// Static Uploads Folder
+// Static Uploads Folder with Long-term Cache Headers
 const uploadsPath = path.join(process.cwd(), 'uploads');
-app.use('/uploads', express.static(uploadsPath));
+app.use('/uploads', express.static(uploadsPath, {
+  maxAge: '30d',
+  etag: true,
+  lastModified: true,
+  immutable: true
+}));
 
 // Root Health Check
 app.get('/', (req, res) => {

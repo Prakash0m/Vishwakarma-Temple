@@ -103,6 +103,8 @@ const GallerySection = ({ gallery }) => {
                   <img
                     src={getImageUrl(item.imageUrl)}
                     alt={title}
+                    loading="lazy"
+                    decoding="async"
                     style={{
                       width: '100%',
                       height: '100%',

@@ -69,5 +69,7 @@ const memberSchema = new mongoose.Schema(
 );
 
 memberSchema.index({ name: 'text', memberId: 'text', phone: 'text' });
+memberSchema.index({ status: 1 });
+memberSchema.index({ phone: 1 });
 
 export default mongoose.model('Member', memberSchema);

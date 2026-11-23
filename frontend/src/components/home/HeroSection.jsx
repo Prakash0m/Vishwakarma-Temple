@@ -70,10 +70,10 @@ const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal,
     ? (settings?.heroSubtitleNepali || 'सृष्टि, वास्तुकला, विज्ञान र शिल्पकलाका अधिष्ठाता भगवान विश्वकर्माको पवित्र प्राङ्गणमा हार्दिक नमन गर्दछौं।')
     : (settings?.heroSubtitleEnglish || 'Devoted to the divine supreme architect, engineer, and cosmic creator. Experience peace, prayers, and community harmony.');
 
-  // High-Definition transparent PNG deity cutout seamlessly blending without any square box
+  // High-Definition transparent WebP deity cutout seamlessly blending without any square box (108 KB)
   const fixedDeityImage = (settings?.heroImage && !settings.heroImage.includes('deity-portrait.jpg') && !settings.heroImage.includes('deity-cream-blend.jpg'))
     ? settings.heroImage
-    : '/assets/images/deity-hd-transparent.png';
+    : '/assets/images/deity-hd-transparent.webp';
 
   const captionTitle = language === 'ne'
     ? 'गर्भगृह पञ्चदीप प्रज्वलन तथा पूजा आराधना'
@@ -354,6 +354,8 @@ const HeroSection = ({ settings, gallery = [], meetingData, onOpenDonationModal,
                 <img
                   src={getImageUrl(fixedDeityImage)}
                   alt="भगवान श्री विश्वकर्मा गर्भगृह पञ्चदीप पूजा - छापकी, सप्तरी"
+                  fetchPriority="high"
+                  decoding="async"
                   style={{
                     width: '100%',
                     maxWidth: '460px',

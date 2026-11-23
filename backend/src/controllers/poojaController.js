@@ -8,7 +8,8 @@ export const getPoojas = async (req, res, next) => {
     const { includeInactive } = req.query;
     const query = includeInactive === 'true' ? {} : { isActive: true };
 
-    const poojas = await Pooja.find(query).sort({ order: 1, createdAt: 1 });
+    const poojas = await Pooja.find(query).sort({ order: 1, createdAt: 1 }).lean();
+    res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
     res.status(200).json({ success: true, count: poojas.length, data: poojas });
   } catch (error) {
     next(error);
@@ -20,7 +21,7 @@ export const getPoojas = async (req, res, next) => {
 // @access  Public
 export const getPoojaById = async (req, res, next) => {
   try {
-    const pooja = await Pooja.findById(req.params.id);
+    const pooja = await Pooja.findById(req.params.id).lean();
     if (!pooja) {
       return res.status(404).json({ success: false, message: 'Pooja service not found' });
     }

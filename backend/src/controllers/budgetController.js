@@ -8,36 +8,37 @@ export const getBudgets = async (req, res, next) => {
   try {
     const { fiscalYear = '2081/82 (2026)' } = req.query;
 
-    const budgets = await Budget.find({ fiscalYear }).sort({ category: 1 });
+    // Concurrently fetch budgets and aggregated expense totals (eliminates N+1 query loop)
+    const [budgets, spentAgg] = await Promise.all([
+      Budget.find({ fiscalYear }).sort({ category: 1 }).lean(),
+      Expense.aggregate([
+        { $group: { _id: '$category', totalSpent: { $sum: '$amount' } } }
+      ])
+    ]);
 
-    const budgetsWithAnalysis = await Promise.all(
-      budgets.map(async (b) => {
-        const spentAgg = await Expense.aggregate([
-          { $match: { category: b.category } },
-          { $group: { _id: null, totalSpent: { $sum: '$amount' } } }
-        ]);
+    const spentMap = new Map(spentAgg.map(s => [s._id, s.totalSpent]));
 
-        const spent = spentAgg.length > 0 ? spentAgg[0].totalSpent : 0;
-        const allocated = b.allocatedAmount;
-        const remaining = allocated - spent;
-        const percentageUsed = allocated > 0 ? Number(((spent / allocated) * 100).toFixed(1)) : 0;
+    const budgetsWithAnalysis = budgets.map((b) => {
+      const spent = spentMap.get(b.category) || 0;
+      const allocated = b.allocatedAmount || 0;
+      const remaining = allocated - spent;
+      const percentageUsed = allocated > 0 ? Number(((spent / allocated) * 100).toFixed(1)) : 0;
 
-        let statusColor = 'green';
-        if (percentageUsed >= 100) {
-          statusColor = 'red';
-        } else if (percentageUsed >= 80) {
-          statusColor = 'orange';
-        }
+      let statusColor = 'green';
+      if (percentageUsed >= 100) {
+        statusColor = 'red';
+      } else if (percentageUsed >= 80) {
+        statusColor = 'orange';
+      }
 
-        return {
-          ...b.toObject(),
-          spent,
-          remaining,
-          percentageUsed,
-          statusColor
-        };
-      })
-    );
+      return {
+        ...b,
+        spent,
+        remaining,
+        percentageUsed,
+        statusColor
+      };
+    });
 
     // Total budget summary calculations
     const totalAllocated = budgetsWithAnalysis.reduce((acc, curr) => acc + curr.allocatedAmount, 0);
@@ -45,6 +46,7 @@ export const getBudgets = async (req, res, next) => {
     const totalRemaining = totalAllocated - totalSpent;
     const overallPercentage = totalAllocated > 0 ? Number(((totalSpent / totalAllocated) * 100).toFixed(1)) : 0;
 
+    res.set('Cache-Control', 'public, max-age=30, stale-while-revalidate=120');
     res.status(200).json({
       success: true,
       summary: {
