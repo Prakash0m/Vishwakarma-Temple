@@ -20,7 +20,7 @@ const PoojaBookingModal = React.lazy(() => import('../components/modals/PoojaBoo
 const DonationModal = React.lazy(() => import('../components/modals/DonationModal'));
 const ToleFundModal = React.lazy(() => import('../components/modals/ToleFundModal'));
 
-const CACHE_KEY = 'temple_homepage_swr_cache_v1';
+const CACHE_KEY = 'temple_homepage_swr_cache_v2';
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes cache validity
 
 const loadCachedData = () => {
